@@ -1,0 +1,9 @@
+# V1 Neurons Links
+# Author: Pedro F. Toledo <pedrotoledocorrea@gmail.com>
+
+setsim V1V1_base_weight_source default_weight
+setsim V1V1_default_weight     0.000
+setsim V1V1_weight_adaptation  V1V1_A001
+
+       #LINK            #W
+#setsim V1000000:V1000000 0.000
