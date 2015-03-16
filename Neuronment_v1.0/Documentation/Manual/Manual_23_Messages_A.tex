@@ -1,0 +1,423 @@
+\section{Reading Nproc File Issues}
+
+\subsection{IN-001}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{NProc directive not recognized}
+  \item Development Assertion: YES
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+  \item Message Description:\\[1em]The directive trying to get interpreted is not on the list of possible directives. Please go to the Reference Manual chapter "Directives" to get a full list of valid directives.
+\end{itemize}
+
+\subsection{IN-002}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to report an undeclared variable}
+  \item Development Assertion: YES
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{IN-003}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Redefining a previously stored setting}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{IN-004}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Nproc unidentified sub directive, ignoring line}
+  \item Development Assertion: YES
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{IN-005}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Nproc unidentified setting, ignoring line}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{IN-006}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Flag not found or without a value}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{IN-007}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{A boolean argument has not been properly written. Will be interpreted as false}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{IN-010}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{NProc incorrect amount of arguments for directive, ignoring line}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\section{Command Line Issues}
+
+\subsection{UI-001}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Duplicated or contradictory flags on command call}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{UI-002}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Flag expected}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{UI-003}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Flag not recognized, flag omitted}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{UI-004}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Label without content}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{UI-006}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Empty NProc name}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\section{File IO Issues}
+
+\subsection{ER-001}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Development Assetion - The program arrived to an unexpected set of conditions}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{ER-002}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Runtime Assertion - Something went wrong running the program. Terminating}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{ER-003}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{File couldn't be opened}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{ER-004}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{File couldn't be properly closed}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{ER-005}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to get a new line from a non ready file}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{ER-006}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to get a new line from a file already at the end}
+  \item Development Assertion: YES
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{ER-007}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Fail on getting a new line from nproc file}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{ER-008}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Implementation Assertion - There is a problem with the implementation}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{ER-009}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to close an unopened file}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{ER-010}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Required file is empty}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\section{Implementation Issues}
+
+\subsection{DV-001}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Missing implementation}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{DV-002}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to declare a previously declared setting}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{DV-003}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to load a setting of an unsupported type}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{DV-005}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to use an unsupported setting}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{DV-006}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to read an incorrect data type for the setting}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{DV-007}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{The setting count is different than the declared setting count on the HashEntry}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{DV-012}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying a quick access of incorrect type}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{DV-013}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Hash Table Full}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{DV-015}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Setting declared but hasn't been initialized}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{DV-017}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Discrepancy on neuron type on assignment}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{DV-018}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to quick retrieve un-existent value}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{SD-030}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Internal simulation pointer corruption}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{SD-031}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to compare 2 identical MT cells}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{SD-032}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Empty pointer to function entry}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\section{Reporting Issues}
+
+\subsection{RP-001}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to open an already opened stream}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{RP-002}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to close a non opened stream}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\subsection{RP-003}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Stream didn't oppened correctly}
+  \item Development Assertion: NO
+  \item Implementation Assertion: YES
+  \item Runtime Assertion: NO
+\end{itemize}
+
+\section{Simulator Interface Issues}
+
+\subsection{SD-001}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Simple Simulator Not Initialized}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{SD-015}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{No V1\_Neuron created}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{SD-016}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{No MT\_Neuron created}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{SD-021}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Invalid timing for eternal excitation}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{SD-025}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Unordered external excitation phase insertion attempt}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{SD-027}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{First diffusion phase should be always zero}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{SD-028}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{The number of steps for simulate needs to be at least 1}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{SD-033}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Trying to access an invalid activation TimeStep}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{SD-036}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Setting not recognized}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\subsection{SD-037}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{Setting required}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: YES
+\end{itemize}
+
+\section{Warnings}
+
+\subsection{WN-006}
+\begin{itemize}
+  \item Interface Message:\\[1em]\textbf{There are undocumented calculations in use}
+  \item Development Assertion: NO
+  \item Implementation Assertion: NO
+  \item Runtime Assertion: NO
+\end{itemize}
+
