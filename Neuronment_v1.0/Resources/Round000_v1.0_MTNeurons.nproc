@@ -4,8 +4,10 @@
 # Y: 0.0
 # 8 Orientations (45.00[Deg] Step)
 
-setsim MT_act_method MT_A001
-setsim MT_dac_method MT_D001
+setsim MT_first_calculation activation
+
+setsim MT_act_method        MT_A001
+setsim MT_dac_method        MT_D001
 
        #ID    #X  #Y  #Z  #Or    #DA #DD
 setsim MT000000 0.0 0.0 0.0 000.00 0.0 0.0

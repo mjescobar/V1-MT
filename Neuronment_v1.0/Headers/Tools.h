@@ -266,4 +266,10 @@ bool GetFlag(vector<string> TokensP, string FlagP);
  */
 string GetFlagValue(vector<string> TokensP, string FlagP);
 
+////////////////////////////////////////////////////////////////////////////////////
+// Abbreviated math
+////////////////////////////////////////////////////////////////////////////////////
+
+double NonLinearity001(double ValueP, double MaxP, double AP, double BP);
+
 #endif	/* TOOLS_H */

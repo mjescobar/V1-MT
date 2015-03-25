@@ -37,16 +37,6 @@ public:
     string GetName();
 
     /**
-     * Stores the weight associated to a neuron link
-     * If weights over the threshold set by a simulation setting
-     * the neuron is also added to the linked neurons list
-     * @param SourceP The influence source neuron name
-     * @param WeightP The influence weight
-     * @return true if successfully added
-     */
-    bool SetNewLink_Activation(string SourceP, double WeightP);
-
-    /**
      * Sets the activation method calculation for the neuron
      * @param MethodP The name of the activation method calculation
      * @return True if successfull
@@ -132,12 +122,37 @@ public:
      */
     bool SetLinkingWeight(string NeuronNameP, double WeightP);
 
+    /**
+     * Calculates the activation and dactivation values for the next step
+     * @param StepP the step to calculate
+     * @return true if success
+     */
+    bool SimulateStep(int StepP);
+    
+    /**
+     * Calculates the DActivation of the current step
+     * @return true if calculated correctly
+     */
+    virtual double CalculateDActivation();
+
+    /**
+     * Calculates the Activation of the current step
+     * @return true if calculated correctly
+     */
+    virtual double CalculateActivation();
+    
+    /**
+     * Sets the first calculation parameter
+     * @param PFirstCalculation the first calculation to be set
+     */
+    void SetFirstCalculation(string PFirstCalculation);
 protected:
     int ExternalExcitationPointer;
     double XPos;
     double YPos;
     double ZPos;
     string Name;
+    string FirstCalculation;
     string ActivationMethod;
     string DActivationMethod;
     vector<int> ExternalExcitationTiming;

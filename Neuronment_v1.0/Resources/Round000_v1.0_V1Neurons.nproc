@@ -7,10 +7,16 @@
 # Y: 0.0
 # 32 Orientations (11.25[Deg] Step)
 
+setsim V1_first_calculation       dactivation
+
 setsim V1_act_method              V1_A001
+setsim V1_A001_nl_max             1
+setsim V1_A001_nl_a               5
+setsim V1_A001_nl_b               0.17
+
 setsim V1_dac_method              V1_D001
 setsim V1_D001_excitatory_factor  0.2
-setsim V1_D001_inhibition_factor  0.8 # This last 2 settings should add 1.0
+setsim V1_D001_inhibition_factor -0.8 # This last 2 settings should add 1.0
 setsim V1_D001_conductance_leak  -0.1
 
        #ID      #X  #Y  #Z  #Or    #SF     #TF  #DA #DD

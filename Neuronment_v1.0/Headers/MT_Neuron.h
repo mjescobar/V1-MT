@@ -6,6 +6,8 @@
 #ifndef MT_NEURON_H
 #define	MT_NEURON_H
 
+class SimulationManager;
+
 class MT_Neuron : public ND_Neuron {
 public:
     /**
@@ -41,19 +43,19 @@ public:
      * @param NeuronP the neuron to link
      * @return true if connected
      */
-    bool AddV1Link(V1_Neuron* NeuronP);
-
-    /**
-     * Getst the neuron preferred orientation
-     * @return the preferred orientation value
-     */
-    double GetOri();
+    bool AddV1Link(V1_Neuron* NeuronP, SimulationManager SimulatorP);
 
     /**
      * Calculates the activation for the step StepP
      * @return true if calculated successfully
      */
-    bool SimulateStep(int StepP);
+    //bool SimulateStep(int StepP);
+    
+    /**
+     * Gets the neuron preferred orientation
+     * @return the preferred orientation value in deg
+     */
+    double GetOri();
 
 private:
      /**

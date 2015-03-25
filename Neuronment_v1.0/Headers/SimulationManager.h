@@ -88,6 +88,12 @@ public:
      * @return true if printed correctly
      */
     bool PrintV1ExternalExcitation(int StepP);
+    
+    /**
+     * Returns the current calculated value for the radius of V1 Neurons
+     * @return the V!Radius value
+     */
+    double GetV1Radius();
 
 private:
     /**
@@ -138,17 +144,12 @@ private:
      */
     bool SetV1MTConnectionLinks();
 
-    /**
-     * Obtains the base weight defined by the simulator configuration
-     * @param MethodP Method to obtain the value
-     * @param DestinationP Destination neuron that configures the weight
-     * @param OriginP Origin neuron that configures the weight
-     * @return the retrieved value
-     */
-    double GetV1V1BaseWeight(string MethodP, int DestinationP, int OriginP);
-
+    // V1 Parameters
     vector<V1_Neuron> V1_Neurons;
+    double V1Radius;
+    // MT Parameters
     vector<MT_Neuron> MT_Neurons;
+    // Status
     bool Initialized;
 };
 

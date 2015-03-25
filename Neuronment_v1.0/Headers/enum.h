@@ -44,9 +44,11 @@ enum MessageType{
     Message_Allways
 };
 
+/** To process three state output functions */
 enum ResultType{
     Result_true,
     Result_false,
     Result_silent
 };
+
 #endif	/* ENUMS_H */

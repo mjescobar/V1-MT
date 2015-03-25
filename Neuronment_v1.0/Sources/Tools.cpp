@@ -416,3 +416,14 @@ string GetFlagValue(vector<string> TokensP, string FlagP)
   Log.Message("IN-006: In command \"" + TokensP[0] + " " + TokensP[1] + "\" flag \"" + FlagP + "\"");
   return "";
 }
+
+////////////////////////////////////////////////////////////////////////////////////
+// Abbreviated math
+////////////////////////////////////////////////////////////////////////////////////
+
+double NonLinearity001(double ValueP, double MaxP, double AP, double BP)
+{
+  double Tem = (MaxP / (1 + exp(AP * (BP - ValueP))) - MaxP / (1 + exp(AP * (BP - 0))))*(MaxP / (MaxP - MaxP / (1 + exp(AP * (BP - 0)))));
+  Tem = (Tem > 0) ? Tem : 0;
+  return Tem;
+}

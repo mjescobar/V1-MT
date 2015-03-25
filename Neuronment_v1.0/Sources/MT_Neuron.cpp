@@ -15,8 +15,8 @@ using namespace std;
 #include "HashTable.h"
 #include "Globals.h"
 #include "ND_Neuron.h"
-#include "MT_Neuron.h"
 #include "LogManager.h"
+#include "MT_Neuron.h"
 
 MT_Neuron::MT_Neuron()
 {
@@ -37,6 +37,7 @@ MT_Neuron::MT_Neuron(const MT_Neuron& orig) : ND_Neuron(Neuron_MT)
   ZPos = orig.ZPos;
   Activation = orig.Activation;
   DActivation = orig.DActivation;
+  FirstCalculation = orig.FirstCalculation;
   ActivationLinkingWeights = orig.ActivationLinkingWeights;
 }
 
@@ -57,36 +58,26 @@ MT_Neuron::MT_Neuron(string NameP, double Xp, double Yp, double Zp, double OriP,
   ActivationLinkingWeights = HashTable(Data_double);
 }
 
-bool MT_Neuron::AddV1Link(V1_Neuron* NeuronP)
+bool MT_Neuron::AddV1Link(V1_Neuron* NeuronP, SimulationManager SimulatorP)
 {
   string V1MTConnectionMethod = Simulation.GetSingleSetting_string(V1MT_CONNECTION_METHOD, DEFAULT_V1MT_CONNECTION_METHOD);
   if (V1MTConnectionMethod == V1MT_L001) {
     double Modulation = Simulation.GetSingleSetting_double(V1MT_L001_MODULATION, DEFAULT_V1MT_L001_MODULATION);
     double Sigma = Simulation.GetSingleSetting_double(V1MT_L001_SIGMA, DEFAULT_V1MT_L001_SIGMA);
+    double V1Radius = (SimulatorP.GetV1Radius() < 0.1) ? 0.1 : SimulatorP.GetV1Radius();
     double Amplification = Simulation.GetSingleSetting_double(V1MT_L001_AMPLIFICATION, DEFAULT_V1MT_L001_AMPLIFICATION);
     double Aperture = Simulation.GetSingleSetting_double(V1MT_L001_APERTURE, DEFAULT_V1MT_L001_APERTURE);
     double DeltaAngle = (abs(Ori - NeuronP->GetOri()) >= 180) ? 360 - abs(Ori - NeuronP->GetOri()) : abs(Ori - NeuronP->GetOri());
-    double Distance = sqrt((XPos - NeuronP->GetXPos())*(XPos - NeuronP->GetXPos())+(YPos - NeuronP->GetYPos())*(YPos - NeuronP->GetYPos())+(ZPos - NeuronP->GetZPos())*(ZPos - NeuronP->GetZPos()));
-    double Weight = Amplification * exp(-(Distance) / (2 * Sigma * Sigma)) * (pow(abs(deg_cos(DeltaAngle)), Modulation) * deg_cos(DeltaAngle));
+    double Distance = sqrt(pow(XPos - NeuronP->GetXPos(), 2) + pow(YPos - NeuronP->GetYPos(), 2) + pow(ZPos - NeuronP->GetZPos(), 2));
+    double Weight = Amplification * exp(-(Distance) / (2 * pow(Sigma * V1Radius, 2))) * (pow(abs(deg_cos(DeltaAngle)), Modulation) * deg_cos(DeltaAngle));
     if (DeltaAngle <= Aperture || DeltaAngle >= 360 - Aperture) {
       ActivationLinkingList.push_back(NeuronP);
       ActivationLinkingWeights.QuickPutEntry_double(NeuronP->GetName(), Weight);
     }
     return true;
   }
-  Log.Message("SD-036: "+V1MTConnectionMethod+" for "+V1MT_CONNECTION_METHOD);
+  Log.Message("SD-036: " + V1MTConnectionMethod + " for " + V1MT_CONNECTION_METHOD);
   return false;
-}
-
-bool MT_Neuron::SimulateStep(int StepP)
-{
-  if (Activation.size() == StepP) {
-    Activation.push_back(CalculateActivation());
-  } else {
-    Log.Message("SD-030");
-    return false;
-  }
-  return true;
 }
 
 double MT_Neuron::CalculateActivation()
@@ -96,7 +87,10 @@ double MT_Neuron::CalculateActivation()
   if (MTActivationMethod == MT_A001) {
     for (int i = 0; i < ActivationLinkingList.size(); i++) {
       if (ActivationLinkingList[i]->GetType() == Neuron_V1) {
-        TemporalActivation += ((V1_Neuron*) ActivationLinkingList[i])->GetLastActivation(); // * ActivationLinkingWeights.GetEntry(ActivationLinkingList[i]->GetName());
+        double SourceActivation = ((V1_Neuron*) ActivationLinkingList[i])->GetLastActivation();
+        SourceActivation = (SourceActivation < 0) ? 0 : SourceActivation;
+        double SourceWeight = ActivationLinkingWeights.QuickGetEntry_double(((V1_Neuron*) ActivationLinkingList[i])->GetName());
+        TemporalActivation += SourceActivation * SourceWeight;
       }
     }
   } else {

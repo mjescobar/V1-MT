@@ -139,3 +139,38 @@ bool ND_Neuron::SetLinkingWeight(string NeuronNameP, double NewWeightP)
 {
   ((double*) ActivationLinkingWeights.GetEntry(NeuronNameP)->GetContent())[0] = NewWeightP;
 }
+
+bool ND_Neuron::SimulateStep(int StepP)
+{
+  if (DActivation.size() == StepP && Activation.size() == StepP) {
+    if (FirstCalculation == CALCULATE_DACTIVATION) {
+      DActivation.push_back(CalculateDActivation());
+      Activation.push_back(CalculateActivation());
+      return true;
+    }
+    if (FirstCalculation == CALCULATE_ACTIVATION) {
+      Activation.push_back(CalculateActivation());
+      DActivation.push_back(CalculateDActivation());
+      return true;
+    }
+    return false;
+  } else {
+    Log.Message("SD-030");
+    return false;
+  }
+}
+
+void ND_Neuron::SetFirstCalculation(string PFirstCalculation)
+{
+  FirstCalculation = PFirstCalculation;
+}
+
+double ND_Neuron::CalculateDActivation()
+{
+  return 0;
+}
+
+double ND_Neuron::CalculateActivation()
+{
+  return 0;
+}

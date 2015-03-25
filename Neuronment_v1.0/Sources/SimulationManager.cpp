@@ -24,6 +24,7 @@ using namespace std;
 SimulationManager::SimulationManager()
 {
   Initialized = false;
+  V1Radius = 0;
 }
 
 SimulationManager::SimulationManager(const SimulationManager& orig)
@@ -39,49 +40,42 @@ bool SimulationManager::InitializeNeurons()
   bool ToReturn = false;
   // V1 Settings
   // Creating the V1_Neurons Vector
-  ToReturn = CreateV1NeuronVector();
-  if (!ToReturn) {
+  if (!CreateV1NeuronVector()) {
     return false;
   }
   // Setting the V1 activation calculation method
-  ToReturn = SetV1ActMethod();
-  if (!ToReturn) {
+  if (!SetV1ActMethod()) {
     return false;
   }
   // Setting the V1 dactivation calculation method
-  ToReturn = SetV1DacMethod();
-  if (!ToReturn) {
+  if (!SetV1DacMethod()) {
     return false;
   }
   // MT Settings
   // Creating the MT_Neurons Vector
-  ToReturn = CreateMTNeuronVector();
-  if (!ToReturn) {
+  if (!CreateMTNeuronVector()) {
     return false;
   }
   // Setting the MT activation calculation method
-  ToReturn = SetMTActMethod();
-  if (!ToReturn) {
+  if (!SetMTActMethod()) {
     return false;
   }
   // Setting the MT dactivation calculation method
-  ToReturn = SetMTDacMethod();
-  if (!ToReturn) {
+  if (!SetMTDacMethod()) {
     return false;
   }
   // V1V1 Settings
   // Setting V1V1 connection links
-  ToReturn = SetV1V1ConnectionLinks();
-  if (!ToReturn) {
+  if (!SetV1V1ConnectionLinks()) {
     return false;
   }
   // MTMT Settings
   // Setting MT-MT connection links
+  // None declared
 
   // V1MT Settings
   // Setting V1MT connection links
-  ToReturn = SetV1MTConnectionLinks();
-  if (!ToReturn) {
+  if (!SetV1MTConnectionLinks()) {
     return false;
   }
   Initialized = true;
@@ -100,14 +94,17 @@ bool SimulationManager::CreateV1NeuronVector()
       Data = Simulation.GetSetting_double(Name);
       if (Data) {
         V1_Neuron ToAdd = V1_Neuron(Name, Data[0], Data[1], Data[2], Data[3], Data[4], Data[5], Data[6], Data[7]);
+        ToAdd.SetFirstCalculation(*Simulation.GetSetting_string(V1_FIRST_CALCULATION));
         vector<V1_Neuron>::iterator it = lower_bound(V1_Neurons.begin(), V1_Neurons.end(), ToAdd, CompareV1_NeuronForSorting);
         V1_Neurons.insert(it, ToAdd);
+        V1Radius = (V1Radius < sqrt(pow(Data[0], 2) + pow(Data[1], 2) + pow(Data[2], 2))) ? sqrt(pow(Data[0], 2) + pow(Data[1], 2) + pow(Data[2], 2)) : V1Radius;
         Log.OutputNNL(Message_Allways, ".");
       }
     }
   }
   Log.Output(Message_Allways, "");
   Log.Output(Message_Allways, "Total V1_Neuron inserted: " + IIntToString(V1_Neurons.size()));
+  Log.Output(Message_Allways, "V1 Radius:                " + IDoubleToString(V1Radius));
   if (V1_Neurons.size() == 0) {
     Log.Message("SD-015");
     return false;
@@ -119,9 +116,9 @@ bool SimulationManager::SetV1ActMethod()
 {
   string V1ActivationMethod = Simulation.GetSingleSetting_string(V1_ACTIVATION_METHOD, DEFAULT_V1_ACTIVATION_METHOD);
   Log.Output(Message_Allways, "V1 activation calculation method: " + V1ActivationMethod);
-  if (V1ActivationMethod == "V1_A001") {
+  if (V1ActivationMethod == V1_A001) {
     for (int i = 0; i < V1_Neurons.size(); i++) {
-      V1_Neurons[i].SetActivationMethod("V1_A001");
+      V1_Neurons[i].SetActivationMethod(V1_A001);
     }
   } else {
     Log.Message("SD-036: " + V1ActivationMethod + " for " + V1_ACTIVATION_METHOD);
@@ -160,6 +157,7 @@ bool SimulationManager::CreateMTNeuronVector()
       Data = Simulation.GetSetting_double(Name);
       if (Data) {
         MT_Neuron ToAdd = MT_Neuron(Name, Data[0], Data[1], Data[2], Data[3], Data[4], Data[5]);
+        ToAdd.SetFirstCalculation(*Simulation.GetSetting_string(MT_FIRST_CALCULATION));
         vector<MT_Neuron>::iterator it = lower_bound(MT_Neurons.begin(), MT_Neurons.end(), ToAdd, CompareMT_NeuronForSorting);
         MT_Neurons.insert(it, ToAdd);
         Log.OutputNNL(Message_Allways, ".");
@@ -179,9 +177,9 @@ bool SimulationManager::SetMTActMethod()
 {
   string MTActivationMethod = Simulation.GetSingleSetting_string(MT_ACTIVATION_METHOD, DEFAULT_MT_ACTIVATION_METHOD);
   Log.Output(Message_Allways, "MT activation calculation method: " + MTActivationMethod);
-  if (MTActivationMethod == "MT_A001") {
+  if (MTActivationMethod == MT_A001) {
     for (int i = 0; i < MT_Neurons.size(); i++) {
-      MT_Neurons[i].SetActivationMethod("MT_A001");
+      MT_Neurons[i].SetActivationMethod(MT_A001);
     }
   } else {
     Log.Message("SD-036: " + MTActivationMethod + " for " + MT_ACTIVATION_METHOD);
@@ -194,9 +192,9 @@ bool SimulationManager::SetMTDacMethod()
 {
   string MTDActivationMethod = Simulation.GetSingleSetting_string(MT_DACTIVATION_METHOD, DEFAULT_MT_DACTIVATION_METHOD);
   Log.Output(Message_Allways, "MT dactivation calculation method: " + MTDActivationMethod);
-  if (MTDActivationMethod == "MT_D001") {
+  if (MTDActivationMethod == MT_D001) {
     for (int i = 0; i < MT_Neurons.size(); i++) {
-      MT_Neurons[i].SetActivationMethod("MT_D001");
+      MT_Neurons[i].SetActivationMethod(MT_D001);
     }
   } else {
     Log.Message("SD-036: " + MTDActivationMethod + " for " + MT_DACTIVATION_METHOD);
@@ -208,23 +206,14 @@ bool SimulationManager::SetMTDacMethod()
 bool SimulationManager::SetV1V1ConnectionLinks()
 {
   Log.Output(Message_Allways, "Creating V1V1 links");
-  string V1V1BaseWeightSource = Simulation.GetSingleSetting_string(V1V1_BASE_WEIGHT_SOURCE, DEFAULT_V1V1_BASE_WEIGHT_SOURCE);
-  string V1V1WeightAdaptation = Simulation.GetSingleSetting_string(V1V1_WEIGHT_ADAPTATION, DEFAULT_V1V1_WEIGHT_ADAPTATION);
-  Log.Output(Message_Allways, "V1V1 base weight source: " + V1V1BaseWeightSource);
-  Log.Output(Message_Allways, "V1V1 weight adaptation method: " + V1V1WeightAdaptation);
-  if (V1V1WeightAdaptation == "V1V1_A001") {
+  string V1V1ConnectionMethod = Simulation.GetSingleSetting_string(V1V1_CONNECTION_METHOD, DEFAULT_V1V1_CONNECTION_METHOD);
+  Log.Output(Message_Allways, "V1V1 connection method: " + V1V1ConnectionMethod);
+  if (V1V1ConnectionMethod == V1V1_L001) {
+    string V1V1BaseWeightSource = Simulation.GetSingleSetting_string(V1V1_L001_BASE_WEIGHT_SOURCE, DEFAULT_V1V1_L001_BASE_WEIGHT_SOURCE);
+    Log.Output(Message_Allways, "V1V1_L001 Base Weight Source: " + V1V1BaseWeightSource);
     for (int i = 0; i < V1_Neurons.size(); i++) {
       for (int j = 0; j < V1_Neurons.size(); j++) {
-        double Distance = V1_Neurons[i].DistanceToNeuron(V1_Neurons[j]);
-        double SpatialFrequency = V1_Neurons[i].GetSpa();
-        double RFSize = 1.5 * 0.5622 / SpatialFrequency;
-        Log.Message("WN-006: RFSize");
-        double Sigma = 2.2 * RFSize / 3.0;
-        Log.Message("WN-006: Sigma");
-        double AdaptedWeight = exp(-(Distance) / (2 * Sigma * Sigma));
-        Log.Message("WN-006: AdaptedWeight");
-        V1_Neurons[i].AddV1Link(&(V1_Neurons[j]), GetV1V1BaseWeight(V1V1BaseWeightSource, i, j) * AdaptedWeight);
-        Log.Message("WN-006: LinkWeight calculation");
+        V1_Neurons[i].AddV1Link(&(V1_Neurons[j]), *this);
       }
     }
     for (int i = 0; i < V1_Neurons.size(); i++) {
@@ -235,22 +224,8 @@ bool SimulationManager::SetV1V1ConnectionLinks()
     }
     return true;
   }
-  Log.Message("SD-036: " + V1V1WeightAdaptation + " for " + V1V1_WEIGHT_ADAPTATION);
+  Log.Message("SD-036: " + V1V1ConnectionMethod + " for " + V1V1_CONNECTION_METHOD);
   return false;
-}
-
-double SimulationManager::GetV1V1BaseWeight(string MethodP, int DestinationP, int OriginP)
-{
-  if (MethodP == "default_weight") {
-    return Simulation.GetSingleSetting_double(V1V1_DEFAULT_WEIGHT, DEFAULT_V1V1_DEFAULT_WEIGHT);
-  }
-  if (MethodP == "from_setsim_values_or_default") {
-    return Simulation.GetSingleSetting_double(V1_Neurons[DestinationP].GetName() + ":" + V1_Neurons[OriginP].GetName(), Simulation.GetSingleSetting_double(V1V1_DEFAULT_WEIGHT, DEFAULT_V1V1_DEFAULT_WEIGHT));
-  }
-  if (MethodP == "from_setsim_values_or_error") {
-    return Simulation.GetSingleSetting_double(V1_Neurons[DestinationP].GetName() + V1_Neurons[OriginP].GetName(), Simulation.GetSingleSetting_double(V1V1_DEFAULT_WEIGHT, DEFAULT_V1V1_DEFAULT_WEIGHT));
-  }
-  Log.Message("SD-036: " + MethodP + " for " + V1V1_DEFAULT_WEIGHT);
 }
 
 bool SimulationManager::SetV1MTConnectionLinks()
@@ -266,7 +241,7 @@ bool SimulationManager::SetV1MTConnectionLinks()
     Dummy = Simulation.GetSettingContentSafe("V1MT_L001_aperture");
     for (int i = 0; i < MT_Neurons.size(); i++) {
       for (int j = 0; j < V1_Neurons.size(); j++) {
-        MT_Neurons[i].AddV1Link(&(V1_Neurons[j]));
+        MT_Neurons[i].AddV1Link(&(V1_Neurons[j]), *this);
       }
     }
   } else {
@@ -484,4 +459,9 @@ bool SimulationManager::PrintV1ExternalExcitation(int TimeStepP)
     Log.Message("SD-001");
     return false;
   }
+}
+
+double SimulationManager::GetV1Radius()
+{
+  return V1Radius;
 }
