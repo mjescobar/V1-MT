@@ -21,7 +21,7 @@ using namespace std;
 V1_Neuron::V1_Neuron()
 {
   Type = Neuron_V1;
-  ActivationLinkingWeights = HashTable(Data_double);
+  ActivationLinkingWeights = HashTable(Data_double, MAX_LINKING_NEURONS);
 }
 
 V1_Neuron::V1_Neuron(const V1_Neuron& orig) : ND_Neuron(Neuron_V1)
@@ -61,7 +61,7 @@ V1_Neuron::V1_Neuron(string NameP, double Xp, double Yp, double Zp, double OriP,
   Activation.push_back(ActiP);
   DActivation.push_back(DactP);
   Type = Neuron_V1;
-  ActivationLinkingWeights = HashTable(Data_double);
+  ActivationLinkingWeights = HashTable(Data_double, MAX_LINKING_NEURONS);
 }
 
 bool V1_Neuron::AddV1Link(V1_Neuron *NeuronP, SimulationManager SimulatorP)

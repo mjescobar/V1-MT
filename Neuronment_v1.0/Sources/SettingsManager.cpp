@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <fstream>
 using namespace std;
+#include "define.h"
 #include "enum.h"
 #include "HashEntry.h"
 #include "HashTable.h"
@@ -17,13 +18,13 @@ using namespace std;
 #include "SettingsManager.h"
 
 SettingsManager::SettingsManager() :
-Hash_int(Data_int),
-Hash_float(Data_float),
-Hash_double(Data_double),
-Hash_string(Data_string),
-Hash_bool(Data_bool),
-Hash_SettingType(Data_DataType),
-Hash_SettingSize(Data_int)
+Hash_int(Data_int, SETTINGS_MANAGER_INT_HASH_SIZE),
+Hash_float(Data_float, SETTINGS_MANAGER_FLOAT_HASH_SIZE),
+Hash_double(Data_double, SETTINGS_MANAGER_DOUBLE_HASH_SIZE),
+Hash_string(Data_string, SETTINGS_MANAGER_STRING_HASH_SIZE),
+Hash_bool(Data_bool, SETTINGS_MANAGER_BOOL_HASH_SIZE),
+Hash_SettingType(Data_DataType, SETTINGS_MANAGER_SETTINGTYPE_HASH_SIZE),
+Hash_SettingSize(Data_int, SETTINGS_MANAGER_SETTINGSIZE_HASH_SIZE)
 {
 }
 

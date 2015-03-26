@@ -23,12 +23,13 @@ HashTable::HashTable()
 {
   TableType = Data_null;
   Table = NULL;
+  HashSize = 0;
 }
 
 HashTable::HashTable(const HashTable& orig)
 {
-  Table = new HashEntry*[HASH_SIZE];
-  for (int i = 0; i < HASH_SIZE; i++) {
+  Table = new HashEntry*[HashSize];
+  for (int i = 0; i < HashSize; i++) {
     if (orig.Table[i] != NULL) {
       Table[i] = new HashEntry();
       Table[i] = orig.Table[i];
@@ -37,12 +38,13 @@ HashTable::HashTable(const HashTable& orig)
     }
   }
   TableType = orig.TableType;
+  HashSize = orig.HashSize;
 }
 
 HashTable::~HashTable()
 {
   if (Table) {
-    for (int i = 0; i < HASH_SIZE; i++) {
+    for (int i = 0; i < HashSize; i++) {
       if (Table[i] != NULL) {
         delete Table[i];
         Table[i] = NULL;
@@ -52,11 +54,12 @@ HashTable::~HashTable()
   }
 }
 
-HashTable::HashTable(DataType TableTypeP)
+HashTable::HashTable(DataType TableTypeP, int HashSizeP)
 {
+  HashSize = HashSizeP * HASH_CAPACITY_MULTIPLICATOR;
   TableType = TableTypeP;
-  Table = new HashEntry*[HASH_SIZE];
-  for (int i = 0; i < HASH_SIZE; i++) {
+  Table = new HashEntry*[HashSize];
+  for (int i = 0; i < HashSize; i++) {
     Table[i] = NULL;
   }
 }
@@ -64,10 +67,10 @@ HashTable::HashTable(DataType TableTypeP)
 bool HashTable::PutEntry(string KeyP, void* ContentP, int CountP, bool ValidP)
 {
   unsigned int HashKeyP = HashString(KeyP);
-  int Index = HashKeyP % HASH_SIZE;
+  int Index = HashKeyP % HashSize;
   while (Table[Index] != NULL && Table[Index]->GetKey() != KeyP) {
-    Index = (Index + 1) % HASH_SIZE;
-    if (Index == HashKeyP % HASH_SIZE) {
+    Index = (Index + 1) % HashSize;
+    if (Index == HashKeyP % HashSize) {
       Log.Message("DV-013");
       return false;
     }
@@ -82,10 +85,10 @@ bool HashTable::PutEntry(string KeyP, void* ContentP, int CountP, bool ValidP)
 HashEntry* HashTable::GetEntry(string KeyP)
 {
   unsigned int HashKeyP = HashString(KeyP);
-  int Index = HashKeyP % HASH_SIZE;
+  int Index = HashKeyP % HashSize;
   while (Table[Index] != NULL && Table[Index]->GetKey() != KeyP) {
-    Index = (Index + 1) % HASH_SIZE;
-    if (Index == HashKeyP % HASH_SIZE) {
+    Index = (Index + 1) % HashSize;
+    if (Index == HashKeyP % HashSize) {
       return NULL;
     }
   }

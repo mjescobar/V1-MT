@@ -22,7 +22,7 @@ InterpreterManager::InterpreterManager()
   ReadyForReading = false;
   EndOfFileReached = false;
   nproc = "";
-  Commands = HashTable(Data_function);
+  Commands = HashTable(Data_function, INTERPRETER_MANAGER_COMMANDS_HASH_SIZE);
   InitializeInterpreter();
 }
 

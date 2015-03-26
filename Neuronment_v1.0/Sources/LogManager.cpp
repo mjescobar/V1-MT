@@ -42,13 +42,13 @@ LogManager::LogManager()
 {
   Messages = DEFAULT_MESSAGES;
   SilentOutput = DEFAULT_SILENT_OUTPUT;
-  MessagesLabel = HashTable(Data_string);
-  MessagesText = HashTable(Data_string);
-  MessagesDisabling = HashTable(Data_int);
-  MessagesCount = HashTable(Data_int);
-  MessagesDevelopmentAssert = HashTable(Data_bool);
-  MessagesRuntimeAssert = HashTable(Data_bool);
-  MessagesImplementationAssert = HashTable(Data_bool);
+  MessagesLabel = HashTable(Data_string, LOG_MANAGER_MESSAGES_HASH_SIZE);
+  MessagesText = HashTable(Data_string, LOG_MANAGER_MESSAGES_HASH_SIZE);
+  MessagesDisabling = HashTable(Data_int, LOG_MANAGER_MESSAGES_HASH_SIZE);
+  MessagesCount = HashTable(Data_int, LOG_MANAGER_MESSAGES_HASH_SIZE);
+  MessagesDevelopmentAssert = HashTable(Data_bool, LOG_MANAGER_MESSAGES_HASH_SIZE);
+  MessagesRuntimeAssert = HashTable(Data_bool, LOG_MANAGER_MESSAGES_HASH_SIZE);
+  MessagesImplementationAssert = HashTable(Data_bool, LOG_MANAGER_MESSAGES_HASH_SIZE);
 }
 
 LogManager::LogManager(const LogManager& orig)

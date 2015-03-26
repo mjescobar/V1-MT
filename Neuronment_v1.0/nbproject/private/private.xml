@@ -6,6 +6,16 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Resources/Round000_v1.0_MTNeurons.nproc</file>
+            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/ND_Neuron.h</file>
+            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/define.h</file>
+            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/Tools.cpp</file>
+            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/Tools.h</file>
+            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/V1_Neuron.cpp</file>
+            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Resources/Round000_v1.0_V1Neurons.nproc</file>
+            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/ND_Neuron.cpp</file>
+            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/V1_Neuron.h</file>
+        </group>
     </open-files>
 </project-private>

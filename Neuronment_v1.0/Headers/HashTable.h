@@ -27,8 +27,9 @@ public:
     /**
      * Initialize HashTable
      * @param TableTypeP Type of data to store
+     * @param HashSizeP Max amount of elements in the table
      */
-    HashTable(DataType TableTypeP);
+    HashTable(DataType TableTypeP, int HashSizeP);
 
     /**
      * Stores a new HashEntry
@@ -123,6 +124,7 @@ public:
     bool QuickPutEntry_function(string KeyP, void* FunctionP);
     
 private:
+    int HashSize;
     DataType TableType;
     HashEntry **Table;
 };
