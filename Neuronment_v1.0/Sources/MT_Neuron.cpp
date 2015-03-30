@@ -67,10 +67,10 @@ bool MT_Neuron::AddV1Link(V1_Neuron* NeuronP, SimulationManager SimulatorP)
     double V1Radius = (SimulatorP.GetV1Radius() < 0.1) ? 0.1 : SimulatorP.GetV1Radius();
     double Amplification = Simulation.GetSingleSetting_double(V1MT_L001_AMPLIFICATION, DEFAULT_V1MT_L001_AMPLIFICATION);
     double Aperture = Simulation.GetSingleSetting_double(V1MT_L001_APERTURE, DEFAULT_V1MT_L001_APERTURE);
-    double DeltaAngle = (abs(Ori - NeuronP->GetOri()) >= 180) ? 360 - abs(Ori - NeuronP->GetOri()) : abs(Ori - NeuronP->GetOri());
-    double Distance = sqrt(pow(XPos - NeuronP->GetXPos(), 2) + pow(YPos - NeuronP->GetYPos(), 2) + pow(ZPos - NeuronP->GetZPos(), 2));
-    double Weight = Amplification * exp(-(Distance) / (2 * pow(Sigma * V1Radius, 2))) * (pow(abs(deg_cos(DeltaAngle)), Modulation) * deg_cos(DeltaAngle));
-    if (DeltaAngle <= Aperture || DeltaAngle >= 360 - Aperture) {
+    double DeltaAngle = (abs(Ori - NeuronP->GetOri()) >= 180.0) ? 360.0 - abs(Ori - NeuronP->GetOri()) : abs(Ori - NeuronP->GetOri());
+    double Distance = sqrt(pow(XPos - NeuronP->GetXPos(), 2.0) + pow(YPos - NeuronP->GetYPos(), 2.0) + pow(ZPos - NeuronP->GetZPos(), 2.0));
+    double Weight = Amplification * exp(-(Distance) / (2.0 * pow(Sigma * V1Radius, 2.0))) * (pow(abs(deg_cos(DeltaAngle)), Modulation) * deg_cos(DeltaAngle));
+    if (DeltaAngle <= Aperture || DeltaAngle >= 180.0 - Aperture) {
       ActivationLinkingList.push_back(NeuronP);
       ActivationLinkingWeights.QuickPutEntry_double(NeuronP->GetName(), Weight);
     }

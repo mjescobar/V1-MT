@@ -98,7 +98,7 @@ double V1_Neuron::GetV1V1BaseWeight(string MethodP, string DestinationP, string 
     return Simulation.GetSingleSetting_double(DestinationP + ":" + OriginP, Simulation.GetSingleSetting_double(V1V1_L001_DEFAULT_WEIGHT, DEFAULT_V1V1_L001_DEFAULT_WEIGHT));
   }
   if (MethodP == "from_setsim_values_or_error") {
-    return Simulation.GetSingleSetting_double(DestinationP + OriginP, Simulation.GetSingleSetting_double(V1V1_L001_DEFAULT_WEIGHT, DEFAULT_V1V1_L001_DEFAULT_WEIGHT));
+    return Simulation.GetSingleSetting_double(DestinationP + ":" + OriginP, Simulation.GetSingleSetting_double(V1V1_L001_DEFAULT_WEIGHT, DEFAULT_V1V1_L001_DEFAULT_WEIGHT));
   }
   Log.Message("SD-036: " + MethodP + " for " + V1V1_L001_DEFAULT_WEIGHT);
 }
@@ -184,10 +184,10 @@ double V1_Neuron::CalculateDActivation()
     double Surround = 0;
     for (int i = 0; i < ActivationLinkingList.size(); i++) {
       if (ActivationLinkingList[i]->GetType() == Neuron_V1) {
-        Surround += ActivationLinkingWeights.QuickGetEntry_double(ActivationLinkingList[i]->GetName()) * ActivationLinkingList[i]->GetActivation(Activation.size()-1);
+        Surround += ActivationLinkingWeights.QuickGetEntry_double(ActivationLinkingList[i]->GetName()) * ActivationLinkingList[i]->GetActivation(Activation.size() - 1);
       }
     }
-    TDActivation += Simulation.GetSingleSettingSafe_double(V1_D001_INHIBITION_FACTOR, DEFAULT_V1_D001_INHIBITION_FACTOR) * Surround;
+    TDActivation += Surround * Simulation.GetSingleSettingSafe_double(V1_D001_INHIBITION_FACTOR, DEFAULT_V1_D001_INHIBITION_FACTOR) * Simulation.GetSingleSettingSafe_double(V1_D001_WEIGHT_FACTOR, DEFAULT_V1_D001_WEIGHT_FACTOR);
   } else {
     Log.Message("SD-036: " + V1DActivationMethod + " for " + V1_DACTIVATION_METHOD);
   }
@@ -240,22 +240,22 @@ bool CompareV1_NeuronForSorting(V1_Neuron aP, V1_Neuron bP)
         } else if (aP.GetZPos() > bP.GetZPos()) {
           return false;
         } else {
-          // Smallest spatial frequency
-          if (aP.GetSpa() < bP.GetSpa()) {
+          // Smallest orientation
+          if (aP.GetOri() < bP.GetOri()) {
             return true;
-          } else if (aP.GetSpa() > bP.GetSpa()) {
+          } else if (aP.GetOri() > bP.GetOri()) {
             return false;
           } else {
-            // Smallest temporal frequency
-            if (aP.GetTem() < bP.GetTem()) {
+            // Smallest spatial frequency
+            if (aP.GetSpa() < bP.GetSpa()) {
               return true;
-            } else if (aP.GetTem() > bP.GetTem()) {
+            } else if (aP.GetSpa() > bP.GetSpa()) {
               return false;
             } else {
-              // Smallest orientation
-              if (aP.GetOri() < bP.GetOri()) {
+              // Smallest temporal frequency
+              if (aP.GetTem() < bP.GetTem()) {
                 return true;
-              } else if (aP.GetOri() > bP.GetOri()) {
+              } else if (aP.GetTem() > bP.GetTem()) {
                 return false;
               } else {
                 // Name comparison

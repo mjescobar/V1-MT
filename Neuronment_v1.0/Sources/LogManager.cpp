@@ -102,7 +102,7 @@ void LogManager::OutputNNL(MessageType MessageTypeP, string OutputP)
       cout.flush();
     }
   }
-  if (SilentOutput && MessageTypeP == Message_Coded) {
+  if (SilentOutput && (MessageTypeP == Message_Coded)) {
     cout << ">" << OutputP;
     cout.flush();
   }

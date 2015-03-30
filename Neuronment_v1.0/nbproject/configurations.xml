@@ -26,8 +26,8 @@
       <itemPath>Resources/Round000_v1.0_MTNeurons.nproc</itemPath>
       <itemPath>Resources/Round000_v1.0_V1MT_Links.nproc</itemPath>
       <itemPath>Resources/Round000_v1.0_V1Neurons.nproc</itemPath>
+      <itemPath>Resources/Round000_v1.0_V1Neurons_BaseActivation.nproc</itemPath>
       <itemPath>Resources/Round000_v1.0_V1V1_Links.nproc</itemPath>
-      <itemPath>Resources/Round001_v1.0_V1Neurons_BaseActivation.nproc</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -129,12 +129,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_V1V1_Links.nproc"
+      <item path="Resources/Round000_v1.0_V1Neurons_BaseActivation.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round001_v1.0_V1Neurons_BaseActivation.nproc"
+      <item path="Resources/Round000_v1.0_V1V1_Links.nproc"
             ex="false"
             tool="3"
             flavor2="0">
@@ -250,12 +250,12 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_V1V1_Links.nproc"
+      <item path="Resources/Round000_v1.0_V1Neurons_BaseActivation.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round001_v1.0_V1Neurons_BaseActivation.nproc"
+      <item path="Resources/Round000_v1.0_V1V1_Links.nproc"
             ex="false"
             tool="3"
             flavor2="0">

@@ -218,7 +218,7 @@ bool SimulationManager::SetV1V1ConnectionLinks()
     }
     for (int i = 0; i < V1_Neurons.size(); i++) {
       for (int j = 0; j < V1_Neurons.size(); j++) {
-        V1_Neurons[i].SetLinkingWeight(V1_Neurons[j].GetName(), V1_Neurons[i].GetLinkingWeight(V1_Neurons[j].GetName()) / V1_Neurons[i].ConnectionCount(Neuron_V1));
+        V1_Neurons[i].SetLinkingWeight(V1_Neurons[j].GetName(), V1_Neurons[i].GetLinkingWeight(V1_Neurons[j].GetName()) / (double) V1_Neurons[i].ConnectionCount(Neuron_V1));
         Log.Message("WN-006: V1V1 LinkWeight count correction");
       }
     }
