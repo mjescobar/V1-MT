@@ -1,33 +1,35 @@
 \documentclass[letterpaper,oneside,11pt]{book}
+% Compilation Line =======================
+% rm -f Manual.glsdefs|latex -interaction=nonstopmode %.tex|makeglossaries %|latex -interaction=nonstopmode %.tex|bibtex %.aux|latex -interaction=nonstopmode %.tex|latex -interaction=nonstopmode %.tex|dvips -o %.ps %.dvi|ps2pdf %.ps|evince %.pdf
 % Preamble ===============================
-\input{Manual_01_Preamble.tex}					% Packages
-\input{Manual_02_Redefinitions.tex}				% Local settings
+\input{Manual_01_Preamble.tex}            % Packages
+\input{Manual_02_Redefinitions.tex}       % Local settings
 % Document Starts ========================
 \begin{document}
-	\input{Manual_03_Glossary.tex}				% Loading glossary definitions
-	\input{Manual_04_Informations.tex}			% Loading cover information and metadata
-	% First Section ======================
-	\setcounter{page}{1}						% Restarting page counting
-	\pagenumbering{roman}						% Setting page counter to roman numbers
-	\pagestyle{empty}							% Disabling page numbering for cover
-	\input{Manual_11_Cover.tex}
-	\pagestyle{plain}							% Enabling page numbering
-	\input{Manual_12_Abstract.tex}
-	\input{Manual_13_Glossary.tex}
-	\input{Manual_14_Index.tex}
-	% Second Section =====================
-	\setcounter{page}{1}						% Restarting page counting
-	\pagenumbering{arabic}						% Setting page counter to arabic numbers
-	\input{Manual_21_Introduction.tex}
-%   \input{Manual_22_Directives.tex}
-	\input{Manual_23_Messages.tex}    
-%	\input{Manual_24_V1Configuration.tex}
-%   \input{Manual_25_V1V1Configuration.tex}
-%	\input{Manual_26_MTConfiguration.tex}
-%	\input{Manual_27_MTMTConfiguration.tex}
-%	\input{Manual_28_V1MTConfiguration.tex}
-%	\input{Manual_40_References.tex}
-	% Third Section ======================
-	\appendix
-	\input{Manual_41_Appendix.tex}
+  \input{Manual_03_Glossary.tex}          % Loading glossary definitions
+  \input{Manual_04_Informations.tex}      % Loading cover information and metadata
+  % First Section ========================
+  \setcounter{page}{1}                    % Restarting page counting
+  \pagenumbering{roman}                   % Setting page counter to roman numbers
+  \pagestyle{empty}                       % Disabling page numbering for cover
+  \input{Manual_11_Cover.tex}
+  \pagestyle{plain}                       % Enabling page numbering
+  \input{Manual_12_Abstract.tex}
+  \input{Manual_13_Glossary.tex}
+  \input{Manual_14_Index.tex}
+  % Second Section =======================
+  \setcounter{page}{1}                    % Restarting page counting
+  \pagenumbering{arabic}                  % Setting page counter to arabic numbers
+  \input{Manual_21_Introduction.tex}
+  \input{Manual_22_Directives.tex}
+  \input{Manual_23_Messages.tex}    
+% \input{Manual_24_V1Configuration.tex}
+% \input{Manual_25_V1V1Configuration.tex}
+% \input{Manual_26_MTConfiguration.tex}
+% \input{Manual_27_MTMTConfiguration.tex}
+% \input{Manual_28_V1MTConfiguration.tex}
+  \input{Manual_40_References.tex}
+  % Third Section ========================
+  \appendix
+  \input{Manual_41_Appendix.tex}
 \end{document}

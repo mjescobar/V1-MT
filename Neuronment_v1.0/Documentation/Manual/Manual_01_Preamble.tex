@@ -22,17 +22,19 @@
 % Glosario de Términos
 \usepackage[sanitize=none,sanitize={sort=false}]{glossaries}
 \newglossarystyle{mylist}{%
-	\renewenvironment{theglossary}{\begin{multicols}{2}\begin{list}{}{\leftmargin=1em \itemindent=-1em}}{\end{list}\end{multicols}}
-	\renewcommand{\glsgroupheading}[1]{\item {\textbf ##1}}%
-	\renewcommand{\glossaryentryfield}[5]{%
-		\item
-		\textbf{\glstarget{##1}{##2}:} ##4
-		
-		\space ##3 \\
-		\space [##5]
-	}
+  \renewenvironment{theglossary}{\begin{multicols}{2}\begin{list}{}{\leftmargin=1em \itemindent=-1em}}{\end{list}\end{multicols}}
+  \renewcommand{\glsgroupheading}[1]{\item {\textbf ##1}}%
+  \renewcommand{\glossaryentryfield}[5]{%
+    \item
+    \textbf{\glstarget{##1}{##2}:} ##4
+    
+    \space ##3 \\
+    \space [##5]
+  }
 }
 \glossarystyle{mylist}
+\makeglossaries
+\setglossarystyle{mylist}
 \makeglossaries
 % Para la numeración de las subsubsecciones
 \setcounter{secnumdepth}{4}
@@ -54,16 +56,16 @@
 % Para el tamaño de fuentes específicos
 %\usepackage{anyfontsize}
 
-%Dividir direcciones web
+%% Dividir direcciones web
 %\usepackage{breakurl}
-%Operaciones con strings
+%% Operaciones con strings
 %\usepackage{xstring}
 %% Texto en color
 %\usepackage{color}
 %\DeclareGraphicsExtensions{.eps,.png,.jpg,.pdf,.mps,.gif,.bmp}
-%%Vínculos
+%% Vínculos
 %\usepackage{url}
-%%multirow
-%\usepackage{multirow}	
-%%para celdas especiales
+%% Multirow
+%\usepackage{multirow}
+%% Para celdas especiales
 %\usepackage{array}
