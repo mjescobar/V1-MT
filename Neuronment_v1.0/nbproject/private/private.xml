@@ -7,11 +7,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/SimulationManager.cpp</file>
-            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/SettingsManager.cpp</file>
-            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/MT_Neuron.cpp</file>
-            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/Tools.cpp</file>
-            <file>file:/D:/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/V1_Neuron.cpp</file>
+            <file>file:/home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/main.cpp</file>
+            <file>file:/home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/InterpreterManager.cpp</file>
+            <file>file:/home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/Tools.cpp</file>
         </group>
     </open-files>
 </project-private>

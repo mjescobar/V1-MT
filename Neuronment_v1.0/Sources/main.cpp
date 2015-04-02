@@ -104,7 +104,7 @@ bool ReadCommandLineArguments(int argc, char** argv)
           continue;
         }
       }
-      Log.Message("UI-003");
+      Log.Message("UI-003: " + string(argv[i]));
       Log.DisplayHelp();
       DevelopmentAssertion();
       continue;

@@ -153,7 +153,9 @@ void LogManager::Message(string IdP)
 #endif
     }
     Output(Message_Coded, "> " + IdP);
-    Output(Message_Coded, "> " + Message);
+    if (Messages) {
+      Output(Message_Coded, "> " + Message);
+    }
     if (ToDisable) {
       Output(Message_Coded, "> This message will no longer appear on the log");
     }
