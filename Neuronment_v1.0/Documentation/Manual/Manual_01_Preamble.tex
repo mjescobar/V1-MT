@@ -10,13 +10,28 @@
 \usepackage{graphicx}
 % Multiples Columnas
 \usepackage{multicol}
+% For multiple possible colors
+\usepackage[usenames,dvipsnames]{xcolor}
 % Para columnas alineadas de ancho fijo
 \usepackage{array}
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 % Vínculos
-\usepackage[linktocpage,pdfborder={0 0 0}]{hyperref}
+\usepackage{hyperref}
+\hypersetup{
+  linktocpage,
+  colorlinks=true,
+  pdfborder={0 0 0},
+  allcolors=Sepia
+% linkcolor
+% anchorcolor
+% citecolor
+% filecolor
+% menucolor
+% runcolor
+% urlcolor
+}
 % Posicionamiento de vínculos a imágenes
 \usepackage[all]{hypcap}
 % Glosario de Términos
@@ -26,7 +41,7 @@
   \renewcommand{\glsgroupheading}[1]{\item {\textbf ##1}}%
   \renewcommand{\glossaryentryfield}[5]{%
     \item
-    \textbf{\glstarget{##1}{##2}:} ##4
+    \textbf{\glstarget{##1}{##2}: ##4}
     
     \space ##3 \\
     \space [##5]

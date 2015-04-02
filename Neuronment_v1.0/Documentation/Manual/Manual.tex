@@ -5,7 +5,7 @@
 \input{Manual_01_Preamble.tex}            % Packages
 \input{Manual_02_Redefinitions.tex}       % Local settings
 % Document Starts ========================
-\begin{document}
+\begin{document}\setlength\emergencystretch{1.5em}
   \input{Manual_03_Glossary.tex}          % Loading glossary definitions
   \input{Manual_04_Informations.tex}      % Loading cover information and metadata
   % First Section ========================
@@ -21,6 +21,7 @@
   \setcounter{page}{1}                    % Restarting page counting
   \pagenumbering{arabic}                  % Setting page counter to arabic numbers
   \input{Manual_21_Introduction.tex}
+  \input{Manual_24_UsersGuide.tex}
   \input{Manual_22_Directives.tex}
   \input{Manual_23_Messages.tex}    
 % \input{Manual_24_V1Configuration.tex}

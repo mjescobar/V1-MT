@@ -1,0 +1,104 @@
+\chapter{User's Guide}
+\label{ch:usersguide}
+
+\section{Overview}
+
+The Neuronment project is a software intended for discreet simulation and training of complex neural networks for neuroscience studies. Its name comes from the words ``Neurological'' and ``Environment'' as the intention is to create a context where different neurological structures can be model, simulated and trained from a simple procedure description file, abstracting all the computational complexities required for the implementation.
+
+Neuronment works by reading a Procedure Description file (standardized extension \texttt{*.nproc}) which should describe the list of all the \gls{neuralnetwork} descriptor parameters and the simulations and/or trainings intended to be calculated. This file, also called  \gls{neuronmentprocedure} (\glssymbol{neuronmentprocedure}), should comply with the \gls{neuronmentsequencersyntax} (\glssymbol{neuronmentsequencersyntax}) in order to be correctly interpreted by the \gls{neuronmentsequencer} (\glssymbol{neuronmentsequencer}).
+
+The \glssymbol{neuronmentsequencersyntax} has been developed with the intention to cover all the possible use scenarios for the intended purposes of the Neuronment project; nevertheless, it is susceptible to changes in future versions that may not be backwards compatible.
+
+The Neuronment project has been build mainly on the experience acquire on the development of the thesis work of Pedro F. Toledo\cite{thesispedro}.
+
+\section{How to Execute Neuronment}
+
+To execute this program it is required the program executable and a ``Neuronment Procedure'' file. To run it you must execute the following line on the shell:
+
+\begin{verbatim}
+Neuronment -nproc <file.nproc> [-verbose_messages|-no_verbose_messages]
+\end{verbatim}
+
+\begin{itemize}
+  \item \texttt{Neuronment}:\\
+  Name of the Neuronment executable to use.
+  \item \texttt{-nproc <file.nproc>}:\\
+  The flag \textbf{-nproc} is used to identify the \glssymbol{neuronmentprocedure} file that should be read by the \gls{neuronmentsequencer}.
+  \item \texttt{verbose\_messages no\_verbose\_messages}:\\
+  This is an optional setting to force the apparition or not apparition of explanatory texts for the coded messages returned by the \gls{neuronmentsequencer}. You can check the default behaviour by checking the private define \textbf{DEFAULT\_MESSAGES}. {\color{red} CHECK LINKS}
+\end{itemize}
+
+\section{Neuronment sequencer}
+
+The neuronment sequencer is the module inside Neuronment on charge of interpreting the \glssymbol{neuronmentprocedure} file specified at the program call.
+
+\subsection{Variable Groups}
+
+\subsection{Message system}
+\subsection{Assertions}
+
+\section{Neuronment sequencer syntax}
+
+The following section describes the different aspects of the \gls{neuronmentsequencersyntax} required to create a \glssymbol{neuronmentprocedure} file.
+
+\subsection{Basic rules}
+An \glssymbol{neuronmentprocedure} file should be written in ascii and it will be divided in lines using the line breaks as line termination. The resulting lines will be interpreted according their content.
+
+\subsubsection{Empty line}
+An empty line prints an empty line to the standard output.
+
+\subsubsection{Comments}
+The character \texttt{\#} divides a line between a command string (everything to the left) and a comment string (everything to the right).
+
+If the command string is only composed of non-script characters, it will be considered empty and the whole line will be interpreted as a comment.
+
+If the whole line is a comment, it will be printed out to the standard output, otherwise, the command will be executed and no comment will be printed to the standard output.
+
+\subsubsection{Redirections}
+The character \texttt{>} can be used to redirect a command result to a file instead of the standard output.
+
+The text at the right of the \texttt{>} character should be only one valid file name without spaces. After the file name it is possible to add a comment as indicated previously.
+
+\subsubsection{Variables}
+All interaction related to parameters for the Neuronment operations and the Neuronment environment are managed by variables which value should be set prior the command execution.
+
+Every variable except a ``Variable Group'' has a parent, by other side every variable could have a child. To specify a variable you should specify the variable group and the variable name separated by a character \texttt{:} as the following example:
+
+\begin{verbatim}
+VariableGroup1:Variable1
+VariableGroup2:Variable1:ChildVariable1
+\end{verbatim}
+
+A variable name must be composed exclusively by letters from a to z, A to Z, numbers and the underscore character.
+
+\subsubsection{Substitutions}
+If in order to use a command you would like to use a variable value as parameter instead of a hard coded string, you can substitute the name of the variable for its value by using the character \texttt{\$} just before the variable group as in the following example:
+
+\begin{verbatim}
+$VariableGroup1:Variable1
+$VariableGroup2:Variable1:ChildVariable1
+\end{verbatim}
+
+\subsubsection{Command results}
+If a command is intended to return a value after its execution, it will return the values through the Env variable group as it will be indicated in the command specifications.
+
+If you want to store a result you should save it on another variable by using substitution.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
