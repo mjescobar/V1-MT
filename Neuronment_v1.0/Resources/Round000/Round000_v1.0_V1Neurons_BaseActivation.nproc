@@ -1,0 +1,18 @@
+# V1 Neurons Base Activation Description
+# Author: Pedro F. Toledo <pedrotoledocorrea@gmail.com>
+
+setsim V1_external_excitation_method V1_F001
+setsim V1_F001_a                     5
+setsim V1_F001_b                     0.3
+setsim V1_F001_magnitude             1
+setsim V1_F001_phase                 0
+
+#Exp001
+setsim V1_F001_orientation           90
+setsim V1_F001_spatial_frequency     0.100
+setsim V1_F001_temporal_frequency    2.000
+runsim ss_add_V1_diffusion
+setsim V1_F001_orientation           135
+setsim V1_F001_spatial_frequency     0.050
+setsim V1_F001_temporal_frequency    2.000
+runsim ss_add_V1_diffusion

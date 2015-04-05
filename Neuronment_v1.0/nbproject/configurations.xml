@@ -22,12 +22,14 @@
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
-      <itemPath>Resources/Round000_v1.0_BaseTemplate_v1.0.nproc</itemPath>
-      <itemPath>Resources/Round000_v1.0_MTNeurons.nproc</itemPath>
-      <itemPath>Resources/Round000_v1.0_V1MT_Links.nproc</itemPath>
-      <itemPath>Resources/Round000_v1.0_V1Neurons.nproc</itemPath>
-      <itemPath>Resources/Round000_v1.0_V1Neurons_BaseActivation.nproc</itemPath>
-      <itemPath>Resources/Round000_v1.0_V1V1_Links.nproc</itemPath>
+      <logicalFolder name="f1" displayName="Round000" projectFiles="true">
+        <itemPath>Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</itemPath>
+        <itemPath>Resources/Round000/Round000_v1.0_MTNeurons.nproc</itemPath>
+        <itemPath>Resources/Round000/Round000_v1.0_V1MT_Links.nproc</itemPath>
+        <itemPath>Resources/Round000/Round000_v1.0_V1Neurons.nproc</itemPath>
+        <itemPath>Resources/Round000/Round000_v1.0_V1Neurons_BaseActivation.nproc</itemPath>
+        <itemPath>Resources/Round000/Round000_v1.0_V1V1_Links.nproc</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -109,32 +111,32 @@
       </item>
       <item path="Headers/main.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_BaseTemplate_v1.0.nproc"
+      <item path="Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_MTNeurons.nproc"
+      <item path="Resources/Round000/Round000_v1.0_MTNeurons.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_V1MT_Links.nproc"
+      <item path="Resources/Round000/Round000_v1.0_V1MT_Links.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_V1Neurons.nproc"
+      <item path="Resources/Round000/Round000_v1.0_V1Neurons.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_V1Neurons_BaseActivation.nproc"
+      <item path="Resources/Round000/Round000_v1.0_V1Neurons_BaseActivation.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_V1V1_Links.nproc"
+      <item path="Resources/Round000/Round000_v1.0_V1V1_Links.nproc"
             ex="false"
             tool="3"
             flavor2="0">
@@ -230,32 +232,32 @@
       </item>
       <item path="Headers/main.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_BaseTemplate_v1.0.nproc"
+      <item path="Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_MTNeurons.nproc"
+      <item path="Resources/Round000/Round000_v1.0_MTNeurons.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_V1MT_Links.nproc"
+      <item path="Resources/Round000/Round000_v1.0_V1MT_Links.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_V1Neurons.nproc"
+      <item path="Resources/Round000/Round000_v1.0_V1Neurons.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_V1Neurons_BaseActivation.nproc"
+      <item path="Resources/Round000/Round000_v1.0_V1Neurons_BaseActivation.nproc"
             ex="false"
             tool="3"
             flavor2="0">
       </item>
-      <item path="Resources/Round000_v1.0_V1V1_Links.nproc"
+      <item path="Resources/Round000/Round000_v1.0_V1V1_Links.nproc"
             ex="false"
             tool="3"
             flavor2="0">
