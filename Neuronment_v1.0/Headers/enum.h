@@ -19,33 +19,33 @@ enum DataType {
 };
 
 /** Types of neuron */
-enum NeuronType{
+enum NeuronType {
     Neuron_ND,
     Neuron_V1,
     Neuron_MT
 };
 
 /** Used to indicate direction for string edition */
-enum SideType{
+enum SideType {
     Side_Right,
     Side_Left
 };
 
 /** Used to indicate sense of data at reporting */
-enum OrientationType{
+enum OrientationType {
     Orientation_Horizontal,
     Orientation_Vertical
 };
 
 /** Used to indicate the message type for output */
-enum MessageType{
+enum MessageType {
     Message_Coded,
     Message_Dev,
     Message_Allways
 };
 
 /** To process three state output functions */
-enum ResultType{
+enum ResultType {
     Result_true,
     Result_false,
     Result_silent

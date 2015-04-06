@@ -50,7 +50,7 @@ public:
      * @return true if calculated successfully
      */
     //bool SimulateStep(int StepP);
-    
+
     /**
      * Gets the neuron preferred orientation
      * @return the preferred orientation value in deg
@@ -58,12 +58,12 @@ public:
     double GetOri();
 
 private:
-     /**
+    /**
      * Calculates the activation for a new step
      * @return the calculated value
      */
     double CalculateActivation();
-    
+
     double Ori;
 };
 

@@ -114,7 +114,7 @@ public:
      * @return 
      */
     bool QuickPutEntry_int(string KeyP, int ValueP);
-    
+
     /**
      * 
      * @param KeyP
@@ -122,7 +122,7 @@ public:
      * @return 
      */
     bool QuickPutEntry_function(string KeyP, void* FunctionP);
-    
+
 private:
     int HashSize;
     DataType TableType;

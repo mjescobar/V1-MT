@@ -25,8 +25,7 @@ int main(int argc, char** argv)
   SetGlobals();
   // Initialize Globals
   Log.InitializeMessages();
-  Environment.InitializeEnvironment();
-  Simulation.InitializeSimulation();
+  Variables.InitializeVariables();
   // Program Header
   Log.DisplayHeader();
   // Read command line arguments

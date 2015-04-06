@@ -196,14 +196,9 @@ public:
     int GetSingleSettingSafe_int(string SettingP, int DefaultP);
 
     /**
-     * Loads environment settings
+     * Loads variable list
      */
-    void InitializeEnvironment();
-    
-    /**
-     * Loads simulation settings
-     */
-    void InitializeSimulation();
+    void InitializeVariables();
 
 private:
     HashTable Hash_bool;

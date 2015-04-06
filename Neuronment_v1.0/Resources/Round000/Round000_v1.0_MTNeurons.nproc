@@ -4,17 +4,17 @@
 # Y: 0.0
 # 8 Orientations (45.00[Deg] Step)
 
-setsim MT_first_calculation activation
+varman set SIM:MT_first_calculation activation
 
-setsim MT_act_method        MT_A001
-setsim MT_dac_method        MT_D001
+varman set SIM:MT_act_method        MT_A001
+varman set SIM:MT_dac_method        MT_D001
 
        #ID    #X  #Y  #Z  #Or    #DA #DD
-setsim MT000000 0.0 0.0 0.0 000.00 0.0 0.0
-setsim MT000001 0.0 0.0 0.0 045.00 0.0 0.0
-setsim MT000002 0.0 0.0 0.0 090.00 0.0 0.0
-setsim MT000003 0.0 0.0 0.0 135.00 0.0 0.0
-setsim MT000004 0.0 0.0 0.0 180.00 0.0 0.0
-setsim MT000005 0.0 0.0 0.0 225.00 0.0 0.0
-setsim MT000006 0.0 0.0 0.0 270.00 0.0 0.0
-setsim MT000007 0.0 0.0 0.0 315.00 0.0 0.0
+varman set SIM:MT000000 0.0 0.0 0.0 000.00 0.0 0.0
+varman set SIM:MT000001 0.0 0.0 0.0 045.00 0.0 0.0
+varman set SIM:MT000002 0.0 0.0 0.0 090.00 0.0 0.0
+varman set SIM:MT000003 0.0 0.0 0.0 135.00 0.0 0.0
+varman set SIM:MT000004 0.0 0.0 0.0 180.00 0.0 0.0
+varman set SIM:MT000005 0.0 0.0 0.0 225.00 0.0 0.0
+varman set SIM:MT000006 0.0 0.0 0.0 270.00 0.0 0.0
+varman set SIM:MT000007 0.0 0.0 0.0 315.00 0.0 0.0

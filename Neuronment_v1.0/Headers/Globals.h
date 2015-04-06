@@ -15,8 +15,7 @@
 #include "InterpreterManager.h"
 
 extern LogManager Log;
-extern SettingsManager Environment;
-extern SettingsManager Simulation;
+extern SettingsManager Variables;
 extern SimulationManager SingleSimulator;
 extern InterpreterManager Interpreter;
 extern bool ElapsedTimeInitialized;

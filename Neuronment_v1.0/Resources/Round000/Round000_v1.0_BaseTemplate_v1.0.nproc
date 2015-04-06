@@ -20,7 +20,7 @@ runsim ss_initialize
 # Link External Excitation
 rescue nproc -silent -file Resources/Round000/Round000_v1.0_V1Neurons_BaseActivation.nproc
 
-setsim simulator_time_step 0.005
+varman set SIM:simulator_time_step 0.005
 
 runsim ss_simulate 200
 

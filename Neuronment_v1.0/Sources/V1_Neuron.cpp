@@ -66,7 +66,7 @@ V1_Neuron::V1_Neuron(string NameP, double Xp, double Yp, double Zp, double OriP,
 
 bool V1_Neuron::AddV1Link(V1_Neuron *NeuronP, SimulationManager SimulatorP)
 {
-  string V1V1ConnectionMethod = Simulation.GetSingleSetting_string(V1V1_CONNECTION_METHOD, DEFAULT_V1V1_CONNECTION_METHOD);
+  string V1V1ConnectionMethod = Variables.GetSingleSetting_string(V1V1_CONNECTION_METHOD, DEFAULT_V1V1_CONNECTION_METHOD);
   if (V1V1ConnectionMethod == V1V1_L001) {
     double Distance = DistanceToNeuron(*NeuronP);
     double RFSize = 1.5 * 0.5622 / NeuronP->GetSpa();
@@ -75,7 +75,7 @@ bool V1_Neuron::AddV1Link(V1_Neuron *NeuronP, SimulationManager SimulatorP)
     Log.Message("WN-006: Sigma");
     double AdaptedWeight = exp(-(Distance) / (2 * Sigma * Sigma));
     Log.Message("WN-006: AdaptedWeight");
-    string V1V1BaseWeightSource = Simulation.GetSingleSetting_string(V1V1_L001_BASE_WEIGHT_SOURCE, DEFAULT_V1V1_L001_BASE_WEIGHT_SOURCE);
+    string V1V1BaseWeightSource = Variables.GetSingleSetting_string(V1V1_L001_BASE_WEIGHT_SOURCE, DEFAULT_V1V1_L001_BASE_WEIGHT_SOURCE);
     double ConnectionWeight = GetV1V1BaseWeight(V1V1BaseWeightSource, GetName(), NeuronP->GetName()) * AdaptedWeight;
     Log.Message("WN-006: LinkWeight calculation");
     if (Distance <= 1.1 * RFSize) {
@@ -92,13 +92,13 @@ bool V1_Neuron::AddV1Link(V1_Neuron *NeuronP, SimulationManager SimulatorP)
 double V1_Neuron::GetV1V1BaseWeight(string MethodP, string DestinationP, string OriginP)
 {
   if (MethodP == "default_weight") {
-    return Simulation.GetSingleSetting_double(V1V1_L001_DEFAULT_WEIGHT, DEFAULT_V1V1_L001_DEFAULT_WEIGHT);
+    return Variables.GetSingleSetting_double(V1V1_L001_DEFAULT_WEIGHT, DEFAULT_V1V1_L001_DEFAULT_WEIGHT);
   }
   if (MethodP == "from_setsim_values_or_default") {
-    return Simulation.GetSingleSetting_double(DestinationP + ":" + OriginP, Simulation.GetSingleSetting_double(V1V1_L001_DEFAULT_WEIGHT, DEFAULT_V1V1_L001_DEFAULT_WEIGHT));
+    return Variables.GetSingleSetting_double("SIM:" + DestinationP + ":" + OriginP, Variables.GetSingleSetting_double(V1V1_L001_DEFAULT_WEIGHT, DEFAULT_V1V1_L001_DEFAULT_WEIGHT));
   }
   if (MethodP == "from_setsim_values_or_error") {
-    return Simulation.GetSingleSetting_double(DestinationP + ":" + OriginP, Simulation.GetSingleSetting_double(V1V1_L001_DEFAULT_WEIGHT, DEFAULT_V1V1_L001_DEFAULT_WEIGHT));
+    return Variables.GetSingleSetting_double("SIM:" + DestinationP + ":" + OriginP, Variables.GetSingleSetting_double(V1V1_L001_DEFAULT_WEIGHT, DEFAULT_V1V1_L001_DEFAULT_WEIGHT));
   }
   Log.Message("SD-036: " + MethodP + " for " + V1V1_L001_DEFAULT_WEIGHT);
 }
@@ -120,15 +120,15 @@ double V1_Neuron::GetTem()
 
 bool V1_Neuron::SetExternalExcitation()
 {
-  string V1ExternalExcitatoryMethod = Simulation.GetSingleSetting_string(V1_EXTERNAL_EXCITATION_METHOD, DEFAULT_V1_EXTERNAL_EXCITATION_METHOD);
+  string V1ExternalExcitatoryMethod = Variables.GetSingleSetting_string(V1_EXTERNAL_EXCITATION_METHOD, DEFAULT_V1_EXTERNAL_EXCITATION_METHOD);
   if (V1ExternalExcitatoryMethod == V1_F001) {
-    double aP = Simulation.GetSingleSettingSafe_double(V1_F001_A, DEFAULT_V1_F001_A);
-    double bP = Simulation.GetSingleSettingSafe_double(V1_F001_B, DEFAULT_V1_F001_B);
-    double OrientationP = Simulation.GetSingleSettingSafe_double(V1_F001_ORIENTATION, DEFAULT_V1_F001_ORIENTATION);
-    double SpatialFrequencyP = Simulation.GetSingleSettingSafe_double(V1_F001_SPATIAL_FREQUENCY, DEFAULT_V1_F001_SPATIAL_FREQUENCY);
-    double TemporalFrequencyP = Simulation.GetSingleSettingSafe_double(V1_F001_TEMPORAL_FREQUENCY, DEFAULT_V1_F001_TEMPORAL_FREQUENCY);
-    double MagnitudeP = Simulation.GetSingleSettingSafe_double(V1_F001_MAGNITUDE, DEFAULT_V1_F001_MAGNITUDE);
-    int PhaseP = Simulation.GetSingleSettingSafe_int(V1_F001_PHASE, DEFAULT_V1_F001_PHASE);
+    double aP = Variables.GetSingleSettingSafe_double(V1_F001_A, DEFAULT_V1_F001_A);
+    double bP = Variables.GetSingleSettingSafe_double(V1_F001_B, DEFAULT_V1_F001_B);
+    double OrientationP = Variables.GetSingleSettingSafe_double(V1_F001_ORIENTATION, DEFAULT_V1_F001_ORIENTATION);
+    double SpatialFrequencyP = Variables.GetSingleSettingSafe_double(V1_F001_SPATIAL_FREQUENCY, DEFAULT_V1_F001_SPATIAL_FREQUENCY);
+    double TemporalFrequencyP = Variables.GetSingleSettingSafe_double(V1_F001_TEMPORAL_FREQUENCY, DEFAULT_V1_F001_TEMPORAL_FREQUENCY);
+    double MagnitudeP = Variables.GetSingleSettingSafe_double(V1_F001_MAGNITUDE, DEFAULT_V1_F001_MAGNITUDE);
+    int PhaseP = Variables.GetSingleSettingSafe_int(V1_F001_PHASE, DEFAULT_V1_F001_PHASE);
     double ToAdd = MagnitudeP * (exp(aP * deg_cos(OrientationP - Ori)) + bP * exp(aP * deg_cos(OrientationP - Ori + 180))) / exp(aP);
     if (ExternalExcitationTiming.size() == 0) {
       if (PhaseP != 0) {
@@ -174,12 +174,12 @@ bool V1_Neuron::SetExternalExcitation()
 double V1_Neuron::CalculateDActivation()
 {
   double TDActivation = 0;
-  string V1DActivationMethod = Simulation.GetSingleSetting_string(V1_DACTIVATION_METHOD, DEFAULT_V1_DACTIVATION_METHOD);
+  string V1DActivationMethod = Variables.GetSingleSetting_string(V1_DACTIVATION_METHOD, DEFAULT_V1_DACTIVATION_METHOD);
   if (V1DActivationMethod == V1_D001) {
     // Previous activation influence
-    TDActivation += Simulation.GetSingleSettingSafe_double(V1_D001_CONDUCTANCE_LEAK, DEFAULT_V1_D001_CONDUCTANCE_LEAK) * Activation.back();
+    TDActivation += Variables.GetSingleSettingSafe_double(V1_D001_CONDUCTANCE_LEAK, DEFAULT_V1_D001_CONDUCTANCE_LEAK) * Activation.back();
     // Excitation influence
-    TDActivation += Simulation.GetSingleSettingSafe_double(V1_D001_EXCITATORY_FACTOR, DEFAULT_V1_D001_EXCITATORY_FACTOR) * GetExternalExcitation(Activation.size());
+    TDActivation += Variables.GetSingleSettingSafe_double(V1_D001_EXCITATORY_FACTOR, DEFAULT_V1_D001_EXCITATORY_FACTOR) * GetExternalExcitation(Activation.size());
     // V1 Surround Inhibition
     double Surround = 0;
     for (int i = 0; i < ActivationLinkingList.size(); i++) {
@@ -187,7 +187,7 @@ double V1_Neuron::CalculateDActivation()
         Surround += ActivationLinkingWeights.QuickGetEntry_double(ActivationLinkingList[i]->GetName()) * ActivationLinkingList[i]->GetActivation(Activation.size() - 1);
       }
     }
-    TDActivation += Surround * Simulation.GetSingleSettingSafe_double(V1_D001_INHIBITION_FACTOR, DEFAULT_V1_D001_INHIBITION_FACTOR) * Simulation.GetSingleSettingSafe_double(V1_D001_WEIGHT_FACTOR, DEFAULT_V1_D001_WEIGHT_FACTOR);
+    TDActivation += Surround * Variables.GetSingleSettingSafe_double(V1_D001_INHIBITION_FACTOR, DEFAULT_V1_D001_INHIBITION_FACTOR) * Variables.GetSingleSettingSafe_double(V1_D001_WEIGHT_FACTOR, DEFAULT_V1_D001_WEIGHT_FACTOR);
   } else {
     Log.Message("SD-036: " + V1DActivationMethod + " for " + V1_DACTIVATION_METHOD);
   }
@@ -197,13 +197,13 @@ double V1_Neuron::CalculateDActivation()
 double V1_Neuron::CalculateActivation()
 {
   double TemporalActivation = 0;
-  string V1ActivationMethod = Simulation.GetSingleSetting_string(V1_ACTIVATION_METHOD, DEFAULT_V1_ACTIVATION_METHOD);
+  string V1ActivationMethod = Variables.GetSingleSetting_string(V1_ACTIVATION_METHOD, DEFAULT_V1_ACTIVATION_METHOD);
   if (V1ActivationMethod == V1_A001) {
-    double Max = Simulation.GetSingleSetting_double(V1_A001_NL_MAX, DEFAULT_V1_A001_NL_MAX);
-    double A = Simulation.GetSingleSetting_double(V1_A001_NL_A, DEFAULT_V1_A001_NL_A);
-    double B = Simulation.GetSingleSetting_double(V1_A001_NL_B, DEFAULT_V1_A001_NL_B);
+    double Max = Variables.GetSingleSetting_double(V1_A001_NL_MAX, DEFAULT_V1_A001_NL_MAX);
+    double A = Variables.GetSingleSetting_double(V1_A001_NL_A, DEFAULT_V1_A001_NL_A);
+    double B = Variables.GetSingleSetting_double(V1_A001_NL_B, DEFAULT_V1_A001_NL_B);
     TemporalActivation += Activation.back();
-    TemporalActivation += Simulation.GetSingleSetting_double(SIMULATOR_TIME_STEP, DEFAULT_SIMULATOR_TIME_STEP) * DActivation.back();
+    TemporalActivation += Variables.GetSingleSetting_double(SIMULATOR_TIME_STEP, DEFAULT_SIMULATOR_TIME_STEP) * DActivation.back();
     TemporalActivation = NonLinearity001(TemporalActivation, Max, A, B);
   } else {
     Log.Message("SD-036: " + V1ActivationMethod + " for " + V1_ACTIVATION_METHOD);

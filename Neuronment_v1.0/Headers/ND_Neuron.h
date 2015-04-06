@@ -128,7 +128,7 @@ public:
      * @return true if success
      */
     bool SimulateStep(int StepP);
-    
+
     /**
      * Calculates the DActivation of the current step
      * @return true if calculated correctly
@@ -140,7 +140,7 @@ public:
      * @return true if calculated correctly
      */
     virtual double CalculateActivation();
-    
+
     /**
      * Sets the first calculation parameter
      * @param PFirstCalculation the first calculation to be set

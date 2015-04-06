@@ -16,7 +16,7 @@ public:
     V1_Neuron();
 
     /**
-     * Ussual constructor
+     * Usual constructor
      * @param NameP Name of the neuron
      * @param Xp X position
      * @param Yp Y position
@@ -47,7 +47,7 @@ public:
      * @return 
      */
     bool AddV1Link(V1_Neuron *NeuronP, SimulationManager SimulatorP);
-    
+
     /**
      * Sets the external excitation for the neuron based on the simulation parameters
      * @return true if successful
@@ -65,14 +65,14 @@ public:
      * @return true if calculated correctly
      */
     double CalculateActivation();
-    
+
     /**
      * Simulates the step StepP
      * @param StepP the number of step to simulate
      * @return true if simulated correctly
      */
     //bool SimulateStep(int StepP);
-    
+
     /**
      * Returns the preferred orientation
      * @return the preferred orientation value

@@ -22,11 +22,8 @@ using namespace std;
 // Sets the log management instance of LogManager
 LogManager Log;
 
-// Stores the environment settings
-SettingsManager Environment;
-
-// Stores the simulation settings
-SettingsManager Simulation;
+// Stores the variables
+SettingsManager Variables;
 
 // Single Simulator for outside optimization testing
 SimulationManager SingleSimulator;

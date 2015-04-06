@@ -1,8 +1,8 @@
 # V1-MT Connection Description
 # Author: Pedro F. Toledo <pedrotoledocorrea@gmail.com>
 
-setsim V1MT_connection_method  V1MT_L001
-setsim V1MT_L001_sigma         0.666666666
-setsim V1MT_L001_amplification 1
-setsim V1MT_L001_aperture      46
-setsim V1MT_L001_modulation    5.33648681640625
+varman set SIM:V1MT_connection_method  V1MT_L001
+varman set SIM:V1MT_L001_sigma         0.666666666
+varman set SIM:V1MT_L001_amplification 1
+varman set SIM:V1MT_L001_aperture      46
+varman set SIM:V1MT_L001_modulation    5.33648681640625

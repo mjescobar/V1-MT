@@ -89,12 +89,12 @@ bool SimulationManager::CreateV1NeuronVector()
   Log.Output(Message_Allways, "Filling V1_Neurons vector");
   V1_Neurons.reserve(MAX_V1_NEURONS);
   for (int i = 0; i < MAX_V1_NEURONS; i++) {
-    Name = "V1" + NNumber(i);
-    if (Simulation.GetSettingValid(Name)) {
-      Data = Simulation.GetSetting_double(Name);
+    Name = V1_LABEL + NNumber(i);
+    if (Variables.GetSettingValid("SIM:" + Name)) {
+      Data = Variables.GetSetting_double("SIM:" + Name);
       if (Data) {
         V1_Neuron ToAdd = V1_Neuron(Name, Data[0], Data[1], Data[2], Data[3], Data[4], Data[5], Data[6], Data[7]);
-        ToAdd.SetFirstCalculation(*Simulation.GetSetting_string(V1_FIRST_CALCULATION));
+        ToAdd.SetFirstCalculation(*Variables.GetSetting_string(V1_FIRST_CALCULATION));
         vector<V1_Neuron>::iterator it = lower_bound(V1_Neurons.begin(), V1_Neurons.end(), ToAdd, CompareV1_NeuronForSorting);
         V1_Neurons.insert(it, ToAdd);
         V1Radius = (V1Radius < sqrt(pow(Data[0], 2) + pow(Data[1], 2) + pow(Data[2], 2))) ? sqrt(pow(Data[0], 2) + pow(Data[1], 2) + pow(Data[2], 2)) : V1Radius;
@@ -114,7 +114,7 @@ bool SimulationManager::CreateV1NeuronVector()
 
 bool SimulationManager::SetV1ActMethod()
 {
-  string V1ActivationMethod = Simulation.GetSingleSetting_string(V1_ACTIVATION_METHOD, DEFAULT_V1_ACTIVATION_METHOD);
+  string V1ActivationMethod = Variables.GetSingleSetting_string(V1_ACTIVATION_METHOD, DEFAULT_V1_ACTIVATION_METHOD);
   Log.Output(Message_Allways, "V1 activation calculation method: " + V1ActivationMethod);
   if (V1ActivationMethod == V1_A001) {
     for (int i = 0; i < V1_Neurons.size(); i++) {
@@ -129,15 +129,15 @@ bool SimulationManager::SetV1ActMethod()
 
 bool SimulationManager::SetV1DacMethod()
 {
-  string V1DActivationMethod = Simulation.GetSingleSetting_string(V1_DACTIVATION_METHOD, DEFAULT_V1_DACTIVATION_METHOD);
+  string V1DActivationMethod = Variables.GetSingleSetting_string(V1_DACTIVATION_METHOD, DEFAULT_V1_DACTIVATION_METHOD);
   Log.Output(Message_Allways, "V1 dactivation calculation method: " + V1DActivationMethod);
-  if (V1DActivationMethod == "V1_D001") {
+  if (V1DActivationMethod == V1_D001) {
     void* Dummy;
-    Dummy = Simulation.GetSettingContentSafe("V1_D001_excitatory_factor");
-    Dummy = Simulation.GetSettingContentSafe("V1_D001_conductance_leak");
-    Dummy = Simulation.GetSettingContentSafe("V1_D001_inhibition_factor");
+    Dummy = Variables.GetSettingContentSafe(V1_D001_EXCITATORY_FACTOR);
+    Dummy = Variables.GetSettingContentSafe(V1_D001_CONDUCTANCE_LEAK);
+    Dummy = Variables.GetSettingContentSafe(V1_D001_INHIBITION_FACTOR);
     for (int i = 0; i < V1_Neurons.size(); i++) {
-      V1_Neurons[i].SetDActivationMethod("V1_D001");
+      V1_Neurons[i].SetDActivationMethod(V1_D001);
     }
   } else {
     Log.Message("SD-036: " + V1DActivationMethod + " for " + V1_DACTIVATION_METHOD);
@@ -152,12 +152,12 @@ bool SimulationManager::CreateMTNeuronVector()
   double* Data;
   Log.Output(Message_Allways, "Filling MT_Neurons vector");
   for (int i = 0; i < MAX_MT_NEURONS; i++) {
-    Name = "MT" + NNumber(i);
-    if (Simulation.GetSettingValid(Name)) {
-      Data = Simulation.GetSetting_double(Name);
+    Name = string("SIM:") + string(MT_LABEL) + NNumber(i);
+    if (Variables.GetSettingValid(Name)) {
+      Data = Variables.GetSetting_double(Name);
       if (Data) {
         MT_Neuron ToAdd = MT_Neuron(Name, Data[0], Data[1], Data[2], Data[3], Data[4], Data[5]);
-        ToAdd.SetFirstCalculation(*Simulation.GetSetting_string(MT_FIRST_CALCULATION));
+        ToAdd.SetFirstCalculation(*Variables.GetSetting_string(MT_FIRST_CALCULATION));
         vector<MT_Neuron>::iterator it = lower_bound(MT_Neurons.begin(), MT_Neurons.end(), ToAdd, CompareMT_NeuronForSorting);
         MT_Neurons.insert(it, ToAdd);
         Log.OutputNNL(Message_Allways, ".");
@@ -175,7 +175,7 @@ bool SimulationManager::CreateMTNeuronVector()
 
 bool SimulationManager::SetMTActMethod()
 {
-  string MTActivationMethod = Simulation.GetSingleSetting_string(MT_ACTIVATION_METHOD, DEFAULT_MT_ACTIVATION_METHOD);
+  string MTActivationMethod = Variables.GetSingleSetting_string(MT_ACTIVATION_METHOD, DEFAULT_MT_ACTIVATION_METHOD);
   Log.Output(Message_Allways, "MT activation calculation method: " + MTActivationMethod);
   if (MTActivationMethod == MT_A001) {
     for (int i = 0; i < MT_Neurons.size(); i++) {
@@ -190,7 +190,7 @@ bool SimulationManager::SetMTActMethod()
 
 bool SimulationManager::SetMTDacMethod()
 {
-  string MTDActivationMethod = Simulation.GetSingleSetting_string(MT_DACTIVATION_METHOD, DEFAULT_MT_DACTIVATION_METHOD);
+  string MTDActivationMethod = Variables.GetSingleSetting_string(MT_DACTIVATION_METHOD, DEFAULT_MT_DACTIVATION_METHOD);
   Log.Output(Message_Allways, "MT dactivation calculation method: " + MTDActivationMethod);
   if (MTDActivationMethod == MT_D001) {
     for (int i = 0; i < MT_Neurons.size(); i++) {
@@ -206,10 +206,10 @@ bool SimulationManager::SetMTDacMethod()
 bool SimulationManager::SetV1V1ConnectionLinks()
 {
   Log.Output(Message_Allways, "Creating V1V1 links");
-  string V1V1ConnectionMethod = Simulation.GetSingleSetting_string(V1V1_CONNECTION_METHOD, DEFAULT_V1V1_CONNECTION_METHOD);
+  string V1V1ConnectionMethod = Variables.GetSingleSetting_string(V1V1_CONNECTION_METHOD, DEFAULT_V1V1_CONNECTION_METHOD);
   Log.Output(Message_Allways, "V1V1 connection method: " + V1V1ConnectionMethod);
   if (V1V1ConnectionMethod == V1V1_L001) {
-    string V1V1BaseWeightSource = Simulation.GetSingleSetting_string(V1V1_L001_BASE_WEIGHT_SOURCE, DEFAULT_V1V1_L001_BASE_WEIGHT_SOURCE);
+    string V1V1BaseWeightSource = Variables.GetSingleSetting_string(V1V1_L001_BASE_WEIGHT_SOURCE, DEFAULT_V1V1_L001_BASE_WEIGHT_SOURCE);
     Log.Output(Message_Allways, "V1V1_L001 Base Weight Source: " + V1V1BaseWeightSource);
     for (int i = 0; i < V1_Neurons.size(); i++) {
       for (int j = 0; j < V1_Neurons.size(); j++) {
@@ -231,14 +231,14 @@ bool SimulationManager::SetV1V1ConnectionLinks()
 bool SimulationManager::SetV1MTConnectionLinks()
 {
   Log.Output(Message_Allways, "Creating V1MT links");
-  string V1MTConnectionMethod = Simulation.GetSingleSetting_string(V1MT_CONNECTION_METHOD, DEFAULT_V1MT_CONNECTION_METHOD);
+  string V1MTConnectionMethod = Variables.GetSingleSetting_string(V1MT_CONNECTION_METHOD, DEFAULT_V1MT_CONNECTION_METHOD);
   Log.Output(Message_Allways, "V1MT linking method: " + V1MTConnectionMethod);
   if (V1MTConnectionMethod == "V1MT_L001") {
     void* Dummy;
-    Dummy = Simulation.GetSettingContentSafe("V1MT_L001_sigma");
-    Dummy = Simulation.GetSettingContentSafe("V1MT_L001_amplification");
-    Dummy = Simulation.GetSettingContentSafe("V1MT_L001_modulation");
-    Dummy = Simulation.GetSettingContentSafe("V1MT_L001_aperture");
+    Dummy = Variables.GetSettingContentSafe(V1MT_L001_SIGMA);
+    Dummy = Variables.GetSettingContentSafe(V1MT_L001_AMPLIFICATION);
+    Dummy = Variables.GetSettingContentSafe(V1MT_L001_MODULATION);
+    Dummy = Variables.GetSettingContentSafe(V1MT_L001_APERTURE);
     for (int i = 0; i < MT_Neurons.size(); i++) {
       for (int j = 0; j < V1_Neurons.size(); j++) {
         MT_Neurons[i].AddV1Link(&(V1_Neurons[j]), *this);

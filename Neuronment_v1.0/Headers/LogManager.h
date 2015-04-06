@@ -77,30 +77,30 @@ public:
      * Un silences the official output
      */
     void UnsetSilentOutput();
-    
+
     /**
      * Prints to output without line termination
      * @param OutputP the string to print
      */
     void OutputNNL(MessageType MessageTypeP, string OutputP);
-    
+
     /**
      * Sets the output redirection file and opens it
      * @param DestinationP the path for redirecting
      */
     void StartOutputRedirection001(string DestinationP);
-    
+
     /**
      * Stops the redirection and closes the redirection file
      */
     void StopOutputRedirection001();
-    
+
     /**
      * Initialize the messages text
      * @return true if initialized correctly
      */
     void InitializeMessages();
-    
+
 private:
     bool Messages;
     bool SilentOutput;

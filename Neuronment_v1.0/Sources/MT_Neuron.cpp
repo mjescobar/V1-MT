@@ -60,13 +60,13 @@ MT_Neuron::MT_Neuron(string NameP, double Xp, double Yp, double Zp, double OriP,
 
 bool MT_Neuron::AddV1Link(V1_Neuron* NeuronP, SimulationManager SimulatorP)
 {
-  string V1MTConnectionMethod = Simulation.GetSingleSetting_string(V1MT_CONNECTION_METHOD, DEFAULT_V1MT_CONNECTION_METHOD);
+  string V1MTConnectionMethod = Variables.GetSingleSetting_string(V1MT_CONNECTION_METHOD, DEFAULT_V1MT_CONNECTION_METHOD);
   if (V1MTConnectionMethod == V1MT_L001) {
-    double Modulation = Simulation.GetSingleSetting_double(V1MT_L001_MODULATION, DEFAULT_V1MT_L001_MODULATION);
-    double Sigma = Simulation.GetSingleSetting_double(V1MT_L001_SIGMA, DEFAULT_V1MT_L001_SIGMA);
+    double Modulation = Variables.GetSingleSetting_double(V1MT_L001_MODULATION, DEFAULT_V1MT_L001_MODULATION);
+    double Sigma = Variables.GetSingleSetting_double(V1MT_L001_SIGMA, DEFAULT_V1MT_L001_SIGMA);
     double V1Radius = (SimulatorP.GetV1Radius() < 0.1) ? 0.1 : SimulatorP.GetV1Radius();
-    double Amplification = Simulation.GetSingleSetting_double(V1MT_L001_AMPLIFICATION, DEFAULT_V1MT_L001_AMPLIFICATION);
-    double Aperture = Simulation.GetSingleSetting_double(V1MT_L001_APERTURE, DEFAULT_V1MT_L001_APERTURE);
+    double Amplification = Variables.GetSingleSetting_double(V1MT_L001_AMPLIFICATION, DEFAULT_V1MT_L001_AMPLIFICATION);
+    double Aperture = Variables.GetSingleSetting_double(V1MT_L001_APERTURE, DEFAULT_V1MT_L001_APERTURE);
     double DeltaAngle = (abs(Ori - NeuronP->GetOri()) >= 180.0) ? 360.0 - abs(Ori - NeuronP->GetOri()) : abs(Ori - NeuronP->GetOri());
     double Distance = sqrt(pow(XPos - NeuronP->GetXPos(), 2.0) + pow(YPos - NeuronP->GetYPos(), 2.0) + pow(ZPos - NeuronP->GetZPos(), 2.0));
     double Weight = Amplification * exp(-(Distance) / (2.0 * pow(Sigma * V1Radius, 2.0))) * (pow(abs(deg_cos(DeltaAngle)), Modulation) * deg_cos(DeltaAngle));
@@ -83,7 +83,7 @@ bool MT_Neuron::AddV1Link(V1_Neuron* NeuronP, SimulationManager SimulatorP)
 double MT_Neuron::CalculateActivation()
 {
   double TemporalActivation = 0;
-  string MTActivationMethod = Simulation.GetSingleSetting_string(MT_ACTIVATION_METHOD, DEFAULT_MT_ACTIVATION_METHOD);
+  string MTActivationMethod = Variables.GetSingleSetting_string(MT_ACTIVATION_METHOD, DEFAULT_MT_ACTIVATION_METHOD);
   if (MTActivationMethod == MT_A001) {
     for (int i = 0; i < ActivationLinkingList.size(); i++) {
       if (ActivationLinkingList[i]->GetType() == Neuron_V1) {

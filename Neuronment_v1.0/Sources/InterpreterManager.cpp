@@ -123,13 +123,8 @@ ResultType InterpreterManager::InterpretateLine()
   if (Tokens.size() > 1) {
     string CommandString;
     string ToMessage;
-    if (Tokens[0] == LABEL_ENVIRONMENT_SETTINGS || Tokens[0] == LABEL_SIMULATOR_SETTINGS) {
-      CommandString = Tokens[0];
-      ToMessage = Tokens[0];
-    } else {
-      CommandString = Tokens[0] + Tokens[1];
-      ToMessage = Tokens[0] + " " + Tokens[1];
-    }
+    CommandString = Tokens[0] + Tokens[1];
+    ToMessage = Tokens[0] + " " + Tokens[1];
     if (Commands.GetEntry(CommandString) != NULL) {
       if (Commands.GetEntry(CommandString)->GetContent() != NULL) {
         if (((bool (*)(vector<string>))(Commands.GetEntry(CommandString)->GetContent()))(Tokens)) {
@@ -171,7 +166,7 @@ void InterpreterManager::Process()
     } else {
       Result = InterpretateLine();
       if (Result != Result_silent) {
-        if (!Environment.GetSingleSetting_bool(HIDE_END, DEFAULT_HIDE_END)) {
+        if (!Variables.GetSingleSetting_bool(HIDE_END, DEFAULT_HIDE_END)) {
           string VerboseResult = (Result == Result_true) ? LABEL_DONE : LABEL_FAIL;
           Log.Output(Message_Allways, VerboseResult);
         }
@@ -180,52 +175,12 @@ void InterpreterManager::Process()
   }
 }
 
-bool InterpreterManager::ReportCallSettingPrint(SettingsManager &TempManager, vector<string> TokensP)
-{
-  bool Valid = TempManager.GetSettingValid(TokensP[2]);
-  if (!Valid) {
-    Log.Message("IN-002");
-    return false;
-  }
-  DataType SettingType = TempManager.GetSettingType(TokensP[2]);
-  string ToPrint = TokensP[2] + ":";
-  for (int i = 0; i < TempManager.GetSettingSize(TokensP[2]); i++) {
-    switch (SettingType) {
-    case Data_bool:
-      if (((bool*)TempManager.GetSettingContent(TokensP[2]))[i]) {
-        ToPrint = ToPrint + " TRUE";
-      } else {
-        ToPrint = ToPrint + " FALSE";
-      }
-      break;
-    case Data_double:
-      ToPrint = ToPrint + " " + IDoubleToString(((double*) TempManager.GetSettingContent(TokensP[2]))[i]);
-      break;
-    default:
-      Log.Message("DV-001");
-      return false;
-    }
-  }
-  Log.Output(Message_Allways, ToPrint);
-  return true;
-}
-
-bool InterpreterManager::SetenvCall(vector<string> TokensP)
-{
-  return Environment.StoreSetting(TokensP);
-}
-
-bool InterpreterManager::SetsimCall(vector<string> TokensP)
-{
-  return Simulation.StoreSetting(TokensP);
-}
-
 bool InterpreterManager::RunsimCall(vector<string> TokensP)
 {
   bool Result = false;
   bool Found = false;
   bool Arguments = true;
-  if (TokensP[1] == SS_INITIALIZE) {
+  if (TokensP[1] == RUNSIM_SS_INITIALIZE) {
     Found = true;
     if (TokensP.size() == 2) {
       Result = SingleSimulator.InitializeNeurons();
@@ -233,7 +188,7 @@ bool InterpreterManager::RunsimCall(vector<string> TokensP)
       Arguments = false;
     }
   }
-  if (TokensP[1] == SS_ADD_V1_DIFFUSION) {
+  if (TokensP[1] == RUNSIM_SS_ADD_V1_DIFFUSION) {
     Found = true;
     if (TokensP.size() == 2) {
       Result = SingleSimulator.AddV1Diffusion();
@@ -241,7 +196,7 @@ bool InterpreterManager::RunsimCall(vector<string> TokensP)
       Arguments = false;
     }
   }
-  if (TokensP[1] == SS_SIMULATE) {
+  if (TokensP[1] == RUNSIM_SS_SIMULATE) {
     Found = true;
     if (TokensP.size() == 3) {
       Result = SingleSimulator.Simulate(IStringToInt(TokensP[2]));
@@ -264,23 +219,7 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
   bool Result = false;
   bool Found = false;
   bool Arguments = true;
-  if (TokensP[1] == PRINT_ENV) {
-    Found = true;
-    if (TokensP.size() == 3) {
-      Result = ReportCallSettingPrint(Environment, TokensP);
-    } else {
-      Arguments = false;
-    }
-  }
-  if (TokensP[1] == PRINT_SIM) {
-    Found = true;
-    if (TokensP.size() == 3) {
-      Result = ReportCallSettingPrint(Simulation, TokensP);
-    } else {
-      Arguments = false;
-    }
-  }
-  if (TokensP[1] == SS_PRINT_V1_ACTIVATION) {
+  if (TokensP[1] == REPORT_SS_PRINT_V1_ACTIVATION) {
     Found = true;
     if (TokensP.size() == 2) {
       Result = SingleSimulator.PrintV1Activation(Orientation_Vertical);
@@ -292,7 +231,7 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
       }
     }
   }
-  if (TokensP[1] == SS_PRINT_V1_ACTIVATION_HORIZONTAL) {
+  if (TokensP[1] == REPORT_SS_PRINT_V1_ACTIVATION_HORIZONTAL) {
     Found = true;
     if (TokensP.size() == 2) {
       Result = SingleSimulator.PrintV1Activation(Orientation_Horizontal);
@@ -304,7 +243,7 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
       }
     }
   }
-  if (TokensP[1] == SS_PRINT_V1_EXTERNAL_EXCITATION) {
+  if (TokensP[1] == REPORT_SS_PRINT_V1_EXTERNAL_EXCITATION) {
     Found = true;
     if (TokensP.size() == 3) {
       Result = SingleSimulator.PrintV1ExternalExcitation(IStringToInt(TokensP[2]));
@@ -316,7 +255,7 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
       }
     }
   }
-  if (TokensP[1] == SS_PRINT_MT_ACTIVATION) {
+  if (TokensP[1] == REPORT_SS_PRINT_MT_ACTIVATION) {
     Found = true;
     if (TokensP.size() == 2) {
       Result = SingleSimulator.PrintMTActivation(Orientation_Vertical);
@@ -328,7 +267,7 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
       }
     }
   }
-  if (TokensP[1] == SS_PRINT_MT_ACTIVATION_HORIZONTAL) {
+  if (TokensP[1] == REPORT_SS_PRINT_MT_ACTIVATION_HORIZONTAL) {
     Found = true;
     if (TokensP.size() == 2) {
       Result = SingleSimulator.PrintMTActivation(Orientation_Horizontal);
@@ -346,16 +285,6 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
     if (!Arguments) {
       Log.Message("IN-010");
     }
-  }
-  return Result;
-}
-
-bool InterpreterManager::RescueCall(vector<string> TokensP)
-{
-  bool Result = false;
-  bool Found = false;
-  if (!Found) {
-    Log.Message("IN-004: " + TokensP[1]);
   }
   return Result;
 }
@@ -381,4 +310,47 @@ bool InterpreterManager::RescueCall_NPROC(vector<string> TokensP)
   }
   LocalInterpreter.CloseFile();
   return true;
+}
+
+bool InterpreterManager::VarmanCall_SET(vector<string> TokensP)
+{
+  return Variables.StoreSetting(TokensP);
+}
+
+bool InterpreterManager::VarmanCall_PRINT(vector<string> TokensP)
+{
+  if (TokensP.size() == 3) {
+    bool Valid = Variables.GetSettingValid(TokensP[2]);
+    if (!Valid) {
+      Log.Message("IN-002");
+      return false;
+    }
+    DataType SettingType = Variables.GetSettingType(TokensP[2]);
+    string ToPrint = TokensP[2] + " =";
+    for (int i = 0; i < Variables.GetSettingSize(TokensP[2]); i++) {
+      switch (SettingType) {
+      case Data_bool:
+        if (((bool*)Variables.GetSettingContent(TokensP[2]))[i]) {
+          ToPrint = ToPrint + " TRUE";
+        } else {
+          ToPrint = ToPrint + " FALSE";
+        }
+        break;
+      case Data_double:
+        ToPrint = ToPrint + " " + IDoubleToString(((double*) Variables.GetSettingContent(TokensP[2]))[i]);
+        break;
+      case Data_string:
+        ToPrint = ToPrint + " " + ((string*) Variables.GetSettingContent(TokensP[2]))[i];
+        break;
+      default:
+        Log.Message("DV-001");
+        return false;
+      }
+    }
+    Log.Output(Message_Allways, ToPrint);
+    return true;
+  } else {
+    Log.Message("IN-010");
+    return false;
+  }
 }
