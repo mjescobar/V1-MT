@@ -34,6 +34,13 @@ public:
     bool SetSetting(string SettingP, DataType TypeP, int SizeP);
 
     /**
+     * 
+     * @param VariableP
+     * @param ValueP
+     */
+    void QuickSetSetting(string VariableP, string ValueP);
+
+    /**
      * Returns the setting size for a setting
      * @param KeyP the setting key
      * @return The size

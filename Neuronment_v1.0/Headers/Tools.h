@@ -108,9 +108,18 @@ string IIntToString(int ValueP);
  * double as string
  * @param ValueP The value to get converted
  * @param ReturnP The parsed value destination
- * @return true if succesful
+ * @return
  */
 bool DoubleToString(double ValueP, string &ReturnP);
+
+/**
+ * 
+ * @param ValueP
+ * @param ReturnP
+ * @param 
+ * @return 
+ */
+bool DoubleToString(double ValueP, string &ReturnP, int PrecisionP);
 
 /**
  * double to string
@@ -118,6 +127,14 @@ bool DoubleToString(double ValueP, string &ReturnP);
  * @return the parsed value
  */
 string IDoubleToString(double ValueP);
+
+/**
+ * 
+ * @param ValueP
+ * @param PrecisionP
+ * @return 
+ */
+string IDoubleToString(double ValueP, int PrecisionP);
 
 /**
  * string to bool
@@ -244,7 +261,7 @@ double deg_cos(double AngleP);
  * Prints the elapsed time in clock cycles from the previous function call
  * @return true if correctly printed
  */
-bool PrintElapsedTime();
+bool PrintElapsedTime(clock_t* ElapsedTimeP);
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Command Line Processing

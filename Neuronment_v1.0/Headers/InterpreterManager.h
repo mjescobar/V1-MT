@@ -107,7 +107,7 @@ private:
      * @return true if successful
      */
     static bool RescueCall_NPROC(vector<string> TokensP);
-    
+
     /**
      * Process "rescue return"
      * @param TokensP Tokenized command
@@ -134,6 +134,7 @@ private:
     string nproc;
     string LastLine;
     ifstream NprocStream;
+    clock_t ElapsedTime;
     HashTable Commands;
 };
 

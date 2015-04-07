@@ -107,6 +107,10 @@ bool ReadCommandLineArguments(int argc, char** argv)
         Log.SetFullSilentOutput();
         continue;
       }
+      if (strcmp(argv[i], "-time") == 0) {
+        Variables.QuickSetSetting(SHOW_ELAPSED_TIME, "true");
+        continue;
+      }
       Log.Message("UI-003: " + string(argv[i]));
       Log.DisplayHelp();
       DevelopmentAssertion();
@@ -123,6 +127,5 @@ bool ReadCommandLineArguments(int argc, char** argv)
 
 bool SetGlobals()
 {
-  ElapsedTimeInitialized = false;
   return true;
 }

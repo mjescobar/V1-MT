@@ -22,6 +22,7 @@ InterpreterManager::InterpreterManager()
   ReadyForReading = false;
   EndOfFileReached = false;
   nproc = "";
+  ElapsedTime = clock();
   Commands = HashTable(Data_function, INTERPRETER_MANAGER_COMMANDS_HASH_SIZE);
   NprocNesting++;
   InitializeInterpreter();
@@ -33,6 +34,7 @@ InterpreterManager::InterpreterManager(const InterpreterManager& orig)
   EndOfFileReached = orig.EndOfFileReached;
   nproc = orig.nproc;
   Commands = orig.Commands;
+  ElapsedTime = orig.ElapsedTime;
 }
 
 InterpreterManager::~InterpreterManager()
@@ -188,6 +190,9 @@ void InterpreterManager::Process()
     } else {
       Result = InterpretateLine();
       if (Result != Result_silent) {
+        if (Variables.GetSingleSetting_bool(SHOW_ELAPSED_TIME, DEFAULT_SHOW_ELAPSED_TIME)) {
+          PrintElapsedTime(&ElapsedTime);
+        }
         if (!Variables.GetSingleSetting_bool(HIDE_END, DEFAULT_HIDE_END)) {
           string VerboseResult = (Result == Result_true) ? LABEL_DONE : LABEL_FAIL;
           Log.Output(Message_Allways, VerboseResult);

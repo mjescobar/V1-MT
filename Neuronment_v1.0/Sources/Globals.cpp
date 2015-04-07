@@ -36,7 +36,3 @@ int NprocNesting = 0;
 
 // For early terminating a nproc reading
 bool EarlyReturn = false;
-
-// For elapsed timing calculations
-bool ElapsedTimeInitialized;
-clock_t ElapsedTime;

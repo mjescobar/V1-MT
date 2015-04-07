@@ -62,6 +62,16 @@ bool SettingsManager::SetSetting(string SettingP, DataType TypeP, int SizeP)
   }
 }
 
+void SettingsManager::QuickSetSetting(string VariableP, string ValueP)
+{
+  vector<string> ToStore;
+  ToStore.push_back(LABEL_VARIABLE_MANAGEMENT);
+  ToStore.push_back(VARMAN_SET);
+  ToStore.push_back(VariableP);
+  ToStore.push_back(ValueP);
+  StoreSetting(ToStore);
+}
+
 int SettingsManager::GetSettingSize(string SettingP)
 {
   int ToReturn = 0;

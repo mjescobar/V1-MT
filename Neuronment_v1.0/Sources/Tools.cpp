@@ -10,6 +10,7 @@
 #include <vector>
 #include <stdlib.h>
 #include <cmath>
+#include <iomanip>
 #include <fstream>
 using namespace std;
 #include "enum.h"
@@ -194,10 +195,25 @@ bool DoubleToString(double ValueP, string &ReturnP)
   return true;
 }
 
+bool DoubleToString(double ValueP, string &ReturnP, int PrecisionP)
+{
+  stringstream ss;
+  ss << fixed << setprecision(PrecisionP) << ValueP;
+  ReturnP = ss.str();
+  return true;
+}
+
 string IDoubleToString(double ValueP)
 {
   string Tmp;
   DoubleToString(ValueP, Tmp);
+  return Tmp;
+}
+
+string IDoubleToString(double ValueP, int PrecisionP)
+{
+  string Tmp;
+  DoubleToString(ValueP, Tmp, PrecisionP);
   return Tmp;
 }
 
@@ -367,10 +383,10 @@ string DeleteTrailingZeros(string OriginalP)
     }
     if (i < OriginalP.size()) {
       if (OriginalP[i] <= '9' && OriginalP[i] >= '0') {
-        if(Deleted){
+        if (Deleted) {
           CleanString = CleanString + "'" + OriginalP[i];
           Deleted = false;
-        }else{
+        } else {
           CleanString = CleanString + OriginalP[i];
         }
       } else {
@@ -401,17 +417,11 @@ double deg_cos(double AngleP)
 // Runtime Timing
 ////////////////////////////////////////////////////////////////////////////////////
 
-bool PrintElapsedTime()
+bool PrintElapsedTime(clock_t* ElapsedTimeP)
 {
   clock_t NewElapsedTime = clock();
-  if (!ElapsedTimeInitialized) {
-    ElapsedTime = NewElapsedTime;
-    Log.Output(Message_Allways, "ET: Start");
-    ElapsedTimeInitialized = true;
-  } else {
-    Log.Output(Message_Allways, "ET: " + IDoubleToString(double(NewElapsedTime - ElapsedTime)) + "(" + IDoubleToString(double(CLOCKS_PER_SEC)) + ")");
-    ElapsedTime = NewElapsedTime;
-  }
+  Log.Output(Message_Allways, "TIME: " + IDoubleToString(double(NewElapsedTime - *ElapsedTimeP) / CLOCKS_PER_SEC, 3) + "[s]");
+  *ElapsedTimeP = NewElapsedTime;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
