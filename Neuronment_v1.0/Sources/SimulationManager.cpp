@@ -89,7 +89,7 @@ bool SimulationManager::CreateV1NeuronVector()
   Log.Output(Message_Allways, "Filling V1_Neurons vector");
   V1_Neurons.reserve(MAX_V1_NEURONS);
   for (int i = 0; i < MAX_V1_NEURONS; i++) {
-    Name = V1_LABEL + NNumber(i);
+    Name = V1_LABEL + string("'") + IIntToString(i);
     if (Variables.GetSettingValid("SIM:" + Name)) {
       Data = Variables.GetSetting_double("SIM:" + Name);
       if (Data) {
@@ -152,7 +152,7 @@ bool SimulationManager::CreateMTNeuronVector()
   double* Data;
   Log.Output(Message_Allways, "Filling MT_Neurons vector");
   for (int i = 0; i < MAX_MT_NEURONS; i++) {
-    Name = string("SIM:") + string(MT_LABEL) + NNumber(i);
+    Name = string("SIM:") + string(MT_LABEL) + "'" + IIntToString(i);
     if (Variables.GetSettingValid(Name)) {
       Data = Variables.GetSetting_double(Name);
       if (Data) {
@@ -361,9 +361,9 @@ bool SimulationManager::PrintV1Activation(OrientationType OTypeP)
 
 bool SimulationManager::PrintV1Activation(OrientationType OTypeP, string DestinationP)
 {
-  Log.StartOutputRedirection001(DestinationP);
+  Log.StartOutputRedirection(DestinationP);
   PrintV1Activation(OTypeP);
-  Log.StopOutputRedirection001();
+  Log.StopOutputRedirection();
   return true;
 }
 
@@ -432,17 +432,17 @@ bool SimulationManager::PrintMTActivation(OrientationType OTypeP)
 
 bool SimulationManager::PrintMTActivation(OrientationType OTypeP, string DestinationP)
 {
-  Log.StartOutputRedirection001(DestinationP);
+  Log.StartOutputRedirection(DestinationP);
   PrintMTActivation(OTypeP);
-  Log.StopOutputRedirection001();
+  Log.StopOutputRedirection();
   return true;
 }
 
 bool SimulationManager::PrintV1ExternalExcitation(int TimeStepP, string DestinationP)
 {
-  Log.StartOutputRedirection001(DestinationP);
+  Log.StartOutputRedirection(DestinationP);
   PrintV1ExternalExcitation(TimeStepP);
-  Log.StopOutputRedirection001();
+  Log.StopOutputRedirection();
   return true;
 }
 

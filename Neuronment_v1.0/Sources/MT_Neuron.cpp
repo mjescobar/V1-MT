@@ -88,7 +88,6 @@ double MT_Neuron::CalculateActivation()
     for (int i = 0; i < ActivationLinkingList.size(); i++) {
       if (ActivationLinkingList[i]->GetType() == Neuron_V1) {
         double SourceActivation = ((V1_Neuron*) ActivationLinkingList[i])->GetLastActivation();
-        SourceActivation = (SourceActivation < 0) ? 0 : SourceActivation;
         double SourceWeight = ActivationLinkingWeights.QuickGetEntry_double(((V1_Neuron*) ActivationLinkingList[i])->GetName());
         TemporalActivation += SourceActivation * SourceWeight;
       }
@@ -96,7 +95,7 @@ double MT_Neuron::CalculateActivation()
   } else {
     Log.Message("SD-036: " + MTActivationMethod + " for " + MT_ACTIVATION_METHOD);
   }
-  return TemporalActivation;
+  return (TemporalActivation < 0) ? 0 : TemporalActivation;
 }
 
 double MT_Neuron::GetOri()

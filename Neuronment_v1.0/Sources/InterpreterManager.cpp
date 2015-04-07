@@ -98,22 +98,37 @@ bool InterpreterManager::GetEndOfFileReached()
 ResultType InterpreterManager::InterpretateLine()
 {
   vector<string> PreTokens;
+  vector<string> RedirectionTokens;
   vector<string> Tokens;
   if (trim(LastLine).size() < 1) {
     Log.Output(Message_Allways, LastLine);
     return Result_silent;
   }
   TokenizeNoDelete(LastLine, PreTokens, LABEL_COMMENT_STRING);
+  // If the line is a comment from the first character
   if (PreTokens[0][0] == LABEL_COMMENT_CHAR) {
     Log.Output(Message_Allways, LastLine);
     return Result_silent;
   }
+  // If the line is a comment from character n but without a command
   if (PreTokens.size() > 1 && trim(PreTokens[0]).size() == 0 && PreTokens[1][0] == LABEL_COMMENT_CHAR) {
     Log.Output(Message_Allways, LastLine);
     return Result_silent;
   }
+  // If the line holds a command
   Log.Output(Message_Allways, LastLine);
-  Tokenize(trim(PreTokens[0]), Tokens);
+  // Looking for possible redirection
+  Tokenize(trim(PreTokens[0]), RedirectionTokens, LABEL_REDIRECTION_STRING);
+  // More than one redirection character
+  if (RedirectionTokens.size() > 2 || RedirectionTokens.size() < 1) {
+    Log.Message("IN-010");
+    return Result_false;
+  }
+  // If there is redirection, set the redirection
+  if (RedirectionTokens.size() == 2) {
+    Log.StartOutputRedirection(trim(RedirectionTokens[1]));
+  }
+  Tokenize(trim(RedirectionTokens[0]), Tokens);
   if (Tokens.size() < 1) {
     return Result_silent;
   }
@@ -128,19 +143,24 @@ ResultType InterpreterManager::InterpretateLine()
     if (Commands.GetEntry(CommandString) != NULL) {
       if (Commands.GetEntry(CommandString)->GetContent() != NULL) {
         if (((bool (*)(vector<string>))(Commands.GetEntry(CommandString)->GetContent()))(Tokens)) {
+          Log.StopOutputRedirection();
           return Result_true;
         } else {
+          Log.StopOutputRedirection();
           return Result_false;
         }
       } else {
+        Log.StopOutputRedirection();
         Log.Message("SD-032");
         return Result_false;
       }
     } else {
+      Log.StopOutputRedirection();
       Log.Message("IN-001: " + ToMessage);
       return Result_false;
     }
   } else {
+    Log.StopOutputRedirection();
     Log.Message("IN-010");
     return Result_false;
   }
@@ -225,7 +245,7 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
       Result = SingleSimulator.PrintV1Activation(Orientation_Vertical);
     } else {
       if (TokensP.size() == 3) {
-        Result = SingleSimulator.PrintV1Activation(Orientation_Vertical, TokensP[2]);
+        Result = SingleSimulator.PrintV1Activation(Orientation_Vertical, trim(TokensP[2]));
       } else {
         Arguments = false;
       }
@@ -237,7 +257,7 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
       Result = SingleSimulator.PrintV1Activation(Orientation_Horizontal);
     } else {
       if (TokensP.size() == 3) {
-        Result = SingleSimulator.PrintV1Activation(Orientation_Horizontal, TokensP[2]);
+        Result = SingleSimulator.PrintV1Activation(Orientation_Horizontal, trim(TokensP[2]));
       } else {
         Arguments = false;
       }
@@ -261,7 +281,7 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
       Result = SingleSimulator.PrintMTActivation(Orientation_Vertical);
     } else {
       if (TokensP.size() == 3) {
-        Result = SingleSimulator.PrintMTActivation(Orientation_Vertical, TokensP[2]);
+        Result = SingleSimulator.PrintMTActivation(Orientation_Vertical, trim(TokensP[2]));
       } else {
         Arguments = false;
       }
@@ -273,7 +293,7 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
       Result = SingleSimulator.PrintMTActivation(Orientation_Horizontal);
     } else {
       if (TokensP.size() == 3) {
-        Result = SingleSimulator.PrintMTActivation(Orientation_Horizontal, TokensP[2]);
+        Result = SingleSimulator.PrintMTActivation(Orientation_Horizontal, trim(TokensP[2]));
       } else {
         Arguments = false;
       }
@@ -319,28 +339,33 @@ bool InterpreterManager::VarmanCall_SET(vector<string> TokensP)
 
 bool InterpreterManager::VarmanCall_PRINT(vector<string> TokensP)
 {
-  if (TokensP.size() == 3) {
-    bool Valid = Variables.GetSettingValid(TokensP[2]);
+  if (TokensP.size() == 3) { 
+    bool Valid = Variables.GetSettingValid(DeleteTrailingZeros(TokensP[2]));
     if (!Valid) {
       Log.Message("IN-002");
       return false;
     }
-    DataType SettingType = Variables.GetSettingType(TokensP[2]);
-    string ToPrint = TokensP[2] + " =";
-    for (int i = 0; i < Variables.GetSettingSize(TokensP[2]); i++) {
+    DataType SettingType = Variables.GetSettingType(DeleteTrailingZeros(TokensP[2]));
+    string ToPrint = "";
+    if (DeleteTrailingZeros(TokensP[2]) != TokensP[2]) {
+      ToPrint = TokensP[2] + "(" + DeleteTrailingZeros(TokensP[2]) + ") =";
+    } else {
+      ToPrint = TokensP[2] + " =";
+    }
+    for (int i = 0; i < Variables.GetSettingSize(DeleteTrailingZeros(TokensP[2])); i++) {
       switch (SettingType) {
       case Data_bool:
-        if (((bool*)Variables.GetSettingContent(TokensP[2]))[i]) {
+        if (((bool*)Variables.GetSettingContent(DeleteTrailingZeros(TokensP[2])))[i]) {
           ToPrint = ToPrint + " TRUE";
         } else {
           ToPrint = ToPrint + " FALSE";
         }
         break;
       case Data_double:
-        ToPrint = ToPrint + " " + IDoubleToString(((double*) Variables.GetSettingContent(TokensP[2]))[i]);
+        ToPrint = ToPrint + " " + IDoubleToString(((double*) Variables.GetSettingContent(DeleteTrailingZeros(TokensP[2])))[i]);
         break;
       case Data_string:
-        ToPrint = ToPrint + " " + ((string*) Variables.GetSettingContent(TokensP[2]))[i];
+        ToPrint = ToPrint + " " + ((string*) Variables.GetSettingContent(DeleteTrailingZeros(TokensP[2])))[i];
         break;
       default:
         Log.Message("DV-001");

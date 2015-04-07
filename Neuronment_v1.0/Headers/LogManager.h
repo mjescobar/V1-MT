@@ -6,6 +6,8 @@
 #ifndef LOGMANAGER_H
 #define	LOGMANAGER_H
 
+#include <vector>
+
 class LogManager {
 public:
     /**
@@ -88,12 +90,12 @@ public:
      * Sets the output redirection file and opens it
      * @param DestinationP the path for redirecting
      */
-    void StartOutputRedirection001(string DestinationP);
+    void StartOutputRedirection(string DestinationP);
 
     /**
      * Stops the redirection and closes the redirection file
      */
-    void StopOutputRedirection001();
+    void StopOutputRedirection();
 
     /**
      * Initialize the messages text
@@ -104,7 +106,8 @@ public:
 private:
     bool Messages;
     bool SilentOutput;
-    ofstream Redirection001;
+    int RedirectionLevel;
+    vector<ofstream*> Redirection;
     HashTable MessagesLabel; //Stores the short messages text
     HashTable MessagesText; //Stores a message full text for man proposes
     HashTable MessagesDisabling; //Maximum number of message apparitions

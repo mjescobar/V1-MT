@@ -219,11 +219,11 @@ string trim(string s, string delimiters = " \f\n\r\t\v");
 string Alignment(string OriginalP, int SizeP, char FillP, SideType SideP);
 
 /**
- * formats int to length 3 filled with 0s to the left
- * @param NumberP
+ * 
+ * @param OriginalP
  * @return 
  */
-string NNumber(int NumberP);
+string DeleteTrailingZeros(string OriginalP);
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Math

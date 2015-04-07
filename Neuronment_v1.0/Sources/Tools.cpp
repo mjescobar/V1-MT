@@ -353,9 +353,39 @@ string Alignment(string OriginalP, int SizeP, char FillP, SideType SideP)
   return OriginalP;
 }
 
-string NNumber(int NumberP)
+string DeleteTrailingZeros(string OriginalP)
 {
-  return Alignment(IIntToString(NumberP), NEURONS_NAME_SIZE, '0', Side_Left);
+  string CleanString = "";
+  bool Deleted = false;
+  for (int i = 0; i < OriginalP.size(); i++) {
+    if (OriginalP[i] == '\'') {
+      i++;
+      Deleted = true;
+      while (OriginalP[i] == '0') {
+        i++;
+      }
+    }
+    if (i < OriginalP.size()) {
+      if (OriginalP[i] <= '9' && OriginalP[i] >= '0') {
+        if(Deleted){
+          CleanString = CleanString + "'" + OriginalP[i];
+          Deleted = false;
+        }else{
+          CleanString = CleanString + OriginalP[i];
+        }
+      } else {
+        if (Deleted) {
+          CleanString = CleanString + "'0" + OriginalP[i];
+          Deleted = false;
+        } else {
+          CleanString = CleanString + OriginalP[i];
+        }
+      }
+    } else {
+      CleanString = CleanString + "'0";
+    }
+  }
+  return CleanString;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

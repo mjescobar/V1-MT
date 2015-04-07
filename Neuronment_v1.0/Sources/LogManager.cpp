@@ -40,6 +40,7 @@ void LogManager::UnsetMessages()
 
 LogManager::LogManager()
 {
+  RedirectionLevel = -1;
   Messages = DEFAULT_MESSAGES;
   SilentOutput = DEFAULT_SILENT_OUTPUT;
   MessagesLabel = HashTable(Data_string, LOG_MANAGER_MESSAGES_HASH_SIZE);
@@ -53,8 +54,7 @@ LogManager::LogManager()
 
 LogManager::LogManager(const LogManager& orig)
 {
-  Messages = orig.Messages;
-  SilentOutput = orig.SilentOutput;
+  Output(Message_Coded, "DV-008");
 }
 
 LogManager::~LogManager()
@@ -93,9 +93,9 @@ void LogManager::Output(MessageType MessageTypeP, string OutputP)
 
 void LogManager::OutputNNL(MessageType MessageTypeP, string OutputP)
 {
-  if (Redirection001.is_open()) {
-    Redirection001 << OutputP;
-    Redirection001.flush();
+  if (RedirectionLevel >= 0 && Redirection[RedirectionLevel]->is_open()) {
+    *(Redirection[RedirectionLevel]) << OutputP;
+    Redirection[RedirectionLevel]->flush();
   } else {
     if (!SilentOutput) {
       cout << OutputP;
@@ -171,23 +171,27 @@ void LogManager::Message(string IdP)
   }
 }
 
-void LogManager::StartOutputRedirection001(string DestinationP)
+void LogManager::StartOutputRedirection(string DestinationP)
 {
-  if (!Redirection001.is_open()) {
-    Redirection001.open(DestinationP.c_str(), ofstream::out);
-    if (!Redirection001.is_open()) {
-      Log.Message("RP-003: " + DestinationP);
-    }
-  } else {
-    Log.Message("RP-001: " + DestinationP);
+  RedirectionLevel++;
+  Redirection.resize(Redirection.size() + 1);
+  Redirection[RedirectionLevel] = new ofstream;
+  Redirection[RedirectionLevel]->open(DestinationP.c_str(), ofstream::out);
+  if (!Redirection[RedirectionLevel]->is_open()) {
+    Log.Message("RP-003: " + DestinationP);
   }
 }
 
-void LogManager::StopOutputRedirection001()
+void LogManager::StopOutputRedirection()
 {
-  if (Redirection001.is_open()) {
-    Redirection001.close();
-  } else {
-    Log.Message("RP-002");
+  if (RedirectionLevel >= 0) {
+    if (Redirection[RedirectionLevel]->is_open()) {
+      Redirection[RedirectionLevel]->close();
+      delete Redirection[RedirectionLevel];
+      Redirection.resize(Redirection.size() - 1);
+      RedirectionLevel--;
+    } else {
+      Log.Message("RP-002");
+    }
   }
 }

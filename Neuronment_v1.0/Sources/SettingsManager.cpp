@@ -161,8 +161,8 @@ void* SettingsManager::GetSettingContentSafe(string SettingP)
 
 bool SettingsManager::StoreSetting(vector<string> TokenP)
 {
-  DataType SettingType = GetSettingType(TokenP[2]);
-  int SettingSize = GetSettingSize(TokenP[2]);
+  DataType SettingType = GetSettingType(DeleteTrailingZeros(TokenP[2]));
+  int SettingSize = GetSettingSize(DeleteTrailingZeros(TokenP[2]));
   if (SettingSize > 0 && SettingType != Data_null) {
     if (TokenP.size() != SettingSize + 3) {
       Log.Message("IN-010");
@@ -196,16 +196,13 @@ bool SettingsManager::StoreSetting(vector<string> TokenP)
 
 bool SettingsManager::StoreSetting_bool(vector<string> TokenP)
 {
-  HashEntry* Retrieved = Hash_bool.GetEntry(TokenP[2]);
-  int SettingSize = ((int*) Hash_SettingSize.GetEntry(TokenP[2])->GetContent())[0];
-  if (Retrieved) {
-    Log.Message("IN-003");
-  }
+  HashEntry* Retrieved = Hash_bool.GetEntry(DeleteTrailingZeros(TokenP[2]));
+  int SettingSize = ((int*) Hash_SettingSize.GetEntry(DeleteTrailingZeros(TokenP[2]))->GetContent())[0];
   void* ToPut = malloc(sizeof (bool) * SettingSize);
   for (int i = 0; i < SettingSize; i++) {
     ((bool*)ToPut)[i] = IStringToBool(TokenP[3 + i]);
   }
-  return Hash_bool.PutEntry(TokenP[2], ToPut, SettingSize, true);
+  return Hash_bool.PutEntry(DeleteTrailingZeros(TokenP[2]), ToPut, SettingSize, true);
 }
 
 bool* SettingsManager::GetSetting_bool(string SettingP)
@@ -251,16 +248,13 @@ bool SettingsManager::GetSingleSetting_bool(string SettingP, bool DefaultP)
 
 bool SettingsManager::StoreSetting_double(vector<string> TokenP)
 {
-  HashEntry* Retrieved = Hash_double.GetEntry(TokenP[2]);
-  int SettingSize = ((int*) Hash_SettingSize.GetEntry(TokenP[2])->GetContent())[0];
-  if (Retrieved) {
-    Log.Message("IN-003");
-  }
+  HashEntry* Retrieved = Hash_double.GetEntry(DeleteTrailingZeros(TokenP[2]));
+  int SettingSize = ((int*) Hash_SettingSize.GetEntry(DeleteTrailingZeros(TokenP[2]))->GetContent())[0];
   void* ToPut = malloc(sizeof (double) * SettingSize);
   for (int i = 0; i < SettingSize; i++) {
     ((double*) ToPut)[i] = IStringToDouble(TokenP[3 + i]);
   }
-  return Hash_double.PutEntry(TokenP[2], ToPut, SettingSize, true);
+  return Hash_double.PutEntry(DeleteTrailingZeros(TokenP[2]), ToPut, SettingSize, true);
 }
 
 double* SettingsManager::GetSetting_double(string SettingP)
@@ -316,16 +310,13 @@ double SettingsManager::GetSingleSettingSafe_double(string SettingP, double Defa
 
 bool SettingsManager::StoreSetting_string(vector<string> TokenP)
 {
-  HashEntry* Retrieved = Hash_string.GetEntry(TokenP[2]);
-  int SettingSize = ((int*) Hash_SettingSize.GetEntry(TokenP[2])->GetContent())[0];
-  if (Retrieved) {
-    Log.Message("IN-003");
-  }
+  HashEntry* Retrieved = Hash_string.GetEntry(DeleteTrailingZeros(TokenP[2]));
+  int SettingSize = ((int*) Hash_SettingSize.GetEntry(DeleteTrailingZeros(TokenP[2]))->GetContent())[0];
   void* ToPut = malloc(sizeof (string) * SettingSize);
   for (int i = 0; i < SettingSize; i++) {
     new (&((string*) ToPut)[i]) std::string(TokenP[3 + i]);
   }
-  return Hash_string.PutEntry(TokenP[2], ToPut, SettingSize, true);
+  return Hash_string.PutEntry(DeleteTrailingZeros(TokenP[2]), ToPut, SettingSize, true);
 }
 
 string* SettingsManager::GetSetting_string(string SettingP)
@@ -371,16 +362,13 @@ string SettingsManager::GetSingleSetting_string(string SettingP, string DefaultP
 
 bool SettingsManager::StoreSetting_int(vector<string> TokenP)
 {
-  HashEntry* Retrieved = Hash_int.GetEntry(TokenP[2]);
-  int SettingSize = ((int*) Hash_SettingSize.GetEntry(TokenP[2])->GetContent())[0];
-  if (Retrieved) {
-    Log.Message("IN-003");
-  }
+  HashEntry* Retrieved = Hash_int.GetEntry(DeleteTrailingZeros(TokenP[2]));
+  int SettingSize = ((int*) Hash_SettingSize.GetEntry(DeleteTrailingZeros(TokenP[2]))->GetContent())[0];
   void* ToPut = malloc(sizeof (double) * SettingSize);
   for (int i = 0; i < SettingSize; i++) {
     ((double*) ToPut)[i] = IStringToDouble(TokenP[3 + i]);
   }
-  return Hash_int.PutEntry(TokenP[2], ToPut, SettingSize, true);
+  return Hash_int.PutEntry(DeleteTrailingZeros(TokenP[2]), ToPut, SettingSize, true);
 }
 
 int* SettingsManager::GetSetting_int(string SettingP)
