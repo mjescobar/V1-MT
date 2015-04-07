@@ -31,6 +31,9 @@ SimulationManager SingleSimulator;
 // Main Interpreter Manager
 InterpreterManager Interpreter;
 
+// For counting the Nproc nexting level
+int NprocNesting = 0;
+
 // For elapsed timing calculations
 bool ElapsedTimeInitialized;
 clock_t ElapsedTime;

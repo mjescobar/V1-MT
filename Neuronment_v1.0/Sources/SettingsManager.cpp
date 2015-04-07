@@ -366,7 +366,7 @@ bool SettingsManager::StoreSetting_int(vector<string> TokenP)
   int SettingSize = ((int*) Hash_SettingSize.GetEntry(DeleteTrailingZeros(TokenP[2]))->GetContent())[0];
   void* ToPut = malloc(sizeof (double) * SettingSize);
   for (int i = 0; i < SettingSize; i++) {
-    ((double*) ToPut)[i] = IStringToDouble(TokenP[3 + i]);
+    ((int*) ToPut)[i] = IStringToInt(TokenP[3 + i]);
   }
   return Hash_int.PutEntry(DeleteTrailingZeros(TokenP[2]), ToPut, SettingSize, true);
 }

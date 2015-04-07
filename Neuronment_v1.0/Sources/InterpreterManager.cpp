@@ -23,6 +23,7 @@ InterpreterManager::InterpreterManager()
   EndOfFileReached = false;
   nproc = "";
   Commands = HashTable(Data_function, INTERPRETER_MANAGER_COMMANDS_HASH_SIZE);
+  NprocNesting++;
   InitializeInterpreter();
 }
 
@@ -36,6 +37,7 @@ InterpreterManager::InterpreterManager(const InterpreterManager& orig)
 
 InterpreterManager::~InterpreterManager()
 {
+  NprocNesting--;
 }
 
 bool InterpreterManager::LoadFile()
@@ -311,6 +313,10 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
 
 bool InterpreterManager::RescueCall_NPROC(vector<string> TokensP)
 {
+  if (NprocNesting > Variables.GetSingleSetting_int(MAX_NPROC_NESTING, DEFAULT_MAX_NPROC_NESTING)) {
+    Log.Message("IN-008");
+    return false;
+  }
   bool SilentFlag = GetFlag(TokensP, "silent");
   string FileName = GetFlagValue(TokensP, "file");
   if (FileName.size() == 0) {
@@ -339,7 +345,7 @@ bool InterpreterManager::VarmanCall_SET(vector<string> TokensP)
 
 bool InterpreterManager::VarmanCall_PRINT(vector<string> TokensP)
 {
-  if (TokensP.size() == 3) { 
+  if (TokensP.size() == 3) {
     bool Valid = Variables.GetSettingValid(DeleteTrailingZeros(TokensP[2]));
     if (!Valid) {
       Log.Message("IN-002");
