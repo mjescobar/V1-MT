@@ -109,12 +109,18 @@ void LogManager::OutputNNL(MessageType MessageTypeP, string OutputP)
     Redirection[RedirectionLevel]->flush();
   } else {
     if (!SilentOutput && !FullSilentOutput) {
+      for (int i = 1; i < NprocNesting; i++) {
+        cout << LABEL_INDENTATION_STRING;
+      }
       cout << OutputP;
       cout.flush();
     }
   }
   if (SilentOutput && (MessageTypeP == Message_Coded) && !FullSilentOutput) {
-    cout << ">" << OutputP;
+    for (int i = 1; i < NprocNesting; i++) {
+      cout << LABEL_INDENTATION_STRING;
+    }
+    cout << OutputP;
     cout.flush();
   }
 }
@@ -163,12 +169,12 @@ void LogManager::Message(string IdP)
       }
 #endif
     }
-    Output(Message_Coded, "> " + IdP);
+    Output(Message_Coded, LABEL_MESSAGE_STRING + IdP);
     if (Messages) {
-      Output(Message_Coded, "> " + Message);
+      Output(Message_Coded, LABEL_MESSAGE_STRING + Message);
     }
     if (ToDisable) {
-      Output(Message_Coded, "> This message will no longer appear on the log");
+      Output(Message_Coded, LABEL_MESSAGE_STRING + string("This message will no longer appear on the log"));
     }
     if (ToDevelopmentAssert) {
       DevelopmentAssertion();

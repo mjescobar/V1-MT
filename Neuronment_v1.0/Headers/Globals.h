@@ -19,6 +19,7 @@ extern SettingsManager Variables;
 extern SimulationManager SingleSimulator;
 extern InterpreterManager Interpreter;
 extern int NprocNesting;
+extern bool EarlyReturn;
 extern bool ElapsedTimeInitialized;
 extern clock_t ElapsedTime;
 

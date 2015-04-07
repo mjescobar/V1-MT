@@ -107,6 +107,13 @@ private:
      * @return true if successful
      */
     static bool RescueCall_NPROC(vector<string> TokensP);
+    
+    /**
+     * Process "rescue return"
+     * @param TokensP Tokenized command
+     * @return true if successful
+     */
+    static bool RescueCall_RETURN(vector<string> TokensP);
 
     /**
      * Process "varman set"

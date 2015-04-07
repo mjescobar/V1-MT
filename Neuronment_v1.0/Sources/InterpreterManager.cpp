@@ -182,7 +182,7 @@ bool InterpreterManager::SetNproc(string NprocP)
 void InterpreterManager::Process()
 {
   ResultType Result;
-  while (!GetEndOfFileReached()) {
+  while (!GetEndOfFileReached() && !EarlyReturn) {
     if (!NextLine()) {
       Log.Message("ER-007: " + nproc);
     } else {
@@ -311,33 +311,6 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
   return Result;
 }
 
-bool InterpreterManager::RescueCall_NPROC(vector<string> TokensP)
-{
-  if (NprocNesting > Variables.GetSingleSetting_int(MAX_NPROC_NESTING, DEFAULT_MAX_NPROC_NESTING)) {
-    Log.Message("IN-008");
-    return false;
-  }
-  bool SilentFlag = GetFlag(TokensP, "silent");
-  string FileName = GetFlagValue(TokensP, "file");
-  if (FileName.size() == 0) {
-    Log.Message("IN-010");
-    return false;
-  }
-  InterpreterManager LocalInterpreter;
-  LocalInterpreter.InitializeInterpreter();
-  LocalInterpreter.SetNproc(FileName);
-  LocalInterpreter.LoadFile();
-  if (SilentFlag) {
-    Log.SetSilentOutput();
-  }
-  LocalInterpreter.Process();
-  if (SilentFlag) {
-    Log.UnsetSilentOutput();
-  }
-  LocalInterpreter.CloseFile();
-  return true;
-}
-
 bool InterpreterManager::VarmanCall_SET(vector<string> TokensP)
 {
   return Variables.StoreSetting(TokensP);
@@ -384,4 +357,38 @@ bool InterpreterManager::VarmanCall_PRINT(vector<string> TokensP)
     Log.Message("IN-010");
     return false;
   }
+}
+
+bool InterpreterManager::RescueCall_RETURN(vector<string> TokensP)
+{
+  EarlyReturn = true;
+  return true;
+}
+
+bool InterpreterManager::RescueCall_NPROC(vector<string> TokensP)
+{
+  if (NprocNesting > Variables.GetSingleSetting_int(MAX_NPROC_NESTING, DEFAULT_MAX_NPROC_NESTING)) {
+    Log.Message("IN-008");
+    return false;
+  }
+  bool SilentFlag = GetFlag(TokensP, "silent");
+  string FileName = GetFlagValue(TokensP, "file");
+  if (FileName.size() == 0) {
+    Log.Message("IN-010");
+    return false;
+  }
+  InterpreterManager LocalInterpreter;
+  LocalInterpreter.InitializeInterpreter();
+  LocalInterpreter.SetNproc(FileName);
+  LocalInterpreter.LoadFile();
+  if (SilentFlag) {
+    Log.SetSilentOutput();
+  }
+  LocalInterpreter.Process();
+  if (SilentFlag) {
+    Log.UnsetSilentOutput();
+  }
+  LocalInterpreter.CloseFile();
+  EarlyReturn = false;
+  return true;
 }
