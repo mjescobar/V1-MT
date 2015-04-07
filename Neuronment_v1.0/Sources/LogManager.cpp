@@ -33,6 +33,16 @@ void LogManager::SetMessages()
   Messages = true;
 }
 
+void LogManager::SetFullSilentOutput()
+{
+  FullSilentOutput = true;
+}
+
+void LogManager::UnsetFullSilentOutput()
+{
+  FullSilentOutput = false;
+}
+
 void LogManager::UnsetMessages()
 {
   Messages = false;
@@ -43,6 +53,7 @@ LogManager::LogManager()
   RedirectionLevel = -1;
   Messages = DEFAULT_MESSAGES;
   SilentOutput = DEFAULT_SILENT_OUTPUT;
+  FullSilentOutput = DEFAULT_FULL_SILENT_OUTPUT;
   MessagesLabel = HashTable(Data_string, LOG_MANAGER_MESSAGES_HASH_SIZE);
   MessagesText = HashTable(Data_string, LOG_MANAGER_MESSAGES_HASH_SIZE);
   MessagesDisabling = HashTable(Data_int, LOG_MANAGER_MESSAGES_HASH_SIZE);
@@ -97,12 +108,12 @@ void LogManager::OutputNNL(MessageType MessageTypeP, string OutputP)
     *(Redirection[RedirectionLevel]) << OutputP;
     Redirection[RedirectionLevel]->flush();
   } else {
-    if (!SilentOutput) {
+    if (!SilentOutput && !FullSilentOutput) {
       cout << OutputP;
       cout.flush();
     }
   }
-  if (SilentOutput && (MessageTypeP == Message_Coded)) {
+  if (SilentOutput && (MessageTypeP == Message_Coded) && !FullSilentOutput) {
     cout << ">" << OutputP;
     cout.flush();
   }

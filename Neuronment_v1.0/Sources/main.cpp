@@ -26,10 +26,10 @@ int main(int argc, char** argv)
   // Initialize Globals
   Log.InitializeMessages();
   Variables.InitializeVariables();
-  // Program Header
-  Log.DisplayHeader();
   // Read command line arguments
   ReadCommandLineArguments(argc, argv);
+  // Program Header
+  Log.DisplayHeader();
   // Open file to read
   Interpreter.LoadFile();
   // Reads the nproc file line by line
@@ -102,6 +102,10 @@ bool ReadCommandLineArguments(int argc, char** argv)
           VerboseMessagesStatus = true;
           continue;
         }
+      }
+      if (strcmp(argv[i], "-no_output") == 0) {
+        Log.SetFullSilentOutput();
+        continue;
       }
       Log.Message("UI-003: " + string(argv[i]));
       Log.DisplayHelp();

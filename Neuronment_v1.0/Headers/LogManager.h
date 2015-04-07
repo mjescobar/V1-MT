@@ -81,6 +81,16 @@ public:
     void UnsetSilentOutput();
 
     /**
+     *
+     */
+    void SetFullSilentOutput();
+
+    /**
+     *
+     */
+    void UnsetFullSilentOutput();
+
+    /**
      * Prints to output without line termination
      * @param OutputP the string to print
      */
@@ -106,6 +116,7 @@ public:
 private:
     bool Messages;
     bool SilentOutput;
+    bool FullSilentOutput;
     int RedirectionLevel;
     vector<ofstream*> Redirection;
     HashTable MessagesLabel; //Stores the short messages text

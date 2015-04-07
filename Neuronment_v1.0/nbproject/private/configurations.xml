@@ -29,6 +29,7 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Resources/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Round000/Resources/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -no_output -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
         </runcommandpicklist>
         <runcommand>"${OUTPUT_PATH}" -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommand>
@@ -67,6 +68,7 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Resources/Round000_v1.0_BaseTemplate_v1.0.nproc -no_verbose_messages</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Resources/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Round000/Resources/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -no_output -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
         </runcommandpicklist>
         <runcommand>"${OUTPUT_PATH}" -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommand>
