@@ -11,12 +11,15 @@ The \glssymbol{neuronmentsequencersyntax} has been developed with the intention 
 
 The Neuronment project has been build mainly on the experience acquire on the development of the thesis work of Pedro F. Toledo\cite{thesispedro}.
 
-\section{How to Execute Neuronment}
+\section{How to execute Neuronment}
 
-To execute this program it is required the program executable and a ``Neuronment Procedure'' file. To run it you must execute the following line on the shell:
+To execute this program it is required the executable file and a ``Neuronment Procedure'' file. To run it you must use the following line on the shell:
 
 \begin{verbatim}
-Neuronment -nproc <file.nproc> [-verbose_messages|-no_verbose_messages]
+Neuronment -nproc <file.nproc> \
+           [-verbose_messages|-no_verbose_messages] \
+           [-no_output] \
+           [-time]
 \end{verbatim}
 
 \begin{itemize}
@@ -24,45 +27,117 @@ Neuronment -nproc <file.nproc> [-verbose_messages|-no_verbose_messages]
   Name of the Neuronment executable to use.
   \item \texttt{-nproc <file.nproc>}:\\
   The flag \textbf{-nproc} is used to identify the \glssymbol{neuronmentprocedure} file that should be read by the \gls{neuronmentsequencer}.
-  \item \texttt{verbose\_messages no\_verbose\_messages}:\\
-  This is an optional setting to force the apparition or not apparition of explanatory texts for the coded messages returned by the \gls{neuronmentsequencer}. You can check the default behaviour by checking the private define \textbf{DEFAULT\_MESSAGES}. {\color{red} CHECK LINKS}
+  \item \texttt{-verbose\_messages|-no\_verbose\_messages}:\\
+  This is an optional setting to force the apparition or not apparition of explanatory texts for the coded messages returned by the \gls{neuronmentsequencer}. You can check the default behaviour by checking the private define \textbf{DEFAULT\_MESSAGES}. \lotharcl
+  \item \texttt{-no\_output}:\\
+  This is an optional setting that eliminates any print to standard output; nevertheless, it doesn't affect the behavior of re-directions to files.
+  \item \texttt{-time}:\\
+  This is an optional setting that initiates Neuronment with printing the elapsed time by default ON. The printing of the elapsed time corresponds to the standard output printing of the elapsed time between the end of a previous command and the end of the current one. This tima is calculated in base to the \texttt{clock()} funtion of \textbf{time.h}, in seconds.\\
+  The enabling of printing elapsed time can be enabled or disabled at any point of the execution (including when it was set by the \texttt{-time} option) by enabling or disabling the \texttt{ENV:show\_elapsed\_time} variable. \lotharcl
 \end{itemize}
 
 \section{Neuronment sequencer}
 
-The neuronment sequencer is the module inside Neuronment on charge of interpreting the \glssymbol{neuronmentprocedure} file specified at the program call.
+The \gls{neuronmentsequencer} is the module inside Neuronment on charge of interpreting the \glssymbol{neuronmentprocedure} file specified at the program call. It bases its operation on loading settings and executing commands as indicated on the \glssymbol{neuronmentprocedure} file.
 
-\subsection{Variable Groups}
+\subsection{Commands}
+
+All the calculations and information retrieval of Neuronment are managed by \glssymbol{neuronmentprocedure} file lines named ``commands''.
+
+The different possible commands are divided in groups of related functionality and their results usually depend on the values of the Neuronment variables.
+
+\subsection{Variables}
+
+The \gls{neuronmentsequencer} considers a list of valid variables that are loaded at the starting of the program. This variables are defined in compiling time; nevertheless, there are options to create custom variables if required by the user. \lotharpi
+
+The variables are internally called by the different commands as they require the information in order to use it to define their behavior.
+
+A variable always have a ``default'' value also declared at compiling time. This value can be retrieved by the user but once the variable has been written the default value is lost and only the user value will be used for future configuration.
+
+The commands that are variable depending do not link dynamically to the variable values. If a command is executed under certain conditions, if the variable values required for its operation change this changes do not have any effect on the command behavior (for example: if a command defines a neural net configuration but after building the net and before simulating it one of the variables used by the command changes, this doesn't have effect over the simulation and it will behave as if the variable value where the one at the time of the neural net configuration).
 
 \subsection{Message system}
+
+A basic Neuronment output system is a list of coded messages. Each one of these messages are identified informations, warnings, problems or errors that have been considered at the developing stage.
+
+For an exhaustive list of messages codes as well as their abstract and extended explanation can be found at chapter \ref{ch:messages}. Also, it is possible to obtain extra information within the program by calling the \textbf{rescue man} command as indicated in \ref{cmd:rescueman}. \lotharpi
+
 \subsection{Assertions}
+
+When a problem arises on the program execution, there are 3 levels of warnings and/or early termination depending on the severity of the issue:
+\begin{itemize}
+  \item Development Assertion:\\
+  This happens when the program arrives to a known unexpected set of conditions. If the program can recover from this set of conditions it will continue, but it's highly recommended to check for the root cause of this issue. This assertion will deploy the coded message \textbf{ER-001}. \lotharcl
+  \item Implementation Assertion:\\
+  This happens when there is a known incomplete implementation of a required feature to continue the program execution. Under this case the program will terminate and deploy the coded message \textbf{ER-008}. \lotharcl
+  \item Runtime Assertion:\\
+  This is the higher severity exception and it occurs when the program has arrived to an unknown and unpredicted set of conditions. The program will terminate and deploy the codded message \textbf{ER-002}. \lotharcl
+\end{itemize}
 
 \section{Neuronment sequencer syntax}
 
-The following section describes the different aspects of the \gls{neuronmentsequencersyntax} required to create a \glssymbol{neuronmentprocedure} file.
+The following section describes the different aspects of the \gls{neuronmentsequencersyntax} as it required to be used on the development of a \glssymbol{neuronmentprocedure} file.
+
+In order to have a clear terminology, the following definitions will be used for future reference:
+\begin{itemize}
+  \item Line:\\
+  A line is a set of characters between:
+  \begin{itemize}
+    \item The beginning of a file and a new line character or the end of file if there is no new line characters in the file.
+    \item Two new line characters
+    \item A new line character and the end of file.
+  \end{itemize}
+  On this area there are 2 considerations that should be taken in to account:
+  \begin{itemize}
+    \item The new line character(s) isn't part of the line
+    \item The new line character cannot be escaped as in BASH or CShell
+  \end{itemize}
+  \item Comment:\\
+  A line or part of a line that only has explanation or documentation proposes and shouldn't be considered by the sequencer.
+  \item Command:\\
+  A line or part of a line used to modify the Neuronment behavior, to calculate results or to retrieve results.
+  \item Directive:\\
+  Name received by a group of commands with common characteristics.
+  \item Sub-Directive:\\
+  Name received by an specific instruction of a directive in order to execute some task.
+  \item Instruction:\\
+  Name received by a Directive followed by a Sub-Directive.
+  \item Arguments:\\
+  Name received by the set of character strings at the right of an instruction on a command, strings that are required for the command execution.
+  \item Flags:\\
+  Name received by an argument string that starts with the character ``\textbf{-}''. There are two types of flags:
+  \begin{itemize}
+    \item Indicator Flags:\\
+    Its only apparition has a well defined meaning.
+    \item Signaling Flags:\\
+    A signaling flag is used to signal that the following string corresponds to an specific value indicated by the flag. This is normally used to avoid instructions receiving a list of values with non in-line declared meaning.
+  \end{itemize}
+\end{itemize}
 
 \subsection{Basic rules}
-An \glssymbol{neuronmentprocedure} file should be written in ascii and it will be divided in lines using the line breaks as line termination. The resulting lines will be interpreted according their content.
+A \glssymbol{neuronmentprocedure} file should be written in ascii and it will be divided in lines using the line breaks as line termination. The resulting lines will be interpreted according their content.
 
 \subsubsection{Empty line}
 An empty line prints an empty line to the standard output.
 
+An empty line is a line only composed by spaces and/or tabs.
+
 \subsubsection{Comments}
-The character \texttt{\#} divides a line between a command string (everything to the left) and a comment string (everything to the right).
+The character ``\textbf{\#}'' divides a line between a command string (everything to the left) and a comment string (everything to the right).
 
 If the command string is only composed of non-script characters, it will be considered empty and the whole line will be interpreted as a comment.
 
 If the whole line is a comment, it will be printed out to the standard output, otherwise, the command will be executed and no comment will be printed to the standard output.
 
 \subsubsection{Redirections}
-The character \texttt{>} can be used to redirect a command result to a file instead of the standard output.
+The character ``\textbf{>}'' can be used to redirect a command result to a file instead of the standard output.
 
-The text at the right of the \texttt{>} character should be only one valid file name without spaces. After the file name it is possible to add a comment as indicated previously.
+The text at the right of the ``\textbf{>}'' character should be only one valid file name without spaces. After the file name it is possible to add a comment as indicated previously.
 
 \subsubsection{Variables}
-All interaction related to parameters for the Neuronment operations and the Neuronment environment are managed by variables which value should be set prior the command execution.
+All Neuronment interactions are managed by variables and/or command arguments which values should be set prior or at the command execution.
 
-Every variable except a ``Variable Group'' has a parent, by other side every variable could have a child. To specify a variable you should specify the variable group and the variable name separated by a character \texttt{:} as the following example:
+Every variable except a ``Variable Group'' has a parent, by other side every variable could have a child. To specify a variable you should specify the variable group and the variable name separated by a character ``\textbf{:}'' as the following example:
 
 \begin{verbatim}
 VariableGroup1:Variable1
