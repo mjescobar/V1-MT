@@ -7,7 +7,7 @@ The Neuronment project is a software intended for discreet simulation and traini
 
 Neuronment works by reading a Procedure Description file (standardized extension \texttt{*.nproc}) which should describe the list of all the \gls{neuralnetwork} descriptor parameters and the simulations and/or trainings intended to be calculated. This file, also called  \gls{neuronmentprocedure} (\glssymbol{neuronmentprocedure}), should comply with the \gls{neuronmentsequencersyntax} (\glssymbol{neuronmentsequencersyntax}) in order to be correctly interpreted by the \gls{neuronmentsequencer} (\glssymbol{neuronmentsequencer}).
 
-The \glssymbol{neuronmentsequencersyntax} has been developed with the intention to cover all the possible use scenarios for the intended purposes of the Neuronment project; nevertheless, it is susceptible to changes in future versions that may not be backwards compatible.
+The \glssymbol{neuronmentsequencersyntax} has been developed with the intention to cover all the possible use scenarios of the intended purposes of the Neuronment project; nevertheless, it is susceptible to changes in future versions that may not be backwards compatible.
 
 The Neuronment project has been build mainly on the experience acquire on the development of the thesis work of Pedro F. Toledo\cite{thesispedro}.
 
@@ -32,8 +32,8 @@ Neuronment -nproc <file.nproc> \
   \item \texttt{-no\_output}:\\
   This is an optional setting that eliminates any print to standard output; nevertheless, it doesn't affect the behavior of re-directions to files.
   \item \texttt{-time}:\\
-  This is an optional setting that initiates Neuronment with printing the elapsed time by default ON. The printing of the elapsed time corresponds to the standard output printing of the elapsed time between the end of a previous command and the end of the current one. This tima is calculated in base to the \texttt{clock()} funtion of \textbf{time.h}, in seconds.\\
-  The enabling of printing elapsed time can be enabled or disabled at any point of the execution (including when it was set by the \texttt{-time} option) by enabling or disabling the \texttt{ENV:show\_elapsed\_time} variable. \lotharcl
+  This is an optional setting that initiates Neuronment with printing the elapsed time by default ON. The printing of the elapsed time corresponds to the standard output printing of the elapsed time between the end of a previous command and the end of the current one. This time is calculated in base to the \texttt{clock()} funtion of \textbf{time.h}, in seconds.\\
+  The elapsed time printing can be enabled or disabled at any point of the execution (including when it was set by the \texttt{-time} option) by enabling or disabling the \texttt{ENV:show\_elapsed\_time} variable. \lotharcl
 \end{itemize}
 
 \section{Neuronment sequencer}
@@ -48,19 +48,19 @@ The different possible commands are divided in groups of related functionality a
 
 \subsection{Variables}
 
-The \gls{neuronmentsequencer} considers a list of valid variables that are loaded at the starting of the program. This variables are defined in compiling time; nevertheless, there are options to create custom variables if required by the user. \lotharpi
+The \gls{neuronmentsequencer} considers a list of valid variables that are loaded at the starting of the program. These variables are defined in compiling time; nevertheless, there are options to create custom variables if required by the user. \lotharpi
 
 The variables are internally called by the different commands as they require the information in order to use it to define their behavior.
 
 A variable always have a ``default'' value also declared at compiling time. This value can be retrieved by the user but once the variable has been written the default value is lost and only the user value will be used for future configuration.
 
-The commands that are variable depending do not link dynamically to the variable values. If a command is executed under certain conditions, if the variable values required for its operation change this changes do not have any effect on the command behavior (for example: if a command defines a neural net configuration but after building the net and before simulating it one of the variables used by the command changes, this doesn't have effect over the simulation and it will behave as if the variable value where the one at the time of the neural net configuration).
+The commands that are variable depending do not link dynamically to the variable values. If a command is executed under certain conditions, if the variable values required for its operation change these changes do not have any effect on the command behavior (for example: if a command defines a neural net configuration but after building the net and before simulating it one of the variables used by the command changes, this doesn't have effect over the simulation and it will behave as if the variable value where the one at the time of the neural net configuration).
 
 \subsection{Message system}
 
-A basic Neuronment output system is a list of coded messages. Each one of these messages are identified informations, warnings, problems or errors that have been considered at the developing stage.
+The basic Neuronment output system is a list of coded messages. Each one of these messages are identified information, warnings, problems or errors that have been considered at the developing stage.
 
-For an exhaustive list of messages codes as well as their abstract and extended explanation can be found at chapter \ref{ch:messages}. Also, it is possible to obtain extra information within the program by calling the \textbf{rescue man} command as indicated in \ref{cmd:rescueman}. \lotharpi
+An exhaustive list of messages codes as well as their description can be found at chapter \ref{ch:messages}. Also, it is possible to obtain extra information within the program by calling the \textbf{rescue man} command as indicated in \ref{cmd:rescueman}. \lotharpi
 
 \subsection{Assertions}
 
@@ -71,12 +71,12 @@ When a problem arises on the program execution, there are 3 levels of warnings a
   \item Implementation Assertion:\\
   This happens when there is a known incomplete implementation of a required feature to continue the program execution. Under this case the program will terminate and deploy the coded message \textbf{ER-008}. \lotharcl
   \item Runtime Assertion:\\
-  This is the higher severity exception and it occurs when the program has arrived to an unknown and unpredicted set of conditions. The program will terminate and deploy the codded message \textbf{ER-002}. \lotharcl
+  This is the higher severity exception and it occurs when the program has arrived to an unknown and unexpected set of conditions. The program will terminate and deploy the codded message \textbf{ER-002}. \lotharcl
 \end{itemize}
 
 \section{Neuronment sequencer syntax}
 
-The following section describes the different aspects of the \gls{neuronmentsequencersyntax} as it required to be used on the development of a \glssymbol{neuronmentprocedure} file.
+The following section describes the different aspects of the \gls{neuronmentsequencersyntax} as it is required to be used on the development of a \glssymbol{neuronmentprocedure} file.
 
 In order to have a clear terminology, the following definitions will be used for future reference:
 \begin{itemize}
@@ -120,19 +120,19 @@ A \glssymbol{neuronmentprocedure} file should be written in ascii and it will be
 \subsubsection{Empty line}
 An empty line prints an empty line to the standard output.
 
-An empty line is a line only composed by spaces and/or tabs.
+An empty line is a line without characters or only composed by spaces and/or tabs.
 
 \subsubsection{Comments}
-The character ``\textbf{\#}'' divides a line between a command string (everything to the left) and a comment string (everything to the right).
+The character ``\textbf{\#}'' divides a line between a command (everything to the left) and a comment (everything to the right).
 
-If the command string is only composed of non-script characters, it will be considered empty and the whole line will be interpreted as a comment.
+If the command is empty or only composed of spaces and tabs, the whole line will be interpreted as a comment.
 
-If the whole line is a comment, it will be printed out to the standard output, otherwise, the command will be executed and no comment will be printed to the standard output.
+If the whole line is a comment, it will be printed out to the standard output, otherwise, the command will be executed and, if exists, no comment will be printed to the standard output.
 
 \subsubsection{Redirections}
-The character ``\textbf{>}'' can be used to redirect a command result to a file instead of the standard output.
+The character ``\textbf{>}'' can be used to redirect a command result to a file instead of the standard output. This redirection is considered as part of the command.
 
-The text at the right of the ``\textbf{>}'' character should be only one valid file name without spaces. After the file name it is possible to add a comment as indicated previously.
+The text at the right of the ``\textbf{>}'' character should be one valid file name without spaces. After the file name it is possible to add a comment as indicated previously.
 
 \subsubsection{Variables}
 All Neuronment interactions are managed by variables and/or command arguments which values should be set prior or at the command execution.
@@ -147,7 +147,7 @@ VariableGroup2:Variable1:ChildVariable1
 A variable name must be composed exclusively by letters from a to z, A to Z, numbers and the underscore character.
 
 \subsubsection{Substitutions}
-If in order to use a command you would like to use a variable value as parameter instead of a hard coded string, you can substitute the name of the variable for its value by using the character \texttt{\$} just before the variable group as in the following example:
+If in order to use a command you would like to use a variable value as parameter instead of a hard coded string, you can substitute the name of the variable for its value by using the character \texttt{\$} just before the variable group as in the following example:\lotharpi
 
 \begin{verbatim}
 $VariableGroup1:Variable1
@@ -155,25 +155,6 @@ $VariableGroup2:Variable1:ChildVariable1
 \end{verbatim}
 
 \subsubsection{Command results}
-If a command is intended to return a value after its execution, it will return the values through the Env variable group as it will be indicated in the command specifications.
+If a command is intended to return a value after its execution, it will return the values through the Env variable group as it will be indicated in the instruction specifications.
 
-If you want to store a result you should save it on another variable by using substitution.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+If you want to store a result you should save it on another variable by using substitution.\lotharpi

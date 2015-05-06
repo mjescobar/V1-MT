@@ -1,6 +1,6 @@
 \documentclass[letterpaper,oneside,11pt]{book}
 % Compilation Line =======================
-% rm -f Manual.glsdefs|latex -interaction=nonstopmode %.tex|makeglossaries %|latex -interaction=nonstopmode %.tex|bibtex %.aux|latex -interaction=nonstopmode %.tex|latex -interaction=nonstopmode %.tex|dvips -o %.ps %.dvi|ps2pdf %.ps|evince %.pdf
+% rm -f Manual.glsdefs|bibtex %|latex -interaction=nonstopmode %.tex|makeglossaries %|latex -interaction=nonstopmode %.tex|bibtex %.aux|latex -interaction=nonstopmode %.tex|latex -interaction=nonstopmode %.tex|dvips -o %.ps %.dvi|ps2pdf %.ps|evince %.pdf
 % Preamble ===============================
 \input{Manual_01_Preamble.tex}            % Packages
 \input{Manual_02_Redefinitions.tex}       % Local settings
@@ -22,7 +22,7 @@
   \pagenumbering{arabic}                  % Setting page counter to arabic numbers
   \input{Manual_21_Introduction.tex}
   \input{Manual_24_UsersGuide.tex}
-  \input{Manual_22_Directives.tex}
+  \input{Manual_22_Instructions.tex}
   \input{Manual_23_Messages.tex}    
 % \input{Manual_24_V1Configuration.tex}
 % \input{Manual_25_V1V1Configuration.tex}

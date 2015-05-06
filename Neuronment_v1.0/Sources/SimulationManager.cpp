@@ -87,8 +87,8 @@ bool SimulationManager::CreateV1NeuronVector()
   string Name;
   double* Data;
   Log.Output(Message_Allways, "Filling V1_Neurons vector");
-  V1_Neurons.reserve(MAX_V1_NEURONS);
-  for (int i = 0; i < MAX_V1_NEURONS; i++) {
+  V1_Neurons.reserve(V1_MAX_NEURONS);
+  for (int i = 0; i < V1_MAX_NEURONS; i++) {
     Name = V1_LABEL + string("'") + IIntToString(i);
     if (Variables.GetSettingValid("SIM:" + Name)) {
       Data = Variables.GetSetting_double("SIM:" + Name);
@@ -151,7 +151,7 @@ bool SimulationManager::CreateMTNeuronVector()
   string Name;
   double* Data;
   Log.Output(Message_Allways, "Filling MT_Neurons vector");
-  for (int i = 0; i < MAX_MT_NEURONS; i++) {
+  for (int i = 0; i < MT_MAX_NEURONS; i++) {
     Name = string("SIM:") + string(MT_LABEL) + "'" + IIntToString(i);
     if (Variables.GetSettingValid(Name)) {
       Data = Variables.GetSetting_double(Name);
