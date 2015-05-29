@@ -101,6 +101,7 @@ double V1_Neuron::GetV1V1BaseWeight(string MethodP, string DestinationP, string 
     return Variables.GetSingleSetting_double("SIM:" + DestinationP + ":" + OriginP, Variables.GetSingleSetting_double(V1V1_L001_DEFAULT_WEIGHT, DEFAULT_V1V1_L001_DEFAULT_WEIGHT));
   }
   Log.Message("SD-036: " + MethodP + " for " + V1V1_L001_DEFAULT_WEIGHT);
+  return 0;
 }
 
 double V1_Neuron::GetOri()

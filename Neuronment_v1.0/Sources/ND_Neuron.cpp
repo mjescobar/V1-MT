@@ -97,6 +97,7 @@ double ND_Neuron::GetExternalExcitation(int StepP)
     return ExternalExcitationValue[ExternalExcitationPointer];
   } else {
     Log.Message("SD-021");
+    return 0;
   }
 }
 
@@ -104,6 +105,7 @@ double ND_Neuron::GetActivation(int TimeStepP)
 {
   if (TimeStepP < 0 || TimeStepP >= Activation.size()) {
     Log.Message("SD-033");
+    return 0;
   } else {
     return Activation[TimeStepP];
   }
@@ -138,6 +140,7 @@ double ND_Neuron::GetLinkingWeight(string NeuronNameP)
 bool ND_Neuron::SetLinkingWeight(string NeuronNameP, double NewWeightP)
 {
   ((double*) ActivationLinkingWeights.GetEntry(NeuronNameP)->GetContent())[0] = NewWeightP;
+  return true;
 }
 
 bool ND_Neuron::SimulateStep(int StepP)

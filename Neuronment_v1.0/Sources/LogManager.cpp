@@ -7,7 +7,8 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <bits/basic_string.h>
+#include <string.h>
+//#include <bits/basic_string.h>
 using namespace std;
 #include "enum.h"
 #include "define.h"

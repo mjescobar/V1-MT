@@ -38,13 +38,13 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sources/Globals.o \
 	${OBJECTDIR}/Sources/HashEntry.o \
 	${OBJECTDIR}/Sources/HashTable.o \
-	${OBJECTDIR}/Sources/InterpreterManager.Initialize.o \
+	${OBJECTDIR}/Sources/InterpreterManager.Init.o \
 	${OBJECTDIR}/Sources/InterpreterManager.o \
-	${OBJECTDIR}/Sources/LogManager.Initialize.o \
+	${OBJECTDIR}/Sources/LogManager.Init.o \
 	${OBJECTDIR}/Sources/LogManager.o \
 	${OBJECTDIR}/Sources/MT_Neuron.o \
 	${OBJECTDIR}/Sources/ND_Neuron.o \
-	${OBJECTDIR}/Sources/SettingsManager.Initialize.o \
+	${OBJECTDIR}/Sources/SettingsManager.Init.o \
 	${OBJECTDIR}/Sources/SettingsManager.o \
 	${OBJECTDIR}/Sources/SimulationManager.o \
 	${OBJECTDIR}/Sources/Tools.o \
@@ -91,20 +91,20 @@ ${OBJECTDIR}/Sources/HashTable.o: Sources/HashTable.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/HashTable.o Sources/HashTable.cpp
 
-${OBJECTDIR}/Sources/InterpreterManager.Initialize.o: Sources/InterpreterManager.Initialize.cpp 
+${OBJECTDIR}/Sources/InterpreterManager.Init.o: Sources/InterpreterManager.Init.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/InterpreterManager.Initialize.o Sources/InterpreterManager.Initialize.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/InterpreterManager.Init.o Sources/InterpreterManager.Init.cpp
 
 ${OBJECTDIR}/Sources/InterpreterManager.o: Sources/InterpreterManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/InterpreterManager.o Sources/InterpreterManager.cpp
 
-${OBJECTDIR}/Sources/LogManager.Initialize.o: Sources/LogManager.Initialize.cpp 
+${OBJECTDIR}/Sources/LogManager.Init.o: Sources/LogManager.Init.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/LogManager.Initialize.o Sources/LogManager.Initialize.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/LogManager.Init.o Sources/LogManager.Init.cpp
 
 ${OBJECTDIR}/Sources/LogManager.o: Sources/LogManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
@@ -121,10 +121,10 @@ ${OBJECTDIR}/Sources/ND_Neuron.o: Sources/ND_Neuron.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/ND_Neuron.o Sources/ND_Neuron.cpp
 
-${OBJECTDIR}/Sources/SettingsManager.Initialize.o: Sources/SettingsManager.Initialize.cpp 
+${OBJECTDIR}/Sources/SettingsManager.Init.o: Sources/SettingsManager.Init.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/SettingsManager.Initialize.o Sources/SettingsManager.Initialize.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/SettingsManager.Init.o Sources/SettingsManager.Init.cpp
 
 ${OBJECTDIR}/Sources/SettingsManager.o: Sources/SettingsManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources

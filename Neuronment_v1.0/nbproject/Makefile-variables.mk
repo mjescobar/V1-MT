@@ -15,13 +15,13 @@ CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
 CND_PACKAGE_NAME_Debug=neuronmentv1.0.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/neuronmentv1.0.tar
 # Release configuration
-CND_PLATFORM_Release=GNU-Linux-x86
-CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
+CND_PLATFORM_Release=GNU-MacOSX
+CND_ARTIFACT_DIR_Release=dist/Release/GNU-MacOSX
 CND_ARTIFACT_NAME_Release=neuronment_v1.0
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/neuronment_v1.0
-CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-MacOSX/neuronment_v1.0
+CND_PACKAGE_DIR_Release=dist/Release/GNU-MacOSX/package
 CND_PACKAGE_NAME_Release=neuronmentv1.0.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/neuronmentv1.0.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-MacOSX/package/neuronmentv1.0.tar
 #
 # include compiler specific variables
 #

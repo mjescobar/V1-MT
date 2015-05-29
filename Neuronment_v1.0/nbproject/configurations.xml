@@ -37,13 +37,13 @@
       <itemPath>Sources/Globals.cpp</itemPath>
       <itemPath>Sources/HashEntry.cpp</itemPath>
       <itemPath>Sources/HashTable.cpp</itemPath>
-      <itemPath>Sources/InterpreterManager.Initialize.cpp</itemPath>
+      <itemPath>Sources/InterpreterManager.Init.cpp</itemPath>
       <itemPath>Sources/InterpreterManager.cpp</itemPath>
-      <itemPath>Sources/LogManager.Initialize.cpp</itemPath>
+      <itemPath>Sources/LogManager.Init.cpp</itemPath>
       <itemPath>Sources/LogManager.cpp</itemPath>
       <itemPath>Sources/MT_Neuron.cpp</itemPath>
       <itemPath>Sources/ND_Neuron.cpp</itemPath>
-      <itemPath>Sources/SettingsManager.Initialize.cpp</itemPath>
+      <itemPath>Sources/SettingsManager.Init.cpp</itemPath>
       <itemPath>Sources/SettingsManager.cpp</itemPath>
       <itemPath>Sources/SimulationManager.cpp</itemPath>
       <itemPath>Sources/Tools.cpp</itemPath>
@@ -147,14 +147,14 @@
       </item>
       <item path="Sources/HashTable.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Sources/InterpreterManager.Initialize.cpp"
+      <item path="Sources/InterpreterManager.Init.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="Sources/InterpreterManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Sources/LogManager.Initialize.cpp" ex="false" tool="1" flavor2="0">
+      <item path="Sources/LogManager.Init.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/LogManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -162,10 +162,7 @@
       </item>
       <item path="Sources/ND_Neuron.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Sources/SettingsManager.Initialize.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="Sources/SettingsManager.Init.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/SettingsManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -268,14 +265,14 @@
       </item>
       <item path="Sources/HashTable.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Sources/InterpreterManager.Initialize.cpp"
+      <item path="Sources/InterpreterManager.Init.cpp"
             ex="false"
             tool="1"
             flavor2="0">
       </item>
       <item path="Sources/InterpreterManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Sources/LogManager.Initialize.cpp" ex="false" tool="1" flavor2="0">
+      <item path="Sources/LogManager.Init.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/LogManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -283,10 +280,7 @@
       </item>
       <item path="Sources/ND_Neuron.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Sources/SettingsManager.Initialize.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="Sources/SettingsManager.Init.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/SettingsManager.cpp" ex="false" tool="1" flavor2="0">
       </item>

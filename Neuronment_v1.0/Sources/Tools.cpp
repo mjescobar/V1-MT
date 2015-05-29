@@ -359,10 +359,10 @@ string Alignment(string OriginalP, int SizeP, char FillP, SideType SideP)
     return OriginalP;
   }
   for (int i = 0; i < ToAdd; i++) {
-    if (SideP = Side_Right) {
+    if (SideP == Side_Right) {
       OriginalP = OriginalP + FillP;
     }
-    if (SideP = Side_Left) {
+    if (SideP == Side_Left) {
       OriginalP = FillP + OriginalP;
     }
   }
@@ -422,6 +422,7 @@ bool PrintElapsedTime(clock_t* ElapsedTimeP)
   clock_t NewElapsedTime = clock();
   Log.Output(Message_Allways, "TIME: " + IDoubleToString(double(NewElapsedTime - *ElapsedTimeP) / CLOCKS_PER_SEC, 3) + "[s]");
   *ElapsedTimeP = NewElapsedTime;
+  return true;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

@@ -329,7 +329,6 @@ bool SimulationManager::PrintV1Activation(OrientationType OTypeP)
           }
         }
       }
-      return true;
     }
     if (OTypeP == Orientation_Horizontal) {
       Log.OutputNNL(Message_Allways, "Name\tSpatial Freq.\tTemporal Freq.\tPref. Orientation\t");
@@ -353,6 +352,7 @@ bool SimulationManager::PrintV1Activation(OrientationType OTypeP)
         }
       }
     }
+    return true;
   } else {
     Log.Message("SD-001");
     return false;
@@ -424,6 +424,7 @@ bool SimulationManager::PrintMTActivation(OrientationType OTypeP)
         }
       }
     }
+    return true;
   } else {
     Log.Message("SD-001");
     return false;
