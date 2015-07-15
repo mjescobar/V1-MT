@@ -6,38 +6,67 @@
 #ifndef TOOLS_H
 #define	TOOLS_H
 
+#include <vector>
+#include <string>
+#include <iostream>
+#include <assert.h>
+using namespace std;
+#include "enum.h"
+#include "define.h"
+
 ////////////////////////////////////////////////////////////////////////////////////
 // Assertions
 ////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * Assertion always. Unrecoverable error on execution
- */
+void ReturnAssertion();
+void DevelopmentAssertion();
+void ImplementationAssertion();
 void RuntimeAssertion();
 
-/**
- * Assertion on development mode, gets disabled if compiled without the -DDEVELOPMENT
- */
-void DevelopmentAssertion();
+////////////////////////////////////////////////////////////////////////////////////
+// Catching error returns
+////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * Assertion when unimplemented feature requested. Assertion always
- */
-void ImplementationAssertion();
+ReturnType ReturnCatch(ReturnType ReturnP, string ConditionsP = "");
+
+////////////////////////////////////////////////////////////////////////////////////
+// Hashing
+////////////////////////////////////////////////////////////////////////////////////
+
+ReturnType KeyToHashKey(string KeyP, unsigned int &HashKeyP);
+
+////////////////////////////////////////////////////////////////////////////////////
+// Data Validation
+////////////////////////////////////////////////////////////////////////////////////
+
+ReturnType DataCheck(string DataP, string ConditionsP);
+ReturnType DataCheck(int DataP, string ConditionsP);
+ReturnType DataCheck(char** DataP, string ConditionsP);
+ReturnType DataCheck(char DataP, string ConditionsP);
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Tokens
 ////////////////////////////////////////////////////////////////////////////////////
 
-/**
- * Transforms a string in a set of tokens
- * From: http://www.oopweb.com/CPP/Documents/CPPHOWTO/Volume/C++Programming-HOWTO-7.html
- * @param str The original string
- * @param tokens The tokens destination vector
- * @param delimiters The delimeters for tokenization (default "\t ")
- */
-void Tokenize(const string& str, vector<string>& tokens, const string& delimiters = "\t ");
+//From: http://www.oopweb.com/CPP/Documents/CPPHOWTO/Volume/C++Programming-HOWTO-7.html
+ReturnType Tokenize(const string& StringP, vector<string>& TokensP, const string& DelimetersP = "\t ");
 
+////////////////////////////////////////////////////////////////////////////////////
+// Trimming
+////////////////////////////////////////////////////////////////////////////////////
+
+ReturnType trim_right(string &StringP, string DelimetersP = " \f\n\r\t\v");
+ReturnType trim_left(string &StringP, string DelimetersP = " \f\n\r\t\v");
+ReturnType trim(string &StringP, string DelimetersP = " \f\n\r\t\v");
+
+////////////////////////////////////////////////////////////////////////////////////
+// Parsing
+////////////////////////////////////////////////////////////////////////////////////
+
+bool IntToString(int ValueP, string &ReturnP);
+string IIntToString(int ValueP);
+
+#if 0
 /**
  * Transforms a string in a set of tokens without deleting the delimeters
  * From: http://www.oopweb.com/CPP/Documents/CPPHOWTO/Volume/C++Programming-HOWTO-7.html
@@ -46,6 +75,16 @@ void Tokenize(const string& str, vector<string>& tokens, const string& delimiter
  * @param delimiters The delimeters for tokenization (default "\t ")
  */
 void TokenizeNoDelete(const string& str, vector<string>& tokens, const string& delimiters);
+
+////////////////////////////////////////////////////////////////////////////////////
+// Validation
+////////////////////////////////////////////////////////////////////////////////////
+
+ReturnType CheckString(string StringP, string ConditionsP);
+
+ReturnType CheckInt(int IntP, string ConditionsP);
+
+ReturnType CheckInt(int IntP, string ConditionsP, int LowerP, int UpperP);
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Arrays
@@ -60,21 +99,6 @@ void TokenizeNoDelete(const string& str, vector<string>& tokens, const string& d
  */
 void* DuplicateArray(void* SourceP, int SourceSizeP, DataType TypeP);
 
-////////////////////////////////////////////////////////////////////////////////////
-// Hashing
-////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * Returns the hash for a string
- * @param s String to get hash from
- * @return the Hash value
- */
-unsigned int HashString(string s);
-
-////////////////////////////////////////////////////////////////////////////////////
-// Parsing
-////////////////////////////////////////////////////////////////////////////////////
-
 /**
  * Transform a char* to string
  * @param the char* to transform
@@ -88,21 +112,6 @@ void CstringToString(char* CstringP, string &Return);
  * @return the char* as string
  */
 string ICstringToString(char* CstringP);
-
-/**
- * int to string
- * @param ValueP Value to transform
- * @param ReturnP The pointer for the destination
- * @return The formated string
- */
-bool IntToString(int ValueP, string &ReturnP);
-
-/**
- * int to string
- * @param ValueP value to parse
- * @return parsed string
- */
-string IIntToString(int ValueP);
 
 /**
  * double as string
@@ -197,31 +206,6 @@ bool StringToInt(string StringP, int &ReturnP);
 int IStringToInt(string StringP);
 
 ////////////////////////////////////////////////////////////////////////////////////
-// Trimming
-////////////////////////////////////////////////////////////////////////////////////
-
-/**
- * Trim the characters from right
- * @param s String to trim
- * @return Trimmed string
- */
-string trim_right(string s, string delimiters = " \f\n\r\t\v");
-
-/**
- * Trim the characters from left
- * @param s String to trim
- * @return Trimmed string
- */
-string trim_left(string s, string delimiters = " \f\n\r\t\v");
-
-/**
- * Trim the characters from right and then left
- * @param s String to trim
- * @return Trimmed string
- */
-string trim(string s, string delimiters = " \f\n\r\t\v");
-
-////////////////////////////////////////////////////////////////////////////////////
 // String Formating
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -288,5 +272,6 @@ string GetFlagValue(vector<string> TokensP, string FlagP);
 ////////////////////////////////////////////////////////////////////////////////////
 
 double NonLinearity001(double ValueP, double MaxP, double AP, double BP);
+#endif
 
 #endif	/* TOOLS_H */

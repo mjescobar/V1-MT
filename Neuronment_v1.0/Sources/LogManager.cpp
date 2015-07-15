@@ -3,213 +3,292 @@
  * @version 1.0
  */
 
-#include <vector>
-#include <string>
-#include <iostream>
-#include <fstream>
-#include <string.h>
+//#include <vector>
+//#include <string>
+//#include <iostream>
+//#include <fstream>
+//#include <string.h>
 //#include <bits/basic_string.h>
-using namespace std;
-#include "enum.h"
-#include "define.h"
-#include "Tools.h"
-#include "HashEntry.h"
+//using namespace std;
+//#include "enum.h"
+//#include "define.h"
+#include "tools.h"
+//#include "HashEntry.h"
 #include "HashTable.h"
 #include "LogManager.h"
-#include "SettingsManager.h"
-#include "Globals.h"
+//#include "SettingsManager.h"
+#include "extern.h"
 
-void LogManager::SetSilentOutput()
+LogManager::LogManager() :
+MessagesLabel(LOG_MANAGER_HASH_SIZE),
+MessagesText(LOG_MANAGER_HASH_SIZE),
+MessagesDisabling(LOG_MANAGER_HASH_SIZE),
+MessagesCount(LOG_MANAGER_HASH_SIZE),
+MessagesDevelopmentAssert(LOG_MANAGER_HASH_SIZE),
+MessagesRuntimeAssert(LOG_MANAGER_HASH_SIZE),
+MessagesImplementationAssert(LOG_MANAGER_HASH_SIZE)
 {
-  SilentOutput = true;
-}
-
-void LogManager::UnsetSilentOutput()
-{
-  SilentOutput = false;
-}
-
-void LogManager::SetMessages()
-{
-  Messages = true;
-}
-
-void LogManager::SetFullSilentOutput()
-{
-  FullSilentOutput = true;
-}
-
-void LogManager::UnsetFullSilentOutput()
-{
-  FullSilentOutput = false;
-}
-
-void LogManager::UnsetMessages()
-{
-  Messages = false;
-}
-
-LogManager::LogManager()
-{
-  RedirectionLevel = -1;
-  Messages = DEFAULT_MESSAGES;
-  SilentOutput = DEFAULT_SILENT_OUTPUT;
-  FullSilentOutput = DEFAULT_FULL_SILENT_OUTPUT;
-  MessagesLabel = HashTable(Data_string, LOG_MANAGER_MESSAGES_HASH_SIZE);
-  MessagesText = HashTable(Data_string, LOG_MANAGER_MESSAGES_HASH_SIZE);
-  MessagesDisabling = HashTable(Data_int, LOG_MANAGER_MESSAGES_HASH_SIZE);
-  MessagesCount = HashTable(Data_int, LOG_MANAGER_MESSAGES_HASH_SIZE);
-  MessagesDevelopmentAssert = HashTable(Data_bool, LOG_MANAGER_MESSAGES_HASH_SIZE);
-  MessagesRuntimeAssert = HashTable(Data_bool, LOG_MANAGER_MESSAGES_HASH_SIZE);
-  MessagesImplementationAssert = HashTable(Data_bool, LOG_MANAGER_MESSAGES_HASH_SIZE);
+  ShowMessageInformation = DEFAULT_SHOW_MESSAGE_INFORMATION;
+  ShowMessageCodedInformation = DEFAULT_SHOW_MESSAGE_CODED_INFORMATION;
+  ShowMessageCoded = DEFAULT_SHOW_MESSAGE_CODED;
+  ShowMessageDevelopment = DEFAULT_SHOW_MESSAGE_DEVELOPMENT;
+  ShowMessageAllways = DEFAULT_SHOW_MESSAGE_ALLWAYS;
+  Destination.push_back(&cout);
+  ReturnCatch(Log.InitializeMessages());
 }
 
 LogManager::LogManager(const LogManager& orig)
 {
-  Output(Message_Coded, "DV-008");
+  Log.Message("DV-008: LogManager");
 }
 
 LogManager::~LogManager()
 {
 }
 
-void LogManager::DisplayHelp()
+ReturnType LogManager::DisplayHeader()
 {
-  Output(Message_Allways, "Displaying basic program help");
+  Output(MessageAllways, "====================================================================================");
+  Output(MessageAllways, "========================== Neuronment v0.3 - " __DATE__ " ===========================");
+  Output(MessageAllways, "====================================================================================");
+  return ReturnSuccess;
 }
 
-void LogManager::DisplayHeader()
+ReturnType LogManager::DisplayFooter()
 {
-  Output(Message_Allways, "====================================================================================");
-  Output(Message_Allways, "========================== Neuronment v0.3 - " __DATE__ " ===========================");
-  Output(Message_Allways, "====================================================================================");
-  Output(Message_Allways, "");
+  Output(MessageAllways, "====================================================================================");
+  Output(MessageAllways, " Bye!");
+  return ReturnSuccess;
 }
 
-void LogManager::DisplayFooter()
+ReturnType LogManager::Message(string IdP, bool SkipAssertionP)
 {
-  Output(Message_Allways, "");
-  Output(Message_Allways, "====================================================================================");
-  Output(Message_Allways, " Bye!");
-}
+  DataCheck(IdP, "NonEmpty");
 
-void LogManager::DevelopmentMessage(string InfoP, string PrefixP, string TerminationP)
-{
-  OutputNNL(Message_Dev, PrefixP + InfoP + TerminationP);
-}
+  vector<int> Disabling;
+  bool DisablingFound;
+  vector<int> Count;
+  bool CountFound;
+  vector<bool> DevelopmentAssert;
+  bool DevelopmentAssertFound;
+  vector<bool> RuntimeAssert;
+  bool RuntimeAssertFound;
+  vector<bool> ImplementationAssert;
+  bool ImplementationAssertFound;
+  vector<string> Label;
+  bool LabelFound;
 
-void LogManager::Output(MessageType MessageTypeP, string OutputP)
-{
-  OutputNNL(MessageTypeP, OutputP + "\n");
-}
+  string Id = IdP.substr(0, 6);
 
-void LogManager::OutputNNL(MessageType MessageTypeP, string OutputP)
-{
-  if (RedirectionLevel >= 0 && Redirection[RedirectionLevel]->is_open()) {
-    *(Redirection[RedirectionLevel]) << OutputP;
-    Redirection[RedirectionLevel]->flush();
+  ReturnCatch(GetInternalValue(Id, MessagesDisabling, Disabling, DisablingFound), "ContinueOnFail");
+  ReturnCatch(GetInternalValue(Id, MessagesCount, Count, CountFound), "ContinueOnFail");
+  ReturnCatch(GetInternalValue(Id, MessagesDevelopmentAssert, DevelopmentAssert, DevelopmentAssertFound), "ContinueOnFail");
+  ReturnCatch(GetInternalValue(Id, MessagesRuntimeAssert, RuntimeAssert, RuntimeAssertFound), "ContinueOnFail");
+  ReturnCatch(GetInternalValue(Id, MessagesImplementationAssert, ImplementationAssert, ImplementationAssertFound), "ContinueOnFail");
+  ReturnCatch(GetInternalValue(Id, MessagesLabel, Label, LabelFound), "ContinueOnFail");
+
+  if (!(DisablingFound && CountFound && DevelopmentAssertFound && RuntimeAssertFound && ImplementationAssertFound && LabelFound)) {
+    Output(MessageCoded, IdP);
+    Log.Message("DV-023");
+  }
+
+  if (Disabling[0]) {
+    if (Count[0] < Disabling[0]) {
+      Count[0]++;
+      MessagesCount.PutEntry(Id, Count);
+      Output(MessageCoded, LABEL_MESSAGE_STRING + IdP);
+      Output(MessageCodedInformation, LABEL_MESSAGE_STRING + Label[0]);
+      if (Count[0] == Disabling[0]) {
+        Output(MessageCoded, LABEL_MESSAGE_STRING + string("This message will no longer appear on the log"));
+      }
+    }
   } else {
-    if (!SilentOutput && !FullSilentOutput) {
-      for (int i = 1; i < NprocNesting; i++) {
-        cout << LABEL_INDENTATION_STRING;
-      }
-      cout << OutputP;
-      cout.flush();
-    }
+    Output(MessageCoded, LABEL_MESSAGE_STRING + IdP);
+    Output(MessageCodedInformation, LABEL_MESSAGE_STRING + Label[0]);
   }
-  if (SilentOutput && (MessageTypeP == Message_Coded) && !FullSilentOutput) {
-    for (int i = 1; i < NprocNesting; i++) {
-      cout << LABEL_INDENTATION_STRING;
-    }
-    cout << OutputP;
-    cout.flush();
-  }
-}
-
-void LogManager::Message(string IdP)
-{
-  string Label = IdP.substr(0, 6);
-  bool ToPrint = false;
-  bool ToDisable = false;
-  if (!MessagesCount.GetEntry(Label)) {
-    Output(Message_Coded, IdP);
-    Output(Message_Coded, "Message not registered");
-    DevelopmentAssertion();
-  } else {
-    if (!MessagesDisabling.GetEntry(Label)) {
-      Output(Message_Coded, IdP);
-      Output(Message_Coded, "Message without apparition count");
-      DevelopmentAssertion();
-    } else {
-      if (MessagesDisabling.QuickGetEntry_int(Label) > 0) {
-        if (MessagesDisabling.QuickGetEntry_int(Label) > MessagesCount.QuickGetEntry_int(Label)) {
-          ToPrint = true;
-          MessagesCount.QuickUpdateEntry_int(Label, MessagesCount.QuickGetEntry_int(Label) + 1);
-          if (MessagesDisabling.QuickGetEntry_int(Label) >= MessagesCount.QuickGetEntry_int(Label)) {
-            ToDisable = true;
-          }
-        } else {
-          ToPrint = false;
-        }
-      } else {
-        ToPrint = true;
-      }
-    }
-  }
-  if (ToPrint) {
-    bool ToRuntimeAssert = MessagesRuntimeAssert.QuickGetEntry_bool(Label);
-    bool ToImplementationAssert = MessagesImplementationAssert.QuickGetEntry_bool(Label);
-    bool ToDevelopmentAssert = MessagesDevelopmentAssert.QuickGetEntry_bool(Label);
-    string Message = MessagesLabel.QuickGetEntry_string(Label);
-    if (ToImplementationAssert || ToRuntimeAssert) {
-      UnsetSilentOutput();
-    } else {
-#ifdef DEVELOPMENT
-      if (ToDevelopmentAssert) {
-        UnsetSilentOutput();
-      }
-#endif
-    }
-    Output(Message_Coded, LABEL_MESSAGE_STRING + IdP);
-    if (Messages) {
-      Output(Message_Coded, LABEL_MESSAGE_STRING + Message);
-    }
-    if (ToDisable) {
-      Output(Message_Coded, LABEL_MESSAGE_STRING + string("This message will no longer appear on the log"));
-    }
-    if (ToDevelopmentAssert) {
+  if (!SkipAssertionP) {
+    if (DevelopmentAssert[0]) {
       DevelopmentAssertion();
     }
-    if (ToImplementationAssert) {
+    if (ImplementationAssert[0]) {
       ImplementationAssertion();
     }
-    if (ToRuntimeAssert) {
+    if (RuntimeAssert[0]) {
       RuntimeAssertion();
     }
   }
+  return ReturnSuccess;
 }
 
-void LogManager::StartOutputRedirection(string DestinationP)
+ReturnType LogManager::MessageFail()
 {
-  RedirectionLevel++;
-  Redirection.resize(Redirection.size() + 1);
-  Redirection[RedirectionLevel] = new ofstream;
-  Redirection[RedirectionLevel]->open(DestinationP.c_str(), ofstream::out);
-  if (!Redirection[RedirectionLevel]->is_open()) {
-    Log.Message("RP-003: " + DestinationP);
+  Output(MessageAllways, string(LABEL_FAIL));
+}
+
+ReturnType LogManager::MessageDone()
+{
+  Output(MessageAllways, string(LABEL_DONE));
+}
+
+ReturnType LogManager::OutputEmptyLine(MessageType LevelP)
+{
+  return Log.Output(LevelP, "");
+}
+
+ReturnType LogManager::OutputNproc(MessageType LevelP, string MessageP)
+{
+  ReturnCatch(Log.Output(LevelP, MessageP));
+  return ReturnSuccess;
+}
+
+ReturnType LogManager::StartOutput(string FilenameP, RedirectionType RedirectionModeP)
+{
+  if (RedirectionModeP == RedirectionNew) {
+    ofstream *NewFile = new ofstream;
+    NewFile->open(FilenameP.c_str(), ofstream::out);
+    Destination.push_back(NewFile);
+  } else if (RedirectionModeP = RedirectionAppend) {
+    ofstream *NewFile = new ofstream;
+    NewFile->open(FilenameP.c_str(), ofstream::app);
+    Destination.push_back(NewFile);
+  } else {
+    Log.Message("DV-025");
+    return ReturnFail;
   }
+  if (!Destination.back()->good()) {
+    if (FilenameP.size() == 0) {
+      FilenameP = "Standard Output";
+    }
+    Log.Message("RP-002: " + FilenameP);
+    return ReturnFail;
+  }
+  return ReturnSuccess;
 }
 
-void LogManager::StopOutputRedirection()
+ReturnType LogManager::IncreaseOutputLevel()
 {
-  if (RedirectionLevel >= 0) {
-    if (Redirection[RedirectionLevel]->is_open()) {
-      Redirection[RedirectionLevel]->close();
-      delete Redirection[RedirectionLevel];
-      Redirection.resize(Redirection.size() - 1);
-      RedirectionLevel--;
+  Destination.push_back(Destination.back());
+  return ReturnSuccess;
+}
+
+ReturnType LogManager::DecreaseOutputLevel()
+{
+  Destination.pop_back();
+  return ReturnSuccess;
+}
+
+ReturnType LogManager::StopOutput()
+{
+  if (Destination.size() > 0) {
+    if (Destination.back()->good()) {
+      if (Destination.back() != &cout) {
+        (dynamic_cast<ofstream*> (Destination.back()))->close();
+        delete Destination.back();
+      }
+      Destination.pop_back();
     } else {
-      Log.Message("RP-002");
+      Log.Message("RP-001");
+      return ReturnFail;
     }
+  } else {
+    Log.Message("DV-026");
+    return ReturnFail;
+  }
+  return ReturnSuccess;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+// Internals
+////////////////////////////////////////////////////////////////////////////////////
+
+ReturnType LogManager::Output(MessageType MessageTypeP, string OutputP, bool NewLine)
+{
+  if (NewLine) {
+    OutputP = OutputP + "\n";
+  }
+  if (ToPrint(MessageTypeP) == ReturnSuccess) {
+    OutputHere(MessageTypeP, OutputP, 0);
+  }
+  return ReturnSuccess;
+}
+
+ReturnType LogManager::OutputHere(MessageType MessageTypeP, string OutputP, int NprocNestingP)
+{
+  ReturnType FromOutputHere = ReturnNone;
+  // Recursive Call
+  if (NprocNestingP < Destination.size() - 1) {
+    FromOutputHere = OutputHere(MessageTypeP, OutputP, NprocNestingP + 1);
+  }
+  if (FromOutputHere == ReturnNone) {
+    if (!Destination[NprocNestingP]->good()) {
+      Log.Message("RP-003");
+      return ReturnFail;
+    } else {
+      int ThisStreamNesting = 0;
+      for (int i = NprocNestingP; i >= 0; i--) {
+        if (Destination[i] != Destination[NprocNestingP]) {
+          ThisStreamNesting = i + 1;
+          i = -1;
+        }
+      }
+      for (int i = 0; i < NprocNestingP - ThisStreamNesting ; i++) {
+        *(Destination[NprocNestingP]) << LABEL_INDENTATION_STRING;
+      }
+      *(Destination[NprocNestingP]) << OutputP;
+      Destination[NprocNestingP]->flush();
+    }
+  }
+  return ReturnSuccess;
+}
+
+ReturnType LogManager::ToPrint(MessageType MessageTypeP)
+{
+  switch (MessageTypeP) {
+  case MessageCoded:
+    if (!ShowMessageCoded) {
+      return ReturnFail;
+    }
+    break;
+  case MessageAllways:
+    if (!ShowMessageAllways) {
+      return ReturnFail;
+    }
+    break;
+  case MessageInformation:
+    if (!ShowMessageInformation) {
+      return ReturnFail;
+    }
+    break;
+  case MessageDevelopment:
+    if (!ShowMessageDevelopment) {
+      return ReturnFail;
+    }
+    break;
+  case MessageCodedInformation:
+    if (!ShowMessageCodedInformation) {
+      return ReturnFail;
+    }
+    break;
+  default:
+    Log.Message("DV-027");
+    return ReturnFail;
+    break;
+  }
+  return ReturnSuccess;
+}
+
+template <class VariableType> ReturnType LogManager::GetInternalValue(string IdP, HashTable<VariableType> TableP, vector<VariableType> &ContentP, bool &FlagP)
+{
+  if (TableP.GetEntry(IdP, ContentP) == ReturnFail) {
+    Output(MessageCoded, LABEL_MESSAGE_STRING + IdP);
+    Output(MessageCoded, LABEL_MESSAGE_STRING + ReturnMessage);
+    Output(MessageCoded, LABEL_MESSAGE_STRING + string("Coded message not found"));
+    DevelopmentAssertion();
+    ContentP.clear();
+    FlagP = false;
+    return ReturnFail;
+  } else {
+    FlagP = true;
+    return ReturnSuccess;
   }
 }

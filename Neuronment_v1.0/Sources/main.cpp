@@ -3,129 +3,65 @@
  * @version 1.0
  */
 
-#include <vector>
-#include <string>
+//#include <vector>
+//#include <string>
 #include <fstream>
-#include <string.h>
-using namespace std;
-#include "enum.h"
-#include "define.h"
-#include "Tools.h"
-#include "HashEntry.h"
-#include "HashTable.h"
-#include "LogManager.h"
-#include "SettingsManager.h"
+//#include <string.h>
+//using namespace std;
+//#include "enum.h"
+//#include "define.h"
+#include "tools.h"
+//#include "HashEntry.h"
+//#include "HashTable.h"
+//#include "LogManager.h"
+//#include "SettingsManager.h"
+#include "CommandManager.h"
 #include "InterpreterManager.h"
-#include "Globals.h"
+//#include "Globals.h"
+#include "extern.h"
 #include "main.h"
+#include "NeuronmentCommand.h"
+#include "CommandManager.h"
+
+// Stores the warning messages after a function termination
+string ReturnMessage;
+// Sets the log management instance of LogManager
+LogManager Log;
+// Stores the variables
+//SettingsManager Variables;
+// Single Simulator for outside optimization testing
+//SimulationManager SingleSimulator;
+// For early terminating a nproc reading
+//bool EarlyReturn = false;
 
 int main(int argc, char** argv)
 {
   // Initialize global variables that require initialization
-  SetGlobals();
-  // Initialize Globals
-  Log.InitializeMessages();
-  Variables.InitializeVariables();
-  // Read command line arguments
-  ReadCommandLineArguments(argc, argv);
+  ReturnCatch(SetGlobals());
   // Program Header
-  Log.DisplayHeader();
-  // Open file to read
-  Interpreter.LoadFile();
-  // Reads the nproc file line by line
-  Interpreter.Process();
-  // Close nproc file
-  Interpreter.CloseFile();
+  ReturnCatch(Log.DisplayHeader());
+  // Processing command line
+  ReturnCatch(ProcessCommandLine(argc, argv), "ContinueOnFail");
   // Program Footer
-  Log.DisplayFooter();
+  ReturnCatch(Log.DisplayFooter());
   return 0;
 }
 
-bool ReadCommandLineArguments(int argc, char** argv)
+ReturnType ProcessCommandLine(int argcP, char** argvP)
 {
-  bool NprocStatus = false;
-  bool VerboseDevelopmentStatus = false;
-  bool VerboseMessagesStatus = false;
-  for (int i = 1; i < argc; i++) {
-    // Identifying argument label
-    if (argv[i][0] == '-') {
-      // Checking if procedure file
-      if (strcmp(argv[i], "-nproc") == 0) {
-        // if the procedure file has already been stored
-        if (NprocStatus) {
-          Log.Message("UI-001");
-          Log.DisplayHelp();
-          RuntimeAssertion();
-          return false;
-        } else {
-          if (i + 1 < argc) {
-            i++;
-            if (argv[i][0] != '-') {
-              if (Interpreter.SetNproc(ICstringToString(argv[i]))) {
-                NprocStatus = true;
-                continue;
-              } else {
-                DevelopmentAssertion();
-              }
-            } else {
-              Log.Message("UI-004");
-              RuntimeAssertion();
-              return false;
-            }
-          } else {
-            Log.Message("UI-004");
-            RuntimeAssertion();
-            return false;
-          }
-        }
-      }
-      if (strcmp(argv[i], "-verbose_messages") == 0) {
-        if (VerboseMessagesStatus) {
-          Log.Message("UI-001");
-          Log.DisplayHelp();
-          RuntimeAssertion();
-          return false;
-        } else {
-          Log.SetMessages();
-          VerboseMessagesStatus = true;
-          continue;
-        }
-      }
-      if (strcmp(argv[i], "-no_verbose_messages") == 0) {
-        if (VerboseMessagesStatus) {
-          Log.Message("UI-001");
-          Log.DisplayHelp();
-          RuntimeAssertion();
-          return false;
-        } else {
-          Log.UnsetMessages();
-          VerboseMessagesStatus = true;
-          continue;
-        }
-      }
-      if (strcmp(argv[i], "-no_output") == 0) {
-        Log.SetFullSilentOutput();
-        continue;
-      }
-      if (strcmp(argv[i], "-time") == 0) {
-        Variables.QuickSetSetting(SHOW_ELAPSED_TIME, "true");
-        continue;
-      }
-      Log.Message("UI-003: " + string(argv[i]));
-      Log.DisplayHelp();
-      DevelopmentAssertion();
-      continue;
-    } else {
-      Log.Message("UI-002");
-      Log.DisplayHelp();
-      RuntimeAssertion();
-      return false;
-    }
-  }
-  return true;
+  CommandManager CommandLine(argcP, argvP);
+  //Lothar:
+  //-verbose_messages
+  //-no_verbose_messages
+  //-no_output
+  //-time
+  return rescue_nproc(CommandLine);
 }
 
-bool SetGlobals()
+ReturnType SetGlobals()
 {
-  return true;
+  // Initialize system variables list
+  //Variables.InitializeVariables();
+  // Returning process result
+  return ReturnSuccess;
 }

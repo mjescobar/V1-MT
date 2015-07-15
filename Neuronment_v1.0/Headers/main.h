@@ -6,18 +6,14 @@
 #ifndef MAIN_H
 #define	MAIN_H
 
-/**
- * Read and process command line arguments
- * @param argc main argc
- * @param argv main argv
- * @return true if success
- */
-bool ReadCommandLineArguments(int argc, char** argv);
+//#include "LogManager.h"
 
-/**
- * Initialize the global values
- * @return true if success
- */
-bool SetGlobals();
+ReturnType SetGlobals();
+
+ReturnType ProcessCommandLine(int argcP, char** argvP);
+
+#if 0
+bool ReadCommandLineArguments(int argc, char** argv);
+#endif
 
 #endif	/* MAIN_H */

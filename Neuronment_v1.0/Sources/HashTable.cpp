@@ -1,229 +1,199 @@
 /* 
  * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
+ * @version 2.0
  */
 
-#include <vector>
-#include <string>
-#include <fstream>
-#include <stdlib.h>
-using namespace std;
-#include "enum.h"
-#include "define.h"
-#include "HashEntry.h"
-#include "Tools.h"
-#include "HashEntry.h"
+#include "tools.h"
 #include "HashTable.h"
-#include "LogManager.h"
-#include "SettingsManager.h"
-#include "Globals.h"
-#include "HashTable.h"
+#include "extern.h"
 
-HashTable::HashTable()
+template <class TableType> HashTable<TableType>::HashTable()
 {
-  TableType = Data_null;
+  Size = 0;
+  Counter = 0;
   Table = NULL;
-  HashSize = 0;
 }
 
-HashTable::HashTable(const HashTable& orig)
+template <class TableType> HashTable<TableType>::HashTable(int SizeP)
 {
-  Table = new HashEntry*[HashSize];
-  for (int i = 0; i < HashSize; i++) {
+  ReturnCatch(DataCheck(SizeP, "GreaterThanZero"));
+  Size = SizeP * HASH_TABLE_MARGIN*HASH_TABLE_MARGIN;
+  Counter = 0;
+  Table = new HashEntry<TableType>*[Size];
+  for (int i = 0; i < Size; i++) {
+    Table[i] = NULL;
+  }
+}
+
+template <class TableType> HashTable<TableType>::HashTable(const HashTable& orig)
+{
+  ReturnCatch(DataCheck(orig.Size, "GreaterThanZero"));
+  Size = orig.Size;
+  Counter = orig.Counter;
+  Table = new HashEntry<TableType>*[Size];
+  for (int i = 0; i < Size; i++) {
     if (orig.Table[i] != NULL) {
-      Table[i] = new HashEntry();
-      Table[i] = orig.Table[i];
+      Table[i] = new HashEntry<TableType>;
+      *(Table[i]) = *(orig.Table[i]);
     } else {
       Table[i] = NULL;
     }
   }
-  TableType = orig.TableType;
-  HashSize = orig.HashSize;
 }
 
-HashTable::~HashTable()
+template <class TableType> HashTable<TableType>::~HashTable()
 {
   if (Table) {
-    for (int i = 0; i < HashSize; i++) {
+    for (int i = 0; i < Size; i++) {
       if (Table[i] != NULL) {
         delete Table[i];
         Table[i] = NULL;
       }
     }
+    delete Table;
     Table = NULL;
   }
 }
 
-HashTable::HashTable(DataType TableTypeP, int HashSizeP)
+template <class TableType> ReturnType HashTable<TableType>::PutEntry(string KeyP, vector<TableType> ContentP)
 {
-  HashSize = HashSizeP * HASH_CAPACITY_MULTIPLICATOR;
-  TableType = TableTypeP;
-  Table = new HashEntry*[HashSize];
-  for (int i = 0; i < HashSize; i++) {
-    Table[i] = NULL;
-  }
-}
-
-bool HashTable::PutEntry(string KeyP, void* ContentP, int CountP, bool ValidP)
-{
-  unsigned int HashKeyP = HashString(KeyP);
-  int Index = HashKeyP % HashSize;
-  while (Table[Index] != NULL && Table[Index]->GetKey() != KeyP) {
-    Index = (Index + 1) % HashSize;
-    if (Index == HashKeyP % HashSize) {
-      Log.Message("DV-013");
-      return false;
+  // If adding a new element requires a table resizing
+  if (Counter + 1 > Size / HASH_TABLE_MARGIN) {
+    // Creating resizing required variables
+    double OldSize;
+    HashEntry<TableType> **OldTable;
+    // Storing old table values
+    OldSize = Size;
+    OldTable = Table;
+    // Resetting values for resized table
+    Counter = 0;
+    Size = Size*HASH_TABLE_MARGIN;
+    Table = new HashEntry<TableType>*[Size];
+    for (int i = 0; i < Size; i++) {
+      Table[i] = NULL;
     }
+    // Filling resized table with old values
+    for (int i = 0; i < OldSize; i++) {
+      if (OldTable[i] != NULL) {
+        // Creating entry retrieve variables
+        string Key;
+        vector<TableType> Content;
+        // Retrieving old entry values
+        ReturnCatch(OldTable[i]->GetKey(Key));
+        ReturnCatch(OldTable[i]->GetContent(Content));
+        // Adding values to the new table;
+        PutEntry(Key, Content);
+        delete OldTable[i];
+        OldTable[i] = NULL;
+      }
+    }
+    delete OldTable;
+    OldTable = NULL;
+  }
+  // Adding new entry
+  // Declaring temporal variables
+  int Index;
+  bool IndexOk;
+  unsigned int HashKeyP;
+  // Inserting new entry
+  ReturnCatch(KeyToHashKey(KeyP, HashKeyP));
+  Index = HashKeyP % Size;
+  IndexOk = IndexChecking(Index, KeyP);
+  while (IndexOk) {
+    Index = (Index + 1) % Size;
+    IndexOk = IndexChecking(Index, KeyP);
   }
   if (Table[Index] != NULL) {
     delete Table[Index];
+    Table[Index] = NULL;
+    Counter--;
   }
-  Table[Index] = new HashEntry(KeyP, TableType, ContentP, CountP, ValidP);
-  return true;
+  Table[Index] = new HashEntry<TableType>(KeyP, ContentP);
+  Counter++;
+  return ReturnSuccess;
 }
 
-HashEntry* HashTable::GetEntry(string KeyP)
+template <class TableType> ReturnType HashTable<TableType>::PutEntryQuick(string KeyP, TableType ContentP)
 {
-  unsigned int HashKeyP = HashString(KeyP);
-  int Index = HashKeyP % HashSize;
-  while (Table[Index] != NULL && Table[Index]->GetKey() != KeyP) {
-    Index = (Index + 1) % HashSize;
-    if (Index == HashKeyP % HashSize) {
-      return NULL;
-    }
+  vector<TableType> Temporal;
+  Temporal.push_back(ContentP);
+  ReturnCatch(PutEntry(KeyP, Temporal));
+  return ReturnSuccess;
+}
+
+template <class TableType> ReturnType HashTable<TableType>::GetEntry(string KeyP, vector<TableType> &ContentP)
+{
+  // Declaring temporal variables
+  int Index;
+  bool IndexOk;
+  unsigned int HashKey;
+  // Calculating the key index
+  ReturnCatch(KeyToHashKey(KeyP, HashKey));
+  Index = HashKey % Size;
+  IndexOk = IndexChecking(Index, KeyP);
+  while (IndexOk) {
+    Index = (Index + 1) % Size;
+    IndexOk = IndexChecking(Index, KeyP);
   }
   if (Table[Index] == NULL) {
-    return NULL;
+    ReturnMessage = "Key not found in the HashTable";
+    return ReturnFail;
   } else {
-    return Table[Index];
+    ReturnCatch(Table[Index]->GetContent(ContentP));
+    return ReturnSuccess;
   }
 }
 
-bool HashTable::QuickPutEntry_double(string KeyP, double ValueP)
+template <class TableType> ReturnType HashTable<TableType>::GetEntryQuick(string KeyP, TableType &ContentP)
 {
-  if (TableType == Data_double) {
-    void* Content = malloc(sizeof (double));
-    ((double*) Content)[0] = ValueP;
-    return PutEntry(KeyP, Content, 1, true);
+  vector<TableType> Temporal;
+  if (GetEntry(KeyP, Temporal) == ReturnFail) {
+    return ReturnFail;
   } else {
-    Log.Message("DV-012");
-    return false;
+    ContentP = Temporal[0];
+    if (Temporal.size() != 1) {
+      ReturnMessage = "Quick access to a entry with more than 1 element";
+      DevelopmentAssertion();
+      return ReturnSuccessWarning;
+    }
+    return ReturnSuccess;
   }
 }
 
-bool HashTable::QuickPutEntry_bool(string KeyP, bool ValueP)
+template <class TableType> ReturnType HashTable<TableType>::Clear()
 {
-  if (TableType == Data_bool) {
-    void* Content = malloc(sizeof (bool));
-    ((bool*) Content)[0] = ValueP;
-    return PutEntry(KeyP, Content, 1, true);
+  if (Table) {
+    for (int i = 0; i < Size; i++) {
+      if (Table[i] != NULL) {
+        delete Table[i];
+        Table[i] = NULL;
+      }
+    }
+  }
+  return ReturnSuccess;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+// Internals
+////////////////////////////////////////////////////////////////////////////////////
+
+template <class TableType> bool HashTable<TableType>::IndexChecking(int IndexP, string KeyP)
+{
+  string Key;
+  if (Table[IndexP] == NULL) {
+    return false;
   } else {
-    Log.Message("DV-012");
-    return false;
+    ReturnCatch(Table[IndexP]->GetKey(Key));
+    if (Key == KeyP) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }
 
-double HashTable::QuickGetEntry_double(string KeyP)
-{
-  if (TableType != Data_double) {
-    Log.Message("DV-012");
-    return 0;
-  }
-  HashEntry* Retreived = GetEntry(KeyP);
-  if (!Retreived) {
-    Log.Message("DV-018");
-    return 0;
-  }
-  return ((double*) Retreived->GetContent())[0];
-}
-
-int HashTable::QuickGetEntry_int(string KeyP)
-{
-  if (TableType != Data_int) {
-    Log.Message("DV-012");
-    return 0;
-  }
-  HashEntry* Retreived = GetEntry(KeyP);
-  if (!Retreived) {
-    Log.Message("DV-018");
-    return 0;
-  }
-  return ((int*) Retreived->GetContent())[0];
-}
-
-bool HashTable::QuickUpdateEntry_int(string KeyP, int ValueP)
-{
-  if (TableType != Data_int) {
-    Log.Message("DV-012");
-    return false;
-  }
-  HashEntry* Retreived = GetEntry(KeyP);
-  if (!Retreived) {
-    Log.Message("DV-018");
-    return false;
-  }
-  ((int*) Retreived->GetContent())[0] = ValueP;
-  return true;
-}
-
-bool HashTable::QuickGetEntry_bool(string KeyP)
-{
-  if (TableType != Data_bool) {
-    Log.Message("DV-012");
-    return false;
-  }
-  HashEntry* Retreived = GetEntry(KeyP);
-  if (!Retreived) {
-    Log.Message("DV-018");
-    return false;
-  }
-  return ((bool*) Retreived->GetContent())[0];
-}
-
-string HashTable::QuickGetEntry_string(string KeyP)
-{
-  if (TableType != Data_string) {
-    Log.Message("DV-012");
-    return "";
-  }
-  HashEntry* Retreived = GetEntry(KeyP);
-  if (!Retreived) {
-    Log.Message("DV-018");
-    return "";
-  }
-  return ((string*) Retreived->GetContent())[0];
-}
-
-bool HashTable::QuickPutEntry_string(string KeyP, string ValueP)
-{
-  if (TableType == Data_string) {
-    void* ToPut = malloc(sizeof (string));
-    new (&((string*) ToPut)[0]) std::string(ValueP);
-    return PutEntry(KeyP, ToPut, 1, true);
-  } else {
-    Log.Message("DV-012");
-    return false;
-  }
-}
-
-bool HashTable::QuickPutEntry_int(string KeyP, int ValueP)
-{
-  if (TableType == Data_int) {
-    void* Content = malloc(sizeof (int));
-    ((int*) Content)[0] = ValueP;
-    return PutEntry(KeyP, Content, 1, true);
-  } else {
-    Log.Message("DV-012");
-    return false;
-  }
-}
-
-bool HashTable::QuickPutEntry_function(string KeyP, void* FunctionP)
-{
-  if (TableType == Data_function) {
-    return PutEntry(KeyP, FunctionP, 1, true);
-  } else {
-    Log.Message("DV-012");
-    return false;
-  }
-}
+template class HashTable<int>;
+template class HashTable<bool>;
+template class HashTable<void*>;
+template class HashTable<double>;
+template class HashTable<string>;

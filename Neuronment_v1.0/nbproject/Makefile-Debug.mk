@@ -35,21 +35,16 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/Sources/Globals.o \
+	${OBJECTDIR}/Sources/CommandManager.o \
 	${OBJECTDIR}/Sources/HashEntry.o \
 	${OBJECTDIR}/Sources/HashTable.o \
 	${OBJECTDIR}/Sources/InterpreterManager.Init.o \
 	${OBJECTDIR}/Sources/InterpreterManager.o \
 	${OBJECTDIR}/Sources/LogManager.Init.o \
 	${OBJECTDIR}/Sources/LogManager.o \
-	${OBJECTDIR}/Sources/MT_Neuron.o \
-	${OBJECTDIR}/Sources/ND_Neuron.o \
-	${OBJECTDIR}/Sources/SettingsManager.Init.o \
-	${OBJECTDIR}/Sources/SettingsManager.o \
-	${OBJECTDIR}/Sources/SimulationManager.o \
-	${OBJECTDIR}/Sources/Tools.o \
-	${OBJECTDIR}/Sources/V1_Neuron.o \
-	${OBJECTDIR}/Sources/main.o
+	${OBJECTDIR}/Sources/NeuronmentCommand.o \
+	${OBJECTDIR}/Sources/main.o \
+	${OBJECTDIR}/Sources/tools.o
 
 
 # C Compiler Flags
@@ -76,80 +71,55 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/neuronment_v1.0: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/neuronment_v1.0 ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/Sources/Globals.o: Sources/Globals.cpp 
+${OBJECTDIR}/Sources/CommandManager.o: Sources/CommandManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/Globals.o Sources/Globals.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/CommandManager.o Sources/CommandManager.cpp
 
 ${OBJECTDIR}/Sources/HashEntry.o: Sources/HashEntry.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/HashEntry.o Sources/HashEntry.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/HashEntry.o Sources/HashEntry.cpp
 
 ${OBJECTDIR}/Sources/HashTable.o: Sources/HashTable.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/HashTable.o Sources/HashTable.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/HashTable.o Sources/HashTable.cpp
 
 ${OBJECTDIR}/Sources/InterpreterManager.Init.o: Sources/InterpreterManager.Init.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/InterpreterManager.Init.o Sources/InterpreterManager.Init.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/InterpreterManager.Init.o Sources/InterpreterManager.Init.cpp
 
 ${OBJECTDIR}/Sources/InterpreterManager.o: Sources/InterpreterManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/InterpreterManager.o Sources/InterpreterManager.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/InterpreterManager.o Sources/InterpreterManager.cpp
 
 ${OBJECTDIR}/Sources/LogManager.Init.o: Sources/LogManager.Init.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/LogManager.Init.o Sources/LogManager.Init.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/LogManager.Init.o Sources/LogManager.Init.cpp
 
 ${OBJECTDIR}/Sources/LogManager.o: Sources/LogManager.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/LogManager.o Sources/LogManager.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/LogManager.o Sources/LogManager.cpp
 
-${OBJECTDIR}/Sources/MT_Neuron.o: Sources/MT_Neuron.cpp 
+${OBJECTDIR}/Sources/NeuronmentCommand.o: Sources/NeuronmentCommand.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/MT_Neuron.o Sources/MT_Neuron.cpp
-
-${OBJECTDIR}/Sources/ND_Neuron.o: Sources/ND_Neuron.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sources
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/ND_Neuron.o Sources/ND_Neuron.cpp
-
-${OBJECTDIR}/Sources/SettingsManager.Init.o: Sources/SettingsManager.Init.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sources
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/SettingsManager.Init.o Sources/SettingsManager.Init.cpp
-
-${OBJECTDIR}/Sources/SettingsManager.o: Sources/SettingsManager.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sources
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/SettingsManager.o Sources/SettingsManager.cpp
-
-${OBJECTDIR}/Sources/SimulationManager.o: Sources/SimulationManager.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sources
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/SimulationManager.o Sources/SimulationManager.cpp
-
-${OBJECTDIR}/Sources/Tools.o: Sources/Tools.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sources
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/Tools.o Sources/Tools.cpp
-
-${OBJECTDIR}/Sources/V1_Neuron.o: Sources/V1_Neuron.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sources
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/V1_Neuron.o Sources/V1_Neuron.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/NeuronmentCommand.o Sources/NeuronmentCommand.cpp
 
 ${OBJECTDIR}/Sources/main.o: Sources/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -IDocumentation -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/main.o Sources/main.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/main.o Sources/main.cpp
+
+${OBJECTDIR}/Sources/tools.o: Sources/tools.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/tools.o Sources/tools.cpp
 
 # Subprojects
 .build-subprojects:

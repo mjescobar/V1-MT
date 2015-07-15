@@ -1,0 +1,9 @@
+# testing report test
+#RP1
+report test
+#nproc1
+rescue nproc -nproc Resources/Round001/BaseTesting001.nproc >  Resources/DumpFile1
+#nproc2
+rescue nproc -nproc Resources/Round001/BaseTesting002.nproc #>> Resources/DumpFile1
+#RP2
+report test

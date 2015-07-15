@@ -2,10 +2,25 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>1</activeConfTypeElem>
-        <activeConfIndexElem>1</activeConfIndexElem>
+        <activeConfIndexElem>0</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/main.cpp</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/HashTable.cpp</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/NeuronmentCommand.cpp</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/InterpreterManager.cpp</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/CommandManager.cpp</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Resources/Round001/BaseTesting002.nproc</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/LogManager.h</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/LogManager.cpp</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Resources/Round001/BaseTesting.nproc</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Resources/Round001/BaseTesting001.nproc</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/enum.h</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/CommandManager.h</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/tools.h</file>
+            <file>file:/Users/ptoledo/Dropbox/My%20NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/InterpreterManager.h</file>
+        </group>
     </open-files>
 </project-private>

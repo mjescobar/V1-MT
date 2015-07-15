@@ -1,83 +1,64 @@
 /* 
  * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
+ * @version 2.0
  */
 
-#include <vector>
-#include <string>
-#include <fstream>
-#include <stdlib.h>
-using namespace std;
-#include "enum.h"
-#include "Tools.h"
+#include "tools.h"
 #include "HashEntry.h"
-#include "HashTable.h"
-#include "LogManager.h"
-#include "Globals.h"
 
-HashEntry::HashEntry()
+template <class EntryType> HashEntry<EntryType>::HashEntry()
 {
   Key = "";
   HashKey = 0;
-  Type = Data_null;
-  Content = NULL;
-  Count = 0;
-  Valid = false;
+  Content.empty();
 }
 
-HashEntry::HashEntry(const HashEntry& orig)
+template <class EntryType> HashEntry<EntryType>::HashEntry(string KeyP, vector<EntryType> ContentP)
+{
+  unsigned int HashKeyP;
+  ReturnCatch(KeyToHashKey(KeyP, HashKeyP));
+  Key = KeyP;
+  HashKey = HashKeyP;
+  Content = ContentP;
+}
+
+template <class EntryType> HashEntry<EntryType>::HashEntry(const HashEntry& orig)
 {
   Key = orig.Key;
   HashKey = orig.HashKey;
-  Type = orig.Type;
-  Content = DuplicateArray(Content, Count, Type);
-  Count = orig.Count;
-  Valid = orig.Valid;
+  Content = orig.Content;
 }
 
-HashEntry::~HashEntry()
+template <class EntryType> HashEntry<EntryType>::~HashEntry()
 {
-  if (Type == Data_string) {
-    for (int i = 0; i < Count; i++) {
-      (&((string*) Content)[i])->~string();
-    }
-  }
-  if (Type != Data_function) {
-    free(Content);
-  }
 }
 
-HashEntry::HashEntry(string KeyP, DataType TypeP, void* ContentP, int CountP, bool ValidP)
+template <class EntryType> ReturnType HashEntry<EntryType>::GetKey(string &KeyP)
 {
-  Key = KeyP;
-  HashKey = HashString(KeyP);
-  Type = TypeP;
-  Content = ContentP;
-  Count = CountP;
-  Valid = ValidP;
+  KeyP = Key;
+  return ReturnSuccess;
 }
 
-unsigned int HashEntry::GetHashKey()
+template <class EntryType> ReturnType HashEntry<EntryType>::GetHashKey(unsigned int &HashKeyP)
 {
-  return HashKey;
+  HashKeyP = HashKey;
+  return ReturnSuccess;
 }
 
-string HashEntry::GetKey()
+template <class EntryType> ReturnType HashEntry<EntryType>::GetCount(int &CountP)
 {
-  return Key;
+  CountP = Content.size();
+  return ReturnSuccess;
 }
 
-int HashEntry::GetCount()
+template <class EntryType> ReturnType HashEntry<EntryType>::GetContent(vector<EntryType> &ContentP)
 {
-  return Count;
+  ContentP = Content;
+  return ReturnSuccess;
 }
 
-void* HashEntry::GetContent()
-{
-  return Content;
-}
-
-bool HashEntry::GetValid()
-{
-  return Valid;
-}
+template class HashEntry<int>;
+template class HashEntry<bool>;
+template class HashEntry<void*>;
+template class HashEntry<double>;
+template class HashEntry<string>;

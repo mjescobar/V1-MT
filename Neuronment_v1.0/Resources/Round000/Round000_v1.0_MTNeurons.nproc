@@ -18,3 +18,17 @@ varman set SIM:MT'000004 0.0 0.0 0.0 180.00 0.0 0.0
 varman set SIM:MT'000005 0.0 0.0 0.0 225.00 0.0 0.0
 varman set SIM:MT'000006 0.0 0.0 0.0 270.00 0.0 0.0
 varman set SIM:MT'000007 0.0 0.0 0.0 315.00 0.0 0.0
+
+setsim neuron_type MT                             \ 
+                  -activation_levels 1            \
+                  -fact0 MT_001                   \
+                  -parameters {X Y Z Orientation}
+
+setsim add_neuron -name MT'000000 \
+                  -group MT \
+                  -act0 0.0 \
+                  -act1 0.0 \
+                  -X 0.0 \
+                  -Y 0.0 \
+                  -Z 0.0 \
+                  -Orientation 000.00
