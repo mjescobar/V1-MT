@@ -1,0 +1,7 @@
+# testing report test
+report test
+varman set -name Test001 -type int -value { 42 21 84 }
+varman get -name Test001
+rescue end_nproc
+setsim add_neuron_type
+report test
