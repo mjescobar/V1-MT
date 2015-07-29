@@ -79,6 +79,8 @@ ReturnType InterpreterManager::CloseFile()
 ReturnType InterpreterManager::Process()
 {
   bool CommandReady;
+  bool EarlyReturnInternal = false;
+  ;
   bool LastLine = false;
   string Line;
   LocalManager = new CommandManager();
@@ -88,12 +90,20 @@ ReturnType InterpreterManager::Process()
       string ThisCommand;
       ReturnCatch(LocalManager->GetCleanCommand(ThisCommand));
       ReturnType ThisCommandResult = ProcessLine(*LocalManager);
+      if (EarlyReturn == true) {
+        EarlyReturn = false;
+        EarlyReturnInternal = true;
+        Log.Message("WN-001");
+      }
       if (!(ThisCommand == "rescue nproc" || ThisCommand == "")) {
         if (ThisCommandResult == ReturnFail) {
           Log.MessageFail();
         } else {
           Log.MessageDone();
         }
+      }
+      if (EarlyReturnInternal) {
+        break;
       }
       if (!LastLine) {
         ReturnCatch(LocalManager->Restart());
@@ -111,11 +121,13 @@ ReturnType InterpreterManager::Process()
       }
     }
   }
-  ReturnCatch(LocalManager->IsReady(CommandReady));
-  if (!CommandReady) {
-    Log.Message("IN-018");
-    ReturnMessage = "File ended with an incomplete command";
-    return ReturnSuccessWarning;
+  if (!EarlyReturnInternal) {
+    ReturnCatch(LocalManager->IsReady(CommandReady));
+    if (!CommandReady) {
+      Log.Message("IN-018");
+      ReturnMessage = "File ended with an incomplete command";
+      return ReturnSuccessWarning;
+    }
   }
   return ReturnSuccess;
 }

@@ -4,17 +4,19 @@
  */
 
 #ifndef EXTERN_H
-#define	EXTERN_H
+#define EXTERN_H
 
 #include <string>
 #include "LogManager.h"
 #include "InterpreterManager.h"
+#include "SimulatorManager.h"
+#include "VariableManager.h"
 
 extern string ReturnMessage;
 extern LogManager Log;
 extern InterpreterManager Interpreter;
-//extern SettingsManager Variables;
-//extern SimulationManager SingleSimulator;
-//extern bool EarlyReturn;
+extern VariableManager Variable;
+extern SimulatorManager CoreSimulator;
+extern bool EarlyReturn;
 
-#endif	/* EXTERN_H */
+#endif /* EXTERN_H */

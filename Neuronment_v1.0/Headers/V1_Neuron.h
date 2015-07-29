@@ -6,7 +6,7 @@
 #ifndef V1_NEURON_H
 #define	V1_NEURON_H
 
-class SimulationManager;
+class Simulator;
 
 class V1_Neuron : public ND_Neuron {
 public:
@@ -46,7 +46,7 @@ public:
      * @param WeightP The weight for the linking
      * @return 
      */
-    bool AddV1Link(V1_Neuron *NeuronP, SimulationManager SimulatorP);
+    bool AddV1Link(V1_Neuron *NeuronP, Simulator SimulatorP);
 
     /**
      * Sets the external excitation for the neuron based on the simulation parameters

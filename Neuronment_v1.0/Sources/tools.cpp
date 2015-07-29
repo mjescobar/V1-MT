@@ -10,7 +10,7 @@
 //#include <vector>
 //#include <stdlib.h>
 //#include <cmath>
-//#include <iomanip>
+#include <iomanip>
 //#include <fstream>
 using namespace std;
 //#include "enum.h"
@@ -65,6 +65,12 @@ void RuntimeAssertion()
 ReturnType ReturnCatch(ReturnType ReturnP, string ConditionsP)
 {
   if (ConditionsP == "ContinueOnFail") {
+    return ReturnSuccess;
+  }
+  if (ConditionsP == "FailAssertOnDebug") {
+    if (ReturnP == ReturnFail) {
+      Log.Message("DV-021: " + ReturnMessage);
+    }
     return ReturnSuccess;
   }
   if (ConditionsP != "") {
@@ -314,20 +320,122 @@ ReturnType trim(string &StringP, string DelimetersP)
 // Parsing
 ////////////////////////////////////////////////////////////////////////////////////
 
-
-bool IntToString(int ValueP, string &ReturnP)
+ReturnType ToString(int ValueP, string &ReturnP)
 {
   stringstream ss;
   ss << ValueP;
   ReturnP = ss.str();
-  return true;
+  return ReturnSuccess;
 }
 
-string IIntToString(int ValueP)
+string ToString(int ValueP)
 {
   string ReturnP;
-  IntToString(ValueP, ReturnP);
+  ToString(ValueP, ReturnP);
   return ReturnP;
+}
+
+ReturnType ToInt(string StringP, int &ReturnP)
+{
+  for (int i = 0; i < (int) StringP.length(); i++) {
+    if ((StringP[i] < '0' or StringP[i] > '9') and StringP[i] != '-' and StringP[i] != '.') {
+      return ReturnFail;
+    }
+  }
+  stringstream ss(StringP);
+  ss >> ReturnP;
+  return ReturnSuccess;
+}
+
+int ToInt(string StringP)
+{
+  int Tmp;
+  ReturnCatch(ToInt(StringP, Tmp), "FailAssertOnDebug");
+  return Tmp;
+}
+
+ReturnType ToBool(string StringP, bool &ReturnP)
+{
+  if (StringP == "TRUE"
+    || StringP == "True"
+    || StringP == "true"
+    || StringP == "T"
+    || StringP == "t"
+    || StringP == "1") {
+    ReturnP = true;
+  } else {
+    if (StringP == "FALSE"
+      || StringP == "False"
+      || StringP == "false"
+      || StringP == "F"
+      || StringP == "f"
+      || StringP == "0") {
+      ReturnP = false;
+    } else {
+      Log.Message("IN-007"); //Lothar
+      ReturnMessage = "IN-007";
+      ReturnP = false;
+      return ReturnSuccessWarning;
+    }
+  }
+}
+
+bool ToBool(string StringP)
+{
+  bool Tmp;
+  ReturnCatch(ToBool(StringP, Tmp), "FailAssertOnDebug");
+  return Tmp;
+}
+
+ReturnType ToDouble(string StringP, double &ReturnP)
+{
+  for (int i = 0; i < (int) StringP.length(); i++) {
+    if ((StringP[i] < '0' or StringP[i] > '9') and StringP[i] != '-' and StringP[i] != '.') {
+      return ReturnFail;
+    }
+  }
+  stringstream ss(StringP);
+  ss >> ReturnP;
+  return ReturnSuccess;
+}
+
+double ToDouble(string StringP)
+{
+  double Tmp;
+  ReturnCatch(ToDouble(StringP, Tmp), "FailAssertOnDebug");
+  return Tmp;
+}
+
+ReturnType ToString(double ValueP, string &ReturnP, int PrecisionP)
+{
+  stringstream ss;
+  ss << fixed << setprecision(PrecisionP) << ValueP;
+  ReturnP = ss.str();
+  return ReturnSuccess;
+}
+
+string ToString(double ValueP, int PrecisionP)
+{
+  string Tmp;
+  ToString(ValueP, Tmp, PrecisionP);
+  return Tmp;
+}
+
+ReturnType ToString(bool ValueP, string &ReturnP)
+{
+  if (ValueP) {
+    ReturnP = "true";
+  } else {
+    ReturnP = "false";
+  }
+  return ReturnSuccess;
+}
+
+string ToString(bool ValueP)
+{
+  string Tmp;
+  ToString(ValueP, Tmp);
+  return Tmp;
 }
 
 #if 0
@@ -481,121 +589,6 @@ string ICstringToString(char* CstringP)
   return Tmp;
 }
 
-bool DoubleToString(double ValueP, string &ReturnP)
-{
-  stringstream ss;
-  ss << ValueP;
-  ReturnP = ss.str();
-  return true;
-}
-
-bool DoubleToString(double ValueP, string &ReturnP, int PrecisionP)
-{
-  stringstream ss;
-  ss << fixed << setprecision(PrecisionP) << ValueP;
-  ReturnP = ss.str();
-  return true;
-}
-
-string IDoubleToString(double ValueP)
-{
-  string Tmp;
-  DoubleToString(ValueP, Tmp);
-  return Tmp;
-}
-
-string IDoubleToString(double ValueP, int PrecisionP)
-{
-  string Tmp;
-  DoubleToString(ValueP, Tmp, PrecisionP);
-  return Tmp;
-}
-
-void StringToBool(string StringP, bool &ReturnP)
-{
-  if (StringP == "TRUE"
-    || StringP == "True"
-    || StringP == "true"
-    || StringP == "T"
-    || StringP == "t"
-    || StringP == "1") {
-    ReturnP = true;
-  } else {
-    if (StringP == "FALSE"
-      || StringP == "False"
-      || StringP == "false"
-      || StringP == "F"
-      || StringP == "f"
-      || StringP == "0") {
-      ReturnP = false;
-    } else {
-      Log.Message("IN-007");
-      ReturnP = false;
-    }
-  }
-}
-
-bool IStringToBool(string StringP)
-{
-  bool Tmp;
-  StringToBool(StringP, Tmp);
-  return Tmp;
-}
-
-void BoolToString(bool ValueP, string &ReturnP)
-{
-  if (ValueP) {
-    ReturnP = "true";
-  } else {
-    ReturnP = "false";
-  }
-}
-
-string IBoolToString(bool ValueP)
-{
-  string Tmp;
-  BoolToString(ValueP, Tmp);
-  return Tmp;
-}
-
-bool StringToDouble(string StringP, double &ReturnP)
-{
-  for (int i = 0; i < (int) StringP.length(); i++) {
-    if ((StringP[i] < '0' or StringP[i] > '9') and StringP[i] != '-' and StringP[i] != '.') {
-      return false;
-    }
-  }
-  stringstream ss(StringP);
-  ss >> ReturnP;
-  return true;
-}
-
-double IStringToDouble(string StringP)
-{
-  double Tmp;
-  StringToDouble(StringP, Tmp);
-  return Tmp;
-}
-
-bool StringToInt(string StringP, int &ReturnP)
-{
-  for (int i = 0; i < (int) StringP.length(); i++) {
-    if ((StringP[i] < '0' or StringP[i] > '9') and StringP[i] != '-' and StringP[i] != '.') {
-      return false;
-    }
-  }
-  stringstream ss(StringP);
-  ss >> ReturnP;
-  return true;
-}
-
-int IStringToInt(string StringP)
-{
-  int Tmp;
-  StringToInt(StringP, Tmp);
-  return Tmp;
-}
-
 ////////////////////////////////////////////////////////////////////////////////////
 // String Formating
 ////////////////////////////////////////////////////////////////////////////////////
@@ -668,7 +661,7 @@ double deg_cos(double AngleP)
 bool PrintElapsedTime(clock_t* ElapsedTimeP)
 {
   clock_t NewElapsedTime = clock();
-  Log.Output(Message_Allways, "TIME: " + IDoubleToString(double(NewElapsedTime - *ElapsedTimeP) / CLOCKS_PER_SEC, 3) + "[s]");
+  Log.Output(Message_Allways, "TIME: " + ToString(double(NewElapsedTime - *ElapsedTimeP) / CLOCKS_PER_SEC, 3) + "[s]");
   *ElapsedTimeP = NewElapsedTime;
   return true;
 }

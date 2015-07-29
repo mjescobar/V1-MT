@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-MacOSX
-CND_DLIB_EXT=dylib
+CND_PLATFORM=GNU-Linux-x86
+CND_DLIB_EXT=so
 CND_CONF=Release
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -43,6 +43,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sources/LogManager.Init.o \
 	${OBJECTDIR}/Sources/LogManager.o \
 	${OBJECTDIR}/Sources/NeuronmentCommand.o \
+	${OBJECTDIR}/Sources/Simulator.o \
+	${OBJECTDIR}/Sources/SimulatorManager.o \
+	${OBJECTDIR}/Sources/VariableManager.o \
 	${OBJECTDIR}/Sources/main.o \
 	${OBJECTDIR}/Sources/tools.o
 
@@ -110,6 +113,21 @@ ${OBJECTDIR}/Sources/NeuronmentCommand.o: Sources/NeuronmentCommand.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -Werror -IHeaders -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/NeuronmentCommand.o Sources/NeuronmentCommand.cpp
+
+${OBJECTDIR}/Sources/Simulator.o: Sources/Simulator.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -Werror -IHeaders -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/Simulator.o Sources/Simulator.cpp
+
+${OBJECTDIR}/Sources/SimulatorManager.o: Sources/SimulatorManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -Werror -IHeaders -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/SimulatorManager.o Sources/SimulatorManager.cpp
+
+${OBJECTDIR}/Sources/VariableManager.o: Sources/VariableManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -Werror -IHeaders -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/VariableManager.o Sources/VariableManager.cpp
 
 ${OBJECTDIR}/Sources/main.o: Sources/main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources

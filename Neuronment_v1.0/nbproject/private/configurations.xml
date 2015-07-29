@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="96">
+<configurationDescriptor version="97">
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
@@ -13,6 +13,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -27,15 +29,15 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Round000/Resources/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -no_output -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -time -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Test.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc {Test.nproc lala.nproc}</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc { Test1.nproc Test2.nproc }</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Round001/BaseTesting.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Resources/Round001/BaseTesting.nproc</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -time -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" -nproc Resources/Round001/BaseTesting.nproc</runcommand>
+        <runcommand>"${OUTPUT_PATH}" -time -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommand>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
@@ -46,8 +48,8 @@
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
-        <developmentServer>localhost</developmentServer>
-        <platform>4</platform>
+        <developmentServer>ptoledo@localhost:2200</developmentServer>
+        <platform>2</platform>
       </toolsSet>
       <dbx_gdbdebugger version="1">
         <gdb_pathmaps>

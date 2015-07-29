@@ -6,7 +6,7 @@
 #ifndef MT_NEURON_H
 #define	MT_NEURON_H
 
-class SimulationManager;
+class Simulator;
 
 class MT_Neuron : public ND_Neuron {
 public:
@@ -43,7 +43,7 @@ public:
      * @param NeuronP the neuron to link
      * @return true if connected
      */
-    bool AddV1Link(V1_Neuron* NeuronP, SimulationManager SimulatorP);
+    bool AddV1Link(V1_Neuron* NeuronP, Simulator SimulatorP);
 
     /**
      * Calculates the activation for the step StepP

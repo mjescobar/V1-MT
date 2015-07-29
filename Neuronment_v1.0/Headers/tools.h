@@ -63,8 +63,27 @@ ReturnType trim(string &StringP, string DelimetersP = " \f\n\r\t\v");
 // Parsing
 ////////////////////////////////////////////////////////////////////////////////////
 
-bool IntToString(int ValueP, string &ReturnP);
-string IIntToString(int ValueP);
+ReturnType ToString(int ValueP, string &ReturnP);
+ReturnType ToString(bool ValueP, string &ReturnP);
+ReturnType ToString(double ValueP, string &ReturnP, int PrecisionP);
+
+string ToString(int ValueP);
+string ToString(bool ValueP);
+string ToString(double ValueP, int PrecisionP = 6);
+
+ReturnType ToInt(string StringP, int &ReturnP);
+
+int ToInt(string StringP);
+
+ReturnType ToBool(string StringP, bool &ReturnP);
+
+bool ToBool(string StringP);
+
+ReturnType ToDouble(string StringP, double &ReturnP);
+
+double ToDouble(string StringP);
+
+
 
 #if 0
 /**
@@ -112,98 +131,6 @@ void CstringToString(char* CstringP, string &Return);
  * @return the char* as string
  */
 string ICstringToString(char* CstringP);
-
-/**
- * double as string
- * @param ValueP The value to get converted
- * @param ReturnP The parsed value destination
- * @return
- */
-bool DoubleToString(double ValueP, string &ReturnP);
-
-/**
- * 
- * @param ValueP
- * @param ReturnP
- * @param 
- * @return 
- */
-bool DoubleToString(double ValueP, string &ReturnP, int PrecisionP);
-
-/**
- * double to string
- * @param ValueP double for parsing
- * @return the parsed value
- */
-string IDoubleToString(double ValueP);
-
-/**
- * 
- * @param ValueP
- * @param PrecisionP
- * @return 
- */
-string IDoubleToString(double ValueP, int PrecisionP);
-
-/**
- * string to bool
- * @param StringP The string to interpret
- * @param ReturnP The pointer for the destination
- * @return A boolean value according to the string
- */
-void StringToBool(string StringP, bool &ReturnP);
-
-/**
- * string to bool
- * @param StringP string for parsing
- * @return the parsed value
- */
-bool IStringToBool(string StringP);
-
-/**
- * 
- * @param StringP
- * @param ReturnP
- * @return 
- */
-void BoolToString(bool ValueP, string &ReturnP);
-
-/**
- * 
- * @param ValueP
- * @return 
- */
-string IBoolToString(bool ValueP);
-
-/**
- * string to double
- * @param StringP The string to be interpreted
- * @param ReturnP The pointer for the destination
- * @return true if the string was valid and interpreted, false otherwise
- */
-bool StringToDouble(string StringP, double &ReturnP);
-
-/**
- * string to double
- * @param StringP string for parsing
- * @return the parsed value
- */
-double IStringToDouble(string StringP);
-
-/**
- * string to int
- * @param StringP The string to be interpreted
- * @param ReturnP The pointer for the destination
- * @return true if the string was valid and interpreted, false otherwise
- */
-bool StringToInt(string StringP, int &ReturnP);
-
-/**
- * string to int
- * @param StringP string for parsing
- * @return the parsed value
- */
-int IStringToInt(string StringP);
 
 ////////////////////////////////////////////////////////////////////////////////////
 // String Formating

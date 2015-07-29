@@ -1,9 +1,17 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
- */
 
+#include "SimulatorManager.h"
+
+
+#include "LogManager.h"
+
+
+#include <vector>
+using namespace std;
 #include "extern.h"
+#include "VariableManager.h"
+#include "CommandManager.h"
+#include "SimulatorManager.h"
+#include "LogManager.h"
 #include "NeuronmentCommand.h"
 
 ReturnType report_test(CommandManager &LocalManagerP)
@@ -56,6 +64,102 @@ ReturnType rescue_nproc(CommandManager &LocalManagerP)
   return ReturnSuccess;
 }
 
+ReturnType varman_set(CommandManager &LocalManagerP)
+{
+  string VariableName;
+  string VariableType;
+  string VariableValue;
+  ReturnCatch(LocalManagerP.GetFlag("name", VariableName));
+  ReturnCatch(LocalManagerP.GetFlag("type", VariableType));
+  ReturnCatch(LocalManagerP.GetFlag("value", VariableValue));
+  return Variable.SetSettingFromString(VariableName, VariableType, VariableValue);
+}
+
+ReturnType varman_get(CommandManager &LocalManagerP)
+{
+  string VariableName;
+  string VariableValue;
+  ReturnCatch(LocalManagerP.GetFlag("name", VariableName));
+  ReturnCatch(Variable.GetSettingAsString(VariableName, VariableValue));
+  Log.Output(MessageAllways, VariableValue);
+  return ReturnSuccess;
+}
+
+ReturnType rescue_end_nproc(CommandManager &LocalManagerP)
+{
+  EarlyReturn = true;
+  return ReturnSuccess;
+}
+
+ReturnType setsim_add_simulator(CommandManager &LocalManagerP)
+{
+  return CoreSimulator.AddSimulator();
+}
+
+ReturnType setsim_get_current_simulator(CommandManager &LocalManagerP)
+{
+  int CurrentSimulator;
+  ReturnCatch(CoreSimulator.GetSimulatorCurrent(CurrentSimulator));
+  if (CurrentSimulator < 0) {
+    Log.Output(MessageAllways, "There are no simulators started");
+  } else {
+    Log.Output(MessageAllways, "Current Simulator: " + ToString(CurrentSimulator));
+  }
+  return ReturnSuccess;
+}
+
+ReturnType setsim_get_simulators_list(CommandManager &LocalManagerP)
+{
+  vector<string> SimulatorList;
+  ReturnCatch(CoreSimulator.GetSimulatorList(SimulatorList));
+  if (SimulatorList.size() > 0) {
+    for (int i = 0; i < SimulatorList.size(); i++) {
+      Log.Output(MessageAllways, SimulatorList[i]);
+    }
+  } else {
+    Log.Output(MessageAllways, "There are no simulators to report");
+  }
+  return ReturnSuccess;
+}
+
+ReturnType setsim_set_current_simulator(CommandManager &LocalManagerP)
+{
+  int SimulatorId;
+  string SimulatorIdString;
+  if (LocalManagerP.GetFlag("simulator_id", SimulatorIdString) == ReturnFail) {
+    Log.Message("IN-006: SimulatorId");
+    return ReturnFail;
+  }
+  SimulatorId = ToInt(SimulatorIdString);
+  Log.Output(MessageAllways, "Setting current simulator to Id " + ToString(SimulatorId));
+  int SimulatorCount;
+  ReturnCatch(CoreSimulator.GetSimulatorCount(SimulatorCount));
+  if (SimulatorId < 0 || SimulatorId >= SimulatorCount) {
+    Log.Message("IN-024");
+  }
+  return CoreSimulator.SetSimulatorCurrent(SimulatorId);
+}
+
+ReturnType setsim_remove_simulator(CommandManager &LocalManagerP)
+{
+  //Lothar check for correctly setting the new current pointer
+  int SimulatorId;
+  string SimulatorIdString;
+  if (LocalManagerP.GetFlag("simulator_id", SimulatorIdString) == ReturnFail) {
+    Log.Message("IN-006: SimulatorId");
+    return ReturnFail;
+  }
+  SimulatorId = ToInt(SimulatorIdString);
+  Log.Output(MessageAllways, "Removing simulator " + ToString(SimulatorId));
+  int SimulatorCount;
+  ReturnCatch(CoreSimulator.GetSimulatorCount(SimulatorCount));
+  if (SimulatorId < 0 || SimulatorId >= SimulatorCount) {
+    Log.Message("IN-024");
+  }
+  CoreSimulator.SetSimulatorCurrent(-1);
+  return CoreSimulator.RemoveSimulator(SimulatorId);
+}
+
 #if 0
 
 bool InterpreterManager::RunsimCall(vector<string> TokensP)
@@ -82,7 +186,7 @@ bool InterpreterManager::RunsimCall(vector<string> TokensP)
   if (TokensP[1] == RUNSIM_SS_SIMULATE) {
     Found = true;
     if (TokensP.size() == 3) {
-      Result = SingleSimulator.Simulate(IStringToInt(TokensP[2]));
+      Result = SingleSimulator.Simulate(ToInt(TokensP[2]));
     } else {
       Arguments = false;
     }
@@ -91,6 +195,7 @@ bool InterpreterManager::RunsimCall(vector<string> TokensP)
     Log.Message("IN-004: " + TokensP[1]);
   } else {
     if (!Arguments) {
+
       Log.Message("IN-010");
     }
   }
@@ -129,10 +234,10 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
   if (TokensP[1] == REPORT_SS_PRINT_V1_EXTERNAL_EXCITATION) {
     Found = true;
     if (TokensP.size() == 3) {
-      Result = SingleSimulator.PrintV1ExternalExcitation(IStringToInt(TokensP[2]));
+      Result = SingleSimulator.PrintV1ExternalExcitation(ToInt(TokensP[2]));
     } else {
       if (TokensP.size() == 4) {
-        Result = SingleSimulator.PrintV1ExternalExcitation(IStringToInt(TokensP[2]), TokensP[3]);
+        Result = SingleSimulator.PrintV1ExternalExcitation(ToInt(TokensP[2]), TokensP[3]);
       } else {
         Arguments = false;
       }
@@ -166,6 +271,7 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
     Log.Message("IN-004: " + TokensP[1]);
   } else {
     if (!Arguments) {
+
       Log.Message("IN-010");
     }
   }
@@ -174,6 +280,7 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
 
 bool InterpreterManager::VarmanCall_SET(vector<string> TokensP)
 {
+
   return Variables.StoreSetting(TokensP);
 }
 
@@ -202,7 +309,7 @@ bool InterpreterManager::VarmanCall_PRINT(vector<string> TokensP)
         }
         break;
       case Data_double:
-        ToPrint = ToPrint + " " + IDoubleToString(((double*) Variables.GetSettingContent(DeleteTrailingZeros(TokensP[2])))[i]);
+        ToPrint = ToPrint + " " + ToString(((double*) Variables.GetSettingContent(DeleteTrailingZeros(TokensP[2])))[i]);
         break;
       case Data_string:
         ToPrint = ToPrint + " " + ((string*) Variables.GetSettingContent(DeleteTrailingZeros(TokensP[2])))[i];
@@ -216,6 +323,7 @@ bool InterpreterManager::VarmanCall_PRINT(vector<string> TokensP)
     return true;
   } else {
     Log.Message("IN-010");
+
     return false;
   }
 }

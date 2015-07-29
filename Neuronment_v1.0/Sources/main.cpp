@@ -14,7 +14,7 @@
 //#include "HashEntry.h"
 //#include "HashTable.h"
 //#include "LogManager.h"
-//#include "SettingsManager.h"
+#include "VariableManager.h"
 #include "CommandManager.h"
 #include "InterpreterManager.h"
 //#include "Globals.h"
@@ -28,11 +28,11 @@ string ReturnMessage;
 // Sets the log management instance of LogManager
 LogManager Log;
 // Stores the variables
-//SettingsManager Variables;
-// Single Simulator for outside optimization testing
-//SimulationManager SingleSimulator;
+VariableManager Variable;
+// Core simulator manager
+SimulatorManager CoreSimulator;
 // For early terminating a nproc reading
-//bool EarlyReturn = false;
+bool EarlyReturn = false;
 
 int main(int argc, char** argv)
 {

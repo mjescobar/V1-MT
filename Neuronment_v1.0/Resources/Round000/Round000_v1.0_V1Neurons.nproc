@@ -7,6 +7,20 @@
 # Y: 0.0
 # 32 Orientations (11.25[Deg] Step)
 
+setsim neuron_type V1                                               \
+                  -activation_levels 2                              \
+                  -fact0 V1_001                                     \
+                  -parameters { X Y Z Orientation SpaFreq TemFreq }
+
+setsim add_neuron -name MT'000000 \
+                  -group MT \
+                  -act0 0.0 \
+                  -act1 0.0 \
+                  -X 0.0 \
+                  -Y 0.0 \
+                  -Z 0.0 \
+                  -Orientation 000.00
+
 varman set SIM:V1_first_calculation       dactivation
 
 varman set SIM:V1_act_method              V1_A001

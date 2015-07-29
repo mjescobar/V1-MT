@@ -1,41 +1,38 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
- */
 
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <fstream>
-#include <cmath>
-using namespace std;
-#include "enum.h"
-#include "define.h"
-#include "HashEntry.h"
-#include "HashTable.h"
-#include "Tools.h"
-#include "Globals.h"
-#include "SettingsManager.h"
-#include "ND_Neuron.h"
-#include "V1_Neuron.h"
-#include "MT_Neuron.h"
-#include "SimulationManager.h"
+//#include <vector>
+//#include <string>
+//#include <algorithm>
+//#include <fstream>
+//#include <cmath>
+//using namespace std;
+//#include "enum.h"
+//#include "define.h"
+//#include "HashEntry.h"
+//#include "HashTable.h"
+//#include "Tools.h"
+//#include "Globals.h"
+//#include "SettingsManager.h"
+//#include "ND_Neuron.h"
+//#include "V1_Neuron.h"
+//#include "MT_Neuron.h"
+#include "Simulator.h"
 
-SimulationManager::SimulationManager()
+Simulator::Simulator()
 {
   Initialized = false;
   V1Radius = 0;
 }
 
-SimulationManager::SimulationManager(const SimulationManager& orig)
+Simulator::Simulator(const Simulator& orig)
 {
 }
 
-SimulationManager::~SimulationManager()
+Simulator::~Simulator()
 {
 }
 
-bool SimulationManager::InitializeNeurons()
+#if 0
+bool Simulator::InitializeNeurons()
 {
   bool ToReturn = false;
   // V1 Settings
@@ -82,7 +79,7 @@ bool SimulationManager::InitializeNeurons()
   return true;
 }
 
-bool SimulationManager::CreateV1NeuronVector()
+bool Simulator::CreateV1NeuronVector()
 {
   string Name;
   double* Data;
@@ -112,7 +109,7 @@ bool SimulationManager::CreateV1NeuronVector()
   return true;
 }
 
-bool SimulationManager::SetV1ActMethod()
+bool Simulator::SetV1ActMethod()
 {
   string V1ActivationMethod = Variables.GetSingleSetting_string(V1_ACTIVATION_METHOD, DEFAULT_V1_ACTIVATION_METHOD);
   Log.Output(Message_Allways, "V1 activation calculation method: " + V1ActivationMethod);
@@ -127,7 +124,7 @@ bool SimulationManager::SetV1ActMethod()
   return true;
 }
 
-bool SimulationManager::SetV1DacMethod()
+bool Simulator::SetV1DacMethod()
 {
   string V1DActivationMethod = Variables.GetSingleSetting_string(V1_DACTIVATION_METHOD, DEFAULT_V1_DACTIVATION_METHOD);
   Log.Output(Message_Allways, "V1 dactivation calculation method: " + V1DActivationMethod);
@@ -146,7 +143,7 @@ bool SimulationManager::SetV1DacMethod()
   return true;
 }
 
-bool SimulationManager::CreateMTNeuronVector()
+bool Simulator::CreateMTNeuronVector()
 {
   string Name;
   double* Data;
@@ -173,7 +170,7 @@ bool SimulationManager::CreateMTNeuronVector()
   return true;
 }
 
-bool SimulationManager::SetMTActMethod()
+bool Simulator::SetMTActMethod()
 {
   string MTActivationMethod = Variables.GetSingleSetting_string(MT_ACTIVATION_METHOD, DEFAULT_MT_ACTIVATION_METHOD);
   Log.Output(Message_Allways, "MT activation calculation method: " + MTActivationMethod);
@@ -188,7 +185,7 @@ bool SimulationManager::SetMTActMethod()
   return true;
 }
 
-bool SimulationManager::SetMTDacMethod()
+bool Simulator::SetMTDacMethod()
 {
   string MTDActivationMethod = Variables.GetSingleSetting_string(MT_DACTIVATION_METHOD, DEFAULT_MT_DACTIVATION_METHOD);
   Log.Output(Message_Allways, "MT dactivation calculation method: " + MTDActivationMethod);
@@ -203,7 +200,7 @@ bool SimulationManager::SetMTDacMethod()
   return true;
 }
 
-bool SimulationManager::SetV1V1ConnectionLinks()
+bool Simulator::SetV1V1ConnectionLinks()
 {
   Log.Output(Message_Allways, "Creating V1V1 links");
   string V1V1ConnectionMethod = Variables.GetSingleSetting_string(V1V1_CONNECTION_METHOD, DEFAULT_V1V1_CONNECTION_METHOD);
@@ -228,7 +225,7 @@ bool SimulationManager::SetV1V1ConnectionLinks()
   return false;
 }
 
-bool SimulationManager::SetV1MTConnectionLinks()
+bool Simulator::SetV1MTConnectionLinks()
 {
   Log.Output(Message_Allways, "Creating V1MT links");
   string V1MTConnectionMethod = Variables.GetSingleSetting_string(V1MT_CONNECTION_METHOD, DEFAULT_V1MT_CONNECTION_METHOD);
@@ -251,7 +248,7 @@ bool SimulationManager::SetV1MTConnectionLinks()
   return true;
 }
 
-bool SimulationManager::AddV1Diffusion()
+bool Simulator::AddV1Diffusion()
 {
   for (int i = 0; i < V1_Neurons.size(); i++) {
     V1_Neurons[i].SetExternalExcitation();
@@ -259,7 +256,7 @@ bool SimulationManager::AddV1Diffusion()
   return true;
 }
 
-bool SimulationManager::Simulate(int StepsP)
+bool Simulator::Simulate(int StepsP)
 {
   if (StepsP < 1) {
     Log.Message("SD-028");
@@ -278,7 +275,7 @@ bool SimulationManager::Simulate(int StepsP)
   return true;
 }
 
-bool SimulationManager::PrintV1Activation(OrientationType OTypeP)
+bool Simulator::PrintV1Activation(OrientationType OTypeP)
 {
   if (Initialized) {
     if (OTypeP == Orientation_Vertical) {
@@ -359,7 +356,7 @@ bool SimulationManager::PrintV1Activation(OrientationType OTypeP)
   }
 }
 
-bool SimulationManager::PrintV1Activation(OrientationType OTypeP, string DestinationP)
+bool Simulator::PrintV1Activation(OrientationType OTypeP, string DestinationP)
 {
   Log.StartOutputRedirection(DestinationP);
   PrintV1Activation(OTypeP);
@@ -367,7 +364,7 @@ bool SimulationManager::PrintV1Activation(OrientationType OTypeP, string Destina
   return true;
 }
 
-bool SimulationManager::PrintMTActivation(OrientationType OTypeP)
+bool Simulator::PrintMTActivation(OrientationType OTypeP)
 {
   if (Initialized) {
     if (OTypeP == Orientation_Vertical) {
@@ -431,7 +428,7 @@ bool SimulationManager::PrintMTActivation(OrientationType OTypeP)
   }
 }
 
-bool SimulationManager::PrintMTActivation(OrientationType OTypeP, string DestinationP)
+bool Simulator::PrintMTActivation(OrientationType OTypeP, string DestinationP)
 {
   Log.StartOutputRedirection(DestinationP);
   PrintMTActivation(OTypeP);
@@ -439,7 +436,7 @@ bool SimulationManager::PrintMTActivation(OrientationType OTypeP, string Destina
   return true;
 }
 
-bool SimulationManager::PrintV1ExternalExcitation(int TimeStepP, string DestinationP)
+bool Simulator::PrintV1ExternalExcitation(int TimeStepP, string DestinationP)
 {
   Log.StartOutputRedirection(DestinationP);
   PrintV1ExternalExcitation(TimeStepP);
@@ -447,7 +444,7 @@ bool SimulationManager::PrintV1ExternalExcitation(int TimeStepP, string Destinat
   return true;
 }
 
-bool SimulationManager::PrintV1ExternalExcitation(int TimeStepP)
+bool Simulator::PrintV1ExternalExcitation(int TimeStepP)
 {
   if (Initialized) {
     Log.Output(Message_Allways, "Name\tOrientation\tSpatial Freq.\tTemporal Freq.\tValue");
@@ -462,7 +459,8 @@ bool SimulationManager::PrintV1ExternalExcitation(int TimeStepP)
   }
 }
 
-double SimulationManager::GetV1Radius()
+double Simulator::GetV1Radius()
 {
   return V1Radius;
 }
+#endif

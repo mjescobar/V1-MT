@@ -123,11 +123,13 @@ ReturnType LogManager::Message(string IdP, bool SkipAssertionP)
 ReturnType LogManager::MessageFail()
 {
   Output(MessageAllways, string(LABEL_FAIL));
+  return ReturnSuccess;
 }
 
 ReturnType LogManager::MessageDone()
 {
   Output(MessageAllways, string(LABEL_DONE));
+  return ReturnSuccess;
 }
 
 ReturnType LogManager::OutputEmptyLine(MessageType LevelP)
@@ -147,7 +149,7 @@ ReturnType LogManager::StartOutput(string FilenameP, RedirectionType Redirection
     ofstream *NewFile = new ofstream;
     NewFile->open(FilenameP.c_str(), ofstream::out);
     Destination.push_back(NewFile);
-  } else if (RedirectionModeP = RedirectionAppend) {
+  } else if (RedirectionModeP == RedirectionAppend) {
     ofstream *NewFile = new ofstream;
     NewFile->open(FilenameP.c_str(), ofstream::app);
     Destination.push_back(NewFile);
