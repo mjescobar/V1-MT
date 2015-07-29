@@ -193,10 +193,13 @@ ReturnType setsim_new_neuron_type(CommandManager &LocalManagerP)
     ParametersName.push_back(ParametersTokenized[i + 1]);
     ParametersType.push_back(ParametersTokenized[i]);
   }
-  return CoreSimulator.AddNeuronType(Name,ActivationLevels,ActivationFunctions,ParametersName,ParametersType);
+  ReturnCatch(CoreSimulator.AddNeuronType(Name, ActivationLevels, ActivationFunctions, ParametersName, ParametersType));
+  string FastInput;
+  if (LocalManagerP.GetFlag("fast_input", FastInput) != ReturnFail) {
+    ReturnCatch(CoreSimulator.SetNeuronTypeFastInput(Name, FastInput));
+  }
+  return ReturnSuccess;
 }
-
-
 
 #if 0
 

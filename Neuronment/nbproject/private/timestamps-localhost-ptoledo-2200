@@ -1,4 +1,4 @@
-#Wed Jul 29 13:54:24 CLT 2015
+#Wed Jul 29 15:25:53 CLT 2015
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/nbproject/project.xml=t1427046525000
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/nbproject/makefile-debug.mk=c1436747912000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\documentation\\figures\\fig000.eps=t1427046522547
@@ -161,7 +161,7 @@ d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\sources\\standardneu
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Tools/NeuronDescriptionFiller.xlsx=t1428373916000
 /home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Documentation/Manual/Manual_01_Preamble.tex=t1427911892000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\sources\\logmanager.cpp=c1436911929000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual_22_Instructions_A.tex=t1438188537000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual_22_Instructions_A.tex=t1438192292000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/nbproject/Package-Debug.bash=t1437965518000
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/documentation/manual/manual_13_glossary.tex=t1427046524000
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/nbproject/private/launcher.properties=t1432821628000
@@ -195,7 +195,7 @@ d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\sources\\neuronmentc
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/documentation/manual/manual_23_messages_a.tex=t1436859069000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/tools.h=c1438129572000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\documentation\\manual\\manual_40_references.tex=t1428085585158
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/NeuronmentCommand.cpp=c1438188780000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/NeuronmentCommand.cpp=c1438193207000
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/sources/tools.cpp=c1432839446000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\nbproject\\private\\launcher.properties=t1428193831205
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\build\\debug\\gnu-macosx\\sources\\logmanager.o.d=t1436725869000
@@ -245,20 +245,20 @@ d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\nbproject\\private\\
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/HashEntry.cpp=c1436302222000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\headers\\mt_neuron.h=c1428291665511
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\nbproject\\makefile-variables.mk=c1436725913000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Headers/NeuronType.h=c1438188698000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Headers/NeuronType.h=c1438192520000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual_01_Preamble.tex=t1433202967000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual_04_Informations.tex=t1427046525000
 /home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Documentation/Manual/Manual.ist=t1427912547000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\documentation\\manual\\manual_03_glossary.tex=t1428085585533
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/documentation/manual/manual_23_messages.tex=t1432821628000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/VariableManager.Init.cpp=t1438188536000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/VariableManager.Init.cpp=t1438192291000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\tools\\~$neurondescriptionfiller.xlsx=t1428372401701
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/resources/round000/round000_v1.0_v1v1_links.nproc=c1428372594000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\documentation\\manual\\manual_01_preamble.tex=t1433202967244
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\build\\debug\\gnu-macosx\\sources\\hashentry.o.d=t1436725865000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\documentation\\manual\\manual.ist=t1433216791038
 /home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Documentation/Figures/Fig000.eps=t1364876375000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/NeuronType.cpp=c1438188698000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/NeuronType.cpp=c1438194340000
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/sources/neuronmentcommand.cpp=c1436912088000
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/headers/main.h=c1436286257000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Headers/HashEntry.h=c1434933691000
@@ -320,7 +320,7 @@ d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\resources\\round001_
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual_22_Instructions.tex=t1433202967000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual_41_Appendix.tex=t1427046525000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual.aux=t1433216791000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual_23_Messages_A.tex=t1438188537000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual_23_Messages_A.tex=t1438192293000
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/nbproject/makefile-release.mk=t1436747912000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual.ps=t1433216792000
 /home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/Tools.cpp=c1427742932000
@@ -332,7 +332,7 @@ d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\documentation\\manua
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\documentation\\manual\\manual_40_references.bib=t1428085585502
 /home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/ConfigurationManager.cpp=t1426525587000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Results/Round000_ReportMTActivation.txt=t1433202967000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/nbproject/private/timestamps-localhost-ptoledo-2200=t1438188858000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/nbproject/private/timestamps-localhost-ptoledo-2200=t1438193222000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/SimulationManager.h=t1427229643000
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/nbproject/private/makefile-variables.mk=c1432821628000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\documentation\\manual\\manual_40_referencias.tex=t1427046525597
@@ -376,7 +376,7 @@ d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\resources\\round000_
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/Documentation/Manual/Manual.lot=t1433216791000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/Documentation/Manual/Manual.out=t1433216791000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/Documentation/Manual/Manual.toc=t1433216791000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/nbproject/private/configurations.xml=t1438185915000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/nbproject/private/configurations.xml=t1438192409000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/LogManager.cpp=c1437690690000
 /home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Documentation/Manual/Manual_22_Directives.tex=t1427847081000
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/headers/mt_neuron.h=c1432821628000
@@ -408,7 +408,7 @@ d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\nbproject\\makefile-
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/results/round000_reportmtactivation.txt=t1434063519000
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/documentation/manual/manual_40_references.bib=t1428085585000
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/resources/round000/round000_v1.0_v1neurons_baseactivation.nproc=t1432821628000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Headers/SimulatorManager.h=c1438188617000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Headers/SimulatorManager.h=c1438192747000
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/documentation/~$documentationmanager.xlsm=t1436834378000
 /home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/nbproject/Package-Debug.bash=t1427750264000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\resources\\round000\\round000_v1.0_mtneurons.nproc=t1435806149000
@@ -446,7 +446,7 @@ d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\sources\\v1_neuron.c
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/documentation/manual/manual.lot=t1432838955000
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/documentation/manual/manual.out=t1432838955000
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/documentation/manual/manual.toc=t1432838955000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Resources/Round000/Round000_v1.0_V1Neurons.nproc=c1438188517000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Resources/Round000/Round000_v1.0_V1Neurons.nproc=c1438191935000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\headers\\configurationmanager.h=t1427046522521
 /home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/InterpreterManager.h=c1426525658000
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/documentation/manual/manual.log=t1432838955000
@@ -479,7 +479,7 @@ d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\resources\\round000\
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\sources\\hashtable.cpp=c1436306750000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual.lof=t1433216791000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Documentation/Manual/Manual.glsdefs=t1433216791000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/InterpreterManager.Init.cpp=c1438188536000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/InterpreterManager.Init.cpp=c1438192291000
 /home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/HashTable.cpp=c1427742932000
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/headers/settingsmanager.h=c1432821628000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Resources/Round001/BaseTesting001.nproc=c1436907644000
@@ -540,7 +540,7 @@ d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\documentation\\manua
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/HashEntry.h=c1434933691000
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/documentation/manual/manual_11_cover.tex=t1427046524000
 /home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Documentation/Manual/Manual_XX_Template.tex=t1427760274000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/SimulatorManager.cpp=c1438188617000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/SimulatorManager.cpp=c1438192931000
 /users/ptoledo/dropbox/my\ netbeansprojects/v1-mt/neuronment_v1.0/headers/logmanager.h=c1436910426000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/Documentation/Manual/Manual.ps=t1433216792000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/VariableManager.Init.cpp=t1438181449000
@@ -559,8 +559,8 @@ d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\resources\\round000_
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/Sources/SimulationManager.cpp=t1433202967000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\documentation\\~$documentationmanager.xlsm=t1429571574913
 /home/ptoledo/NetBeansProjects/V1-MT/Neuronment_v1.0/Headers/main.h=c1426525587000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/LogManager.Init.cpp=c1438188536000
-/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Headers/define.h=c1438188535000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Sources/LogManager.Init.cpp=c1438192291000
+/home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment/Headers/define.h=c1438192291000
 /home/ptoledo/Dropbox/My\ NetBeansProjects/V1-MT/Neuronment_v1.0/Resources/Round001/BaseTesting001.nproc=c1436907644000
 d\:\\dropbox\\my\ netbeansprojects\\v1-mt\\neuronment_v1.0\\nbproject\\makefile-impl.mk=c1427046524401
 /users/ptoledo/netbeansprojects/v1-mt/neuronment_v1.0/documentation/manual/manual_14_index.tex=t1432821628000

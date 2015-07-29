@@ -7,25 +7,25 @@
 # Y: 0.0
 # 32 Orientations (11.25[Deg] Step)
 
-setsim new_neuron_type -name      V1                   \
-                       -activation_levels 2             \
-                       -activation_function_0 V1_A001   \
-                       -activation_function_1 V1_D001   \
-                       -parameters {                    \
-                                     double X           \
-                                     double Y           \
-                                     double Z           \
-                                     double Orientation \
-                                     double SpaFreq     \
-                                     double TemFreq     \
-                                   }
+setsim new_neuron_type -name                  V1                         \
+                       -activation_levels     2                          \
+                       -activation_function_0 V1_A001                    \
+                       -activation_function_1 V1_D001                    \
+                       -parameters {                                     \
+                                     double X                            \
+                                     double Y                            \
+                                     double Z                            \
+                                     double Orientation                  \
+                                     double SpaFreq                      \
+                                     double TemFreq                      \
+                                   }                                     \
+                       -fast_input { X Y Z Orientation SpaFreq TemFreq }
 
 rescue end_nproc
 
 setsim add_neuron -name MT'000000 \
                   -group MT \
-                  -act0 0.0 \
-                  -act1 0.0 \
+                  -BaseActivation { 0.0 0.0 }
                   -X 0.0 \
                   -Y 0.0 \
                   -Z 0.0 \
