@@ -3,6 +3,7 @@
 #include <vector>
 using namespace std;
 #include "enum.h"
+#include "NeuronType.h"
 #include "Simulator.h"
 
 #ifndef SIMULATORMANAGER_H
@@ -14,6 +15,7 @@ public:
     SimulatorManager(const SimulatorManager& orig);
     virtual ~SimulatorManager();
     ReturnType AddSimulator();
+    ReturnType AddNeuronType(string NameP, int ActivationLevelsP, vector<string> ActivationFunctionsP, vector<string> ParametersNameP, vector<string> ParametersTypeP);
     ReturnType RemoveSimulator(int SimulatorIdP);
     ReturnType SetSimulatorCurrent(int SimulatorIdP);
     ReturnType GetSimulatorCurrent(int &CurrentSimulatorP);
@@ -22,6 +24,7 @@ public:
 private:
     int CurrentSimulator;
     vector<Simulator> SimulatorList;
+    vector<NeuronType> NeuronTypes;
 };
 
 #endif /* SIMULATORMANAGER_H */

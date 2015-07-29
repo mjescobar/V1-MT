@@ -43,6 +43,8 @@ ReturnType DataCheck(string DataP, string ConditionsP);
 ReturnType DataCheck(int DataP, string ConditionsP);
 ReturnType DataCheck(char** DataP, string ConditionsP);
 ReturnType DataCheck(char DataP, string ConditionsP);
+ReturnType IsValidType(string TypeP);
+
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Tokens

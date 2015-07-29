@@ -160,20 +160,6 @@ template <class VariableType> ReturnType VariableManager::GetSetting(string Vari
   return LocalTable->GetEntry(VariableP, ValueP);
 }
 
-ReturnType VariableManager::IsValidType(string TypeP)
-{
-  if (TypeP == "int") {
-    return ReturnSuccess;
-  } else if (TypeP == "bool") {
-    return ReturnSuccess;
-  } else if (TypeP == "double") {
-    return ReturnSuccess;
-  } else if (TypeP == "string") {
-    return ReturnSuccess;
-  }
-  return ReturnFail;
-}
-
 template <class VariableType > ReturnType VariableManager::CheckUnicity(HashTable<VariableType> *LocalTableP, string VariableP)
 {
   if ((void*) &HashInt != (void*) LocalTableP) {

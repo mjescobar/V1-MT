@@ -15,6 +15,6 @@ ReturnType setsim_get_current_simulator(CommandManager &LocalManagerP);
 ReturnType setsim_get_simulators_list(CommandManager &LocalManagerP);
 ReturnType setsim_set_current_simulator(CommandManager &LocalManagerP);
 ReturnType setsim_remove_simulator(CommandManager &LocalManagerP);
-
+ReturnType setsim_new_neuron_type(CommandManager &LocalManagerP);
 #endif /* NEURONMENTCOMMAND_H */
 

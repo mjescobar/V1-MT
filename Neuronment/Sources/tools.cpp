@@ -264,6 +264,20 @@ ReturnType DataCheck(char DataP, string ConditionsP)
   return ReturnSuccess;
 }
 
+ReturnType IsValidType(string TypeP)
+{
+  if (TypeP == "int") {
+    return ReturnSuccess;
+  } else if (TypeP == "bool") {
+    return ReturnSuccess;
+  } else if (TypeP == "double") {
+    return ReturnSuccess;
+  } else if (TypeP == "string") {
+    return ReturnSuccess;
+  }
+  return ReturnFail;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////
 // Tokens
 ////////////////////////////////////////////////////////////////////////////////////

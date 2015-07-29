@@ -17,7 +17,6 @@ public:
     template <class VariableType> ReturnType SetSetting(string VariableP, vector<VariableType> &ValueP);
     template <class VariableType> ReturnType GetSetting(string VariableP, vector<VariableType> &ValueP);
 private:
-    ReturnType IsValidType(string TypeP);
     template <class VariableType> ReturnType CheckUnicity(HashTable<VariableType> *LocalTableP, string VariableP);
     ReturnType GetHashTable(int DummyP, HashTable<int> **HashTableP);
     ReturnType GetHashTable(bool DummyP, HashTable<bool> **HashTableP);

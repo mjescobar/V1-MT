@@ -1,4 +1,7 @@
 
+#include <vector>
+
+
 #include "tools.h"
 #include "SimulatorManager.h"
 
@@ -22,6 +25,13 @@ ReturnType SimulatorManager::AddSimulator()
   if (CurrentSimulator < 0) {
     CurrentSimulator = 0;
   }
+  return ReturnSuccess;
+}
+
+ReturnType SimulatorManager::AddNeuronType(string NameP, int ActivationLevelsP, vector<string> ActivationFunctionsP, vector<string> ParametersNameP, vector<string> ParametersTypeP)
+{
+  NeuronType ToAdd(NameP, ActivationLevelsP, ActivationFunctionsP, ParametersNameP, ParametersTypeP);
+  NeuronTypes.push_back(ToAdd);
   return ReturnSuccess;
 }
 

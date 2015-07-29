@@ -8,6 +8,7 @@
 #include <vector>
 using namespace std;
 #include "extern.h"
+#include "tools.h"
 #include "VariableManager.h"
 #include "CommandManager.h"
 #include "SimulatorManager.h"
@@ -159,6 +160,43 @@ ReturnType setsim_remove_simulator(CommandManager &LocalManagerP)
   CoreSimulator.SetSimulatorCurrent(-1);
   return CoreSimulator.RemoveSimulator(SimulatorId);
 }
+
+ReturnType setsim_new_neuron_type(CommandManager &LocalManagerP)
+{
+  string Name;
+  ReturnCatch(LocalManagerP.GetFlag("name", Name));
+  int ActivationLevels;
+  string ActivationLevelsString;
+  ReturnCatch(LocalManagerP.GetFlag("activation_levels", ActivationLevelsString));
+  ActivationLevels = ToInt(ActivationLevelsString);
+  vector<string> ActivationFunctions;
+  for (int i = 0; i < ActivationLevels; i++) {
+    string Tmp;
+    ReturnCatch(LocalManagerP.GetFlag("activation_function_" + ToString(i), Tmp));
+    ActivationFunctions.push_back(Tmp);
+  }
+  string Parameters;
+  vector<string> ParametersTokenized;
+  ReturnCatch(LocalManagerP.GetFlag("parameters", Parameters));
+  ReturnCatch(Tokenize(Parameters, ParametersTokenized));
+  if (ParametersTokenized.size() % 2 != 0) {
+    Log.Message("IN-025");
+    return ReturnFail;
+  }
+  vector<string> ParametersName;
+  vector<string> ParametersType;
+  for (int i = 0; i < ParametersTokenized.size(); i = i + 2) {
+    if (IsValidType(ParametersTokenized[i]) == ReturnFail) {
+      Log.Message("IN-025");
+      return ReturnFail;
+    }
+    ParametersName.push_back(ParametersTokenized[i + 1]);
+    ParametersType.push_back(ParametersTokenized[i]);
+  }
+  return CoreSimulator.AddNeuronType(Name,ActivationLevels,ActivationFunctions,ParametersName,ParametersType);
+}
+
+
 
 #if 0
 
