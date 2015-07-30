@@ -42,6 +42,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Sources/InterpreterManager.o \
 	${OBJECTDIR}/Sources/LogManager.Init.o \
 	${OBJECTDIR}/Sources/LogManager.o \
+	${OBJECTDIR}/Sources/Neuron.o \
 	${OBJECTDIR}/Sources/NeuronType.o \
 	${OBJECTDIR}/Sources/NeuronmentCommand.o \
 	${OBJECTDIR}/Sources/Simulator.o \
@@ -109,6 +110,11 @@ ${OBJECTDIR}/Sources/LogManager.o: Sources/LogManager.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
 	$(COMPILE.cc) -O3 -Werror -IHeaders -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/LogManager.o Sources/LogManager.cpp
+
+${OBJECTDIR}/Sources/Neuron.o: Sources/Neuron.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -O3 -Werror -IHeaders -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/Neuron.o Sources/Neuron.cpp
 
 ${OBJECTDIR}/Sources/NeuronType.o: Sources/NeuronType.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources

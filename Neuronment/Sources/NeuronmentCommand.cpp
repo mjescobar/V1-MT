@@ -1,4 +1,10 @@
 
+#include "NeuronType.h"
+
+
+#include "Simulator.h"
+
+
 #include "SimulatorManager.h"
 
 
@@ -193,12 +199,65 @@ ReturnType setsim_new_neuron_type(CommandManager &LocalManagerP)
     ParametersName.push_back(ParametersTokenized[i + 1]);
     ParametersType.push_back(ParametersTokenized[i]);
   }
-  ReturnCatch(CoreSimulator.AddNeuronType(Name, ActivationLevels, ActivationFunctions, ParametersName, ParametersType));
+  string DataType;
+  ReturnCatch(LocalManagerP.GetFlag("data_type", DataType));
+  ReturnCatch(CoreSimulator.AddNeuronType(Name, DataType, ActivationLevels, ActivationFunctions, ParametersName, ParametersType));
   string FastInput;
   if (LocalManagerP.GetFlag("fast_input", FastInput) != ReturnFail) {
     ReturnCatch(CoreSimulator.SetNeuronTypeFastInput(Name, FastInput));
   }
   return ReturnSuccess;
+}
+
+ReturnType setsim_add_neuron(CommandManager &LocalManagerP)
+{
+  NeuronType *NewNeuronType;
+  string NeuronTypeName;
+  ReturnCatch(LocalManagerP.GetFlag("neuron_type", NeuronTypeName));
+  ReturnCatch(CoreSimulator.GetNeuronType(NeuronTypeName, &NewNeuronType));
+  string Group;
+  ReturnCatch(LocalManagerP.GetFlag("group", Group));
+  string IdAsString;
+  int Id;
+  ReturnCatch(LocalManagerP.GetFlag("id", IdAsString));
+  Id = ToInt(IdAsString);
+  //Lothar check for repeated IDs
+  string BaseActivation;
+  ReturnCatch(LocalManagerP.GetFlag("base_activation", BaseActivation));
+  string FastInput;
+  vector<string> FastInputTokens;
+  ReturnCatch(LocalManagerP.GetFlag("fast_input", FastInput));
+  ReturnCatch(Tokenize(FastInput, FastInputTokens));
+  vector<string> FastInputList;
+  ReturnCatch(NewNeuronType->GetFastInput(FastInputList));
+  if (FastInputList.size() != FastInputTokens.size()) {
+    Log.Message("DV-039");
+  }
+  vector<string> ParametersName;
+  ReturnCatch(NewNeuronType->GetParametersName(ParametersName));
+  vector<string> ParameterValues;
+  for (int i = 0; i < ParametersName.size(); i++) {
+    int FastIndex = -1;
+    for (int j = 0; j < FastInputList.size(); j++) {
+      if (ParametersName[i] == FastInputList[j]) {
+        FastIndex = j;
+        j = FastInputList.size();
+      }
+    }
+    if (FastIndex < 0) {
+      string Dummy;
+      if (LocalManagerP.GetFlag(ParametersName[i], Dummy) == ReturnFail) {
+        Log.Message("DV-040: " + ParametersName[i]);
+        return ReturnFail;
+      } else {
+        ParameterValues.push_back(Dummy);
+      }
+    } else {
+      ParameterValues.push_back(FastInputTokens[FastIndex]);
+    }
+
+  }
+  return CoreSimulator.CurrentSimulator()->AddNeuron(NewNeuronType, Group, Id, BaseActivation, ParameterValues);
 }
 
 #if 0

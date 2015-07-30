@@ -1,10 +1,19 @@
 
+#include "LogManager.h"
+
+
+#include "NeuronType.h"
+
+
+#include <vector>
+
+
 //#include <vector>
-//#include <string>
+#include <string>
 //#include <algorithm>
 //#include <fstream>
 //#include <cmath>
-//using namespace std;
+using namespace std;
 //#include "enum.h"
 //#include "define.h"
 //#include "HashEntry.h"
@@ -15,12 +24,11 @@
 //#include "ND_Neuron.h"
 //#include "V1_Neuron.h"
 //#include "MT_Neuron.h"
+#include "extern.h"
 #include "Simulator.h"
 
 Simulator::Simulator()
 {
-  Initialized = false;
-  V1Radius = 0;
 }
 
 Simulator::Simulator(const Simulator& orig)
@@ -31,7 +39,27 @@ Simulator::~Simulator()
 {
 }
 
+ReturnType Simulator::AddNeuron(NeuronType *NeuronTypeP, string GroupP, int IdP, string BaseActivationP, vector<string> ParameterValuesP)
+{
+  string DataType;
+  ReturnCatch(NeuronTypeP->GetDataType(DataType));
+  vector<string> FromBaseActivation;
+  ReturnCatch(Tokenize(BaseActivationP, FromBaseActivation));
+  if (DataType == "double") {
+    vector<double> BaseActivation;
+    for (int i = 0; i < FromBaseActivation.size(); i++) {
+      BaseActivation.push_back(ToDouble(FromBaseActivation[i]));
+    }
+    NeuronsDouble.push_back(Neuron<double>(NeuronTypeP, GroupP, IdP, BaseActivation, ParameterValuesP));
+    return ReturnSuccess;
+  }
+  //Lothar: replicate for other datatypes
+  Log.Message("DV-037: " + DataType);
+  return ReturnFail;
+}
+
 #if 0
+
 bool Simulator::InitializeNeurons()
 {
   bool ToReturn = false;

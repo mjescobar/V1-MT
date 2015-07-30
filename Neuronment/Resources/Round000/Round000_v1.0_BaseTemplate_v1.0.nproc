@@ -2,6 +2,9 @@
 # Author: Pedro F. Toledo <pedrotoledocorrea@gmail.com>
 # This file has been designed as base template for Neuronment v1.0
 
+# Creates testing simulator
+setsim add_simulator
+
 # Load V1Neuron Settings
 rescue nproc -nproc Resources/Round000/Round000_v1.0_V1Neurons.nproc
 

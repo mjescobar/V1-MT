@@ -78,9 +78,8 @@ ReturnType VariableManager::SetSettingFromString(string VariableP, string TypeP,
 
 template <class VariableType> ReturnType VariableManager::SetSetting(string VariableP, vector<VariableType> &ValueP)
 {
-  VariableType Dummy;
   HashTable<VariableType> *LocalTable = NULL;
-  ReturnCatch(GetHashTable(Dummy, &LocalTable));
+  ReturnCatch(GetHashTable(VariableType(), &LocalTable));
   if (CheckUnicity(LocalTable, VariableP) == ReturnFail) {
     Log.Message("DV-002");
     return ReturnFail;
@@ -150,9 +149,8 @@ ReturnType VariableManager::GetSettingAsString(string VariableP, string &Variabl
 
 template <class VariableType> ReturnType VariableManager::GetSetting(string VariableP, vector<VariableType> &ValueP)
 {
-  VariableType Dummy;
   HashTable<VariableType> *LocalTable = NULL;
-  ReturnCatch(GetHashTable(Dummy, &LocalTable));
+  ReturnCatch(GetHashTable(VariableType(), &LocalTable));
   if (CheckUnicity(LocalTable, VariableP) == ReturnFail) {
     Log.Message("DV-002");
     return ReturnFail;

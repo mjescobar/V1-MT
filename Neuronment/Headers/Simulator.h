@@ -2,11 +2,17 @@
 #ifndef SIMULATOR_H
 #define	SIMULATOR_H
 
+#include <vector>
+using namespace std;
+#include "enum.h"
+#include "Neuron.h"
+
 class Simulator {
 public:
     Simulator();
     Simulator(const Simulator& orig);
     virtual ~Simulator();
+    ReturnType AddNeuron(NeuronType *NeuronTypeP, string GroupP, int IdP, string BaseActivationP, vector<string> ParametersValueP);
 #if 0
     bool InitializeNeurons();
     bool AddV1Diffusion();
@@ -29,13 +35,15 @@ private:
     bool SetV1MTConnectionLinks();
 #endif
 private:
-    // V1 Parameters
-    //vector<V1_Neuron> V1_Neurons;
-    double V1Radius;
+    vector<Neuron<int> > NeuronsInt;
+    vector<Neuron<bool> > NeuronsBool;
+    vector<Neuron<double> > NeuronsDouble;
+    vector<Neuron<string> > NeuronsString;
+    //double V1Radius;
     // MT Parameters
     //vector<MT_Neuron> MT_Neurons;
     // Status
-    bool Initialized;
+    //bool Initialized;
 };
 
 #endif	/* SIMULATIONMANAGER_H */

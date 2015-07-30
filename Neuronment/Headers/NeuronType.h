@@ -11,12 +11,17 @@ class NeuronType {
 public:
     NeuronType();
     NeuronType(const NeuronType& orig);
-    NeuronType(string NameP, int ActivationLevelsP, vector<string> ActivationFunctionsP, vector<string> ParametersNameP, vector<string> ParametersTypeP);
+    NeuronType(string NameP, string DataTypeP, int ActivationLevelsP, vector<string> ActivationFunctionsP, vector<string> ParametersNameP, vector<string> ParametersTypeP);
     virtual ~NeuronType();
     ReturnType GetName(string &NameP);
+    ReturnType GetDataType(string &DataTypeP);
+    ReturnType GetActivationLevels(int &ActivationLevelsP);
     ReturnType SetFastInput(vector<string> FastInputP);
+    ReturnType GetFastInput(vector<string> &FastInputP);
+    ReturnType GetParametersName(vector<string> &ParametersNameP);
 private:
     string Name;
+    string DataType;
     int ActivationLevels;
     vector<string> ActivationFunctions;
     vector<string> ParametersName;

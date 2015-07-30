@@ -85,7 +85,10 @@ ReturnType ToDouble(string StringP, double &ReturnP);
 
 double ToDouble(string StringP);
 
-
+string TypeToString(int DummyP);
+string TypeToString(bool DummyP);
+string TypeToString(double DummyP);
+string TypeToString(string DummyP);
 
 #if 0
 /**

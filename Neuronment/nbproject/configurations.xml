@@ -9,6 +9,7 @@
       <itemPath>Headers/HashTable.h</itemPath>
       <itemPath>Headers/InterpreterManager.h</itemPath>
       <itemPath>Headers/LogManager.h</itemPath>
+      <itemPath>Headers/Neuron.h</itemPath>
       <itemPath>Headers/NeuronType.h</itemPath>
       <itemPath>Headers/NeuronmentCommand.h</itemPath>
       <itemPath>Headers/Simulator.h</itemPath>
@@ -45,6 +46,7 @@
       <itemPath>Sources/InterpreterManager.cpp</itemPath>
       <itemPath>Sources/LogManager.Init.cpp</itemPath>
       <itemPath>Sources/LogManager.cpp</itemPath>
+      <itemPath>Sources/Neuron.cpp</itemPath>
       <itemPath>Sources/NeuronType.cpp</itemPath>
       <itemPath>Sources/NeuronmentCommand.cpp</itemPath>
       <itemPath>Sources/Simulator.cpp</itemPath>
@@ -94,6 +96,8 @@
       <item path="Headers/InterpreterManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/LogManager.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/Neuron.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/NeuronType.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -176,6 +180,8 @@
       <item path="Sources/LogManager.Init.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/LogManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/Neuron.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/NeuronType.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -228,6 +234,8 @@
       </item>
       <item path="Headers/LogManager.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Headers/Neuron.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Headers/NeuronType.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/NeuronmentCommand.h" ex="false" tool="3" flavor2="0">
@@ -309,6 +317,8 @@
       <item path="Sources/LogManager.Init.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/LogManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/Neuron.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/NeuronType.cpp" ex="false" tool="1" flavor2="0">
       </item>

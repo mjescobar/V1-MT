@@ -10,7 +10,7 @@ using namespace std;
 
 SimulatorManager::SimulatorManager()
 {
-  CurrentSimulator = -1;
+  Current = -1;
 }
 
 SimulatorManager::SimulatorManager(const SimulatorManager& orig)
@@ -21,19 +21,27 @@ SimulatorManager::~SimulatorManager()
 {
 }
 
+Simulator* SimulatorManager::CurrentSimulator()
+{
+  if (Current < 0 || Current >= SimulatorList.size()) {
+    Log.Message("DV-038");
+  }
+  return &(SimulatorList[Current]);
+}
+
 ReturnType SimulatorManager::AddSimulator()
 {
   Simulator ToAdd;
   SimulatorList.push_back(ToAdd);
-  if (CurrentSimulator < 0) {
-    CurrentSimulator = 0;
+  if (Current < 0) {
+    Current = 0;
   }
   return ReturnSuccess;
 }
 
-ReturnType SimulatorManager::GetSimulatorCurrent(int &CurrentSimulatorP)
+ReturnType SimulatorManager::GetSimulatorCurrent(int &CurrentP)
 {
-  CurrentSimulatorP = CurrentSimulator;
+  CurrentP = Current;
   return ReturnSuccess;
 }
 
@@ -49,7 +57,7 @@ ReturnType SimulatorManager::GetSimulatorList(vector<string> &SimulatorListP)
 ReturnType SimulatorManager::SetSimulatorCurrent(int SimulatorIdP)
 {
   if (SimulatorIdP >= -1 && SimulatorIdP < SimulatorList.size()) {
-    CurrentSimulator = SimulatorIdP;
+    Current = SimulatorIdP;
     return ReturnSuccess;
   }
   return ReturnFail;
@@ -70,10 +78,9 @@ ReturnType SimulatorManager::GetSimulatorCount(int &CountP)
   return ReturnSuccess;
 }
 
-ReturnType SimulatorManager::AddNeuronType(string NameP, int ActivationLevelsP, vector<string> ActivationFunctionsP, vector<string> ParametersNameP, vector<string> ParametersTypeP)
+ReturnType SimulatorManager::AddNeuronType(string NameP, string DataTypeP, int ActivationLevelsP, vector<string> ActivationFunctionsP, vector<string> ParametersNameP, vector<string> ParametersTypeP)
 {
-  NeuronType ToAdd(NameP, ActivationLevelsP, ActivationFunctionsP, ParametersNameP, ParametersTypeP);
-  NeuronTypes.push_back(ToAdd);
+  NeuronTypes.push_back(NeuronType(NameP, DataTypeP, ActivationLevelsP, ActivationFunctionsP, ParametersNameP, ParametersTypeP));
   return ReturnSuccess;
 }
 

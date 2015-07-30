@@ -452,6 +452,26 @@ string ToString(bool ValueP)
   return Tmp;
 }
 
+string TypeToString(int DummyP)
+{
+  return "int";
+}
+
+string TypeToString(bool DummyP)
+{
+  return "bool";
+}
+
+string TypeToString(double DummyP)
+{
+  return "double";
+}
+
+string TypeToString(string DummyP)
+{
+  return "string";
+}
+
 #if 0
 
 void TokenizeNoDelete(const string& str, vector<string>& tokens, const string& delimiters)
