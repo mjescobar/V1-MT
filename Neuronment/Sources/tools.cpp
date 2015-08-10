@@ -392,6 +392,7 @@ ReturnType ToBool(string StringP, bool &ReturnP)
       return ReturnSuccessWarning;
     }
   }
+  return ReturnSuccess;
 }
 
 bool ToBool(string StringP)

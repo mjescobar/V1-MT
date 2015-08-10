@@ -145,6 +145,7 @@ ReturnType VariableManager::GetSettingAsString(string VariableP, string &Variabl
     }
     VariableValue = ToReturn;
   }
+  return ReturnSuccess;
 }
 
 template <class VariableType> ReturnType VariableManager::GetSetting(string VariableP, vector<VariableType> &ValueP)
