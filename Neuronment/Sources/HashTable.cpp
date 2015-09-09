@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 2.0
- */
 
 #include "tools.h"
 #include "HashTable.h"
@@ -52,6 +48,31 @@ template <class TableType> HashTable<TableType>::~HashTable()
     }
     delete Table;
     Table = NULL;
+  }
+}
+
+template <class TableType> HashTable<TableType> & HashTable<TableType>::operator=(const HashTable<TableType>& orig)
+{
+  if (Table) {
+    for (int i = 0; i < Size; i++) {
+      if (Table[i] != NULL) {
+        delete Table[i];
+        Table[i] = NULL;
+      }
+    }
+    delete Table;
+    Table = NULL;
+  }
+  Size = orig.Size;
+  Counter = orig.Counter;
+  Table = new HashEntry<TableType>*[Size];
+  for (int i = 0; i < Size; i++) {
+    if (orig.Table[i] != NULL) {
+      Table[i] = new HashEntry<TableType>;
+      *(Table[i]) = *(orig.Table[i]);
+    } else {
+      Table[i] = NULL;
+    }
   }
 }
 

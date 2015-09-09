@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
- */
 
 #ifndef TOOLS_H
 #define	TOOLS_H
@@ -206,4 +202,4 @@ string GetFlagValue(vector<string> TokensP, string FlagP);
 double NonLinearity001(double ValueP, double MaxP, double AP, double BP);
 #endif
 
-#endif	/* TOOLS_H */
+#endif

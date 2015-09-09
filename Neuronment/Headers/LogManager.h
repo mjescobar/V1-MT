@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
- */
 
 #ifndef LOGMANAGER_H
 #define	LOGMANAGER_H
@@ -57,4 +53,4 @@ private:
 //template<> ReturnType LogManager::GetInternalValue<string>(string IdP, HashTable<string> TableP, vector<string> &ContentP, bool &FlagP);
 
 
-#endif	/* LOGMANAGER_H */
+#endif

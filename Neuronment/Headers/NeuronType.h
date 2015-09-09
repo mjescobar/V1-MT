@@ -9,25 +9,30 @@ using namespace std;
 
 class NeuronType {
 public:
-    NeuronType();
-    NeuronType(const NeuronType& orig);
-    NeuronType(string NameP, string DataTypeP, int ActivationLevelsP, vector<string> ActivationFunctionsP, vector<string> ParametersNameP, vector<string> ParametersTypeP);
-    virtual ~NeuronType();
-    ReturnType GetName(string &NameP);
-    ReturnType GetDataType(string &DataTypeP);
-    ReturnType GetActivationLevels(int &ActivationLevelsP);
-    ReturnType SetFastInput(vector<string> FastInputP);
-    ReturnType GetFastInput(vector<string> &FastInputP);
-    ReturnType GetParametersName(vector<string> &ParametersNameP);
+  NeuronType();
+  NeuronType(const NeuronType& orig);
+  NeuronType(string NameP, string DataTypeP, int ActivationLevelsP, vector<string> ActivationFunctionsP, vector<string> ParametersNameP, vector<string> ParametersTypeP);
+  virtual ~NeuronType();
+  ReturnType GetName(string &NameP);
+  ReturnType GetDataType(string &DataTypeP);
+  ReturnType GetActivationLevels(int &ActivationLevelsP);
+  ReturnType SetFastInput(vector<string> FastInputP);
+  ReturnType GetFastInput(vector<string> &FastInputP);
+  ReturnType GetParametersName(vector<string> &ParametersNameP);
+  ReturnType GetActivationFunction(int LevelP, void* &FunctionP);
+  ReturnType GetListsNames(vector<string> &ListNamesP);
+  ReturnType IsName(string NameP);
+  ReturnType IsDataType(string DataTypeP);
+  ReturnType IsActivationLevels(string ActivationLevelsP);
 private:
-    string Name;
-    string DataType;
-    int ActivationLevels;
-    vector<string> ActivationFunctions;
-    vector<string> ParametersName;
-    vector<string> ParametersType;
-    vector<string> FastInput;
+  string Name;
+  string DataType;
+  int ActivationLevels;
+  vector<string> ActivationFunctions;
+  vector<void*> ActivationFunctionsPointers;
+  vector<string> ParametersName;
+  vector<string> ParametersType;
+  vector<string> FastInput;
 };
 
-#endif /* NEURONTYPE_H */
-
+#endif

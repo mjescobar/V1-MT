@@ -1,33 +1,23 @@
 
-#include "NeuronType.h"
-
-
-#include "Simulator.h"
-
-
-#include "SimulatorManager.h"
-
-
-#include "LogManager.h"
-
-
 #include <vector>
 using namespace std;
 #include "extern.h"
 #include "tools.h"
+#include "NeuronType.h"
+#include "Simulator.h"
 #include "VariableManager.h"
-#include "CommandManager.h"
+#include "CommandLine.h"
 #include "SimulatorManager.h"
 #include "LogManager.h"
-#include "NeuronmentCommand.h"
+#include "InterpreterCommands.h"
 
-ReturnType report_test(CommandManager &LocalManagerP)
+ReturnType report_test(CommandLine &LocalManagerP)
 {
   Log.Output(MessageInformation, "Inside report_test");
   return ReturnSuccess;
 }
 
-ReturnType rescue_nproc(CommandManager &LocalManagerP)
+ReturnType rescue_nproc(CommandLine &LocalManagerP)
 {
   bool HasRedirection;
   string Redirection;
@@ -44,21 +34,21 @@ ReturnType rescue_nproc(CommandManager &LocalManagerP)
       vector<string> NprocFiles;
       ReturnCatch(Tokenize(NprocList, NprocFiles));
       for (int i = 0; i < NprocFiles.size(); i++) {
-        InterpreterManager Interpreter(NprocFiles[i]);
-        ReturnCatch(Interpreter.LoadFile());
+        Interpreter LocalInterpreter(NprocFiles[i]);
+        ReturnCatch(LocalInterpreter.LoadFile());
         if (HasRedirection) {
           ReturnCatch(Log.StartOutput(Redirection, RedirectionMode));
         } else {
           ReturnCatch(Log.IncreaseOutputLevel());
         }
-        ThisFileResult = Interpreter.Process(); //Done label
+        ThisFileResult = LocalInterpreter.Process(); //Done label
         if (HasRedirection) {
           ReturnCatch(Log.StopOutput());
           RedirectionMode = RedirectionAppend;
         } else {
           ReturnCatch(Log.DecreaseOutputLevel());
         }
-        ReturnCatch(Interpreter.CloseFile());
+        ReturnCatch(LocalInterpreter.CloseFile());
       }
     } else {
       Log.Message("UI-006");
@@ -71,42 +61,51 @@ ReturnType rescue_nproc(CommandManager &LocalManagerP)
   return ReturnSuccess;
 }
 
-ReturnType varman_set(CommandManager &LocalManagerP)
+ReturnType varman_set(CommandLine &LocalManagerP)
 {
   string VariableName;
   string VariableType;
   string VariableValue;
+  string VariableSimulator;
   ReturnCatch(LocalManagerP.GetFlag("name", VariableName));
   ReturnCatch(LocalManagerP.GetFlag("type", VariableType));
   ReturnCatch(LocalManagerP.GetFlag("value", VariableValue));
-  return Variable.SetSettingFromString(VariableName, VariableType, VariableValue);
+  if (LocalManagerP.GetFlag("simulator", VariableSimulator) == ReturnFail) {
+    return GlobalVariables.SetSettingFromString(VariableName, VariableType, VariableValue);
+  } else {
+    if (VariableSimulator == "current") {
+      return SimulatorDepository.CurrentSimulator()->InternalVariables.SetSettingFromString(VariableName, VariableType, VariableValue);
+    } else {
+      return SimulatorDepository.GetSimulator(ToInt(VariableSimulator))->InternalVariables.SetSettingFromString(VariableName, VariableType, VariableValue);
+    }
+  }
 }
 
-ReturnType varman_get(CommandManager &LocalManagerP)
+ReturnType varman_get(CommandLine &LocalManagerP)
 {
   string VariableName;
   string VariableValue;
   ReturnCatch(LocalManagerP.GetFlag("name", VariableName));
-  ReturnCatch(Variable.GetSettingAsString(VariableName, VariableValue));
+  ReturnCatch(GlobalVariables.GetSettingAsString(VariableName, VariableValue));
   Log.Output(MessageAllways, VariableValue);
   return ReturnSuccess;
 }
 
-ReturnType rescue_end_nproc(CommandManager &LocalManagerP)
+ReturnType rescue_end_nproc(CommandLine &LocalManagerP)
 {
   EarlyReturn = true;
   return ReturnSuccess;
 }
 
-ReturnType setsim_add_simulator(CommandManager &LocalManagerP)
+ReturnType setsim_add_simulator(CommandLine &LocalManagerP)
 {
-  return CoreSimulator.AddSimulator();
+  return SimulatorDepository.AddSimulator();
 }
 
-ReturnType setsim_get_current_simulator(CommandManager &LocalManagerP)
+ReturnType setsim_get_current_simulator(CommandLine &LocalManagerP)
 {
   int CurrentSimulator;
-  ReturnCatch(CoreSimulator.GetSimulatorCurrent(CurrentSimulator));
+  ReturnCatch(SimulatorDepository.GetSimulatorCurrent(CurrentSimulator));
   if (CurrentSimulator < 0) {
     Log.Output(MessageAllways, "There are no simulators started");
   } else {
@@ -115,10 +114,10 @@ ReturnType setsim_get_current_simulator(CommandManager &LocalManagerP)
   return ReturnSuccess;
 }
 
-ReturnType setsim_get_simulators_list(CommandManager &LocalManagerP)
+ReturnType setsim_get_simulators_list(CommandLine &LocalManagerP)
 {
   vector<string> SimulatorList;
-  ReturnCatch(CoreSimulator.GetSimulatorList(SimulatorList));
+  ReturnCatch(SimulatorDepository.GetSimulatorList(SimulatorList));
   if (SimulatorList.size() > 0) {
     for (int i = 0; i < SimulatorList.size(); i++) {
       Log.Output(MessageAllways, SimulatorList[i]);
@@ -129,7 +128,7 @@ ReturnType setsim_get_simulators_list(CommandManager &LocalManagerP)
   return ReturnSuccess;
 }
 
-ReturnType setsim_set_current_simulator(CommandManager &LocalManagerP)
+ReturnType setsim_set_current_simulator(CommandLine &LocalManagerP)
 {
   int SimulatorId;
   string SimulatorIdString;
@@ -140,14 +139,14 @@ ReturnType setsim_set_current_simulator(CommandManager &LocalManagerP)
   SimulatorId = ToInt(SimulatorIdString);
   Log.Output(MessageAllways, "Setting current simulator to Id " + ToString(SimulatorId));
   int SimulatorCount;
-  ReturnCatch(CoreSimulator.GetSimulatorCount(SimulatorCount));
+  ReturnCatch(SimulatorDepository.GetSimulatorCount(SimulatorCount));
   if (SimulatorId < 0 || SimulatorId >= SimulatorCount) {
     Log.Message("IN-024");
   }
-  return CoreSimulator.SetSimulatorCurrent(SimulatorId);
+  return SimulatorDepository.SetSimulatorCurrent(SimulatorId);
 }
 
-ReturnType setsim_remove_simulator(CommandManager &LocalManagerP)
+ReturnType setsim_remove_simulator(CommandLine &LocalManagerP)
 {
   //Lothar check for correctly setting the new current pointer
   int SimulatorId;
@@ -159,15 +158,15 @@ ReturnType setsim_remove_simulator(CommandManager &LocalManagerP)
   SimulatorId = ToInt(SimulatorIdString);
   Log.Output(MessageAllways, "Removing simulator " + ToString(SimulatorId));
   int SimulatorCount;
-  ReturnCatch(CoreSimulator.GetSimulatorCount(SimulatorCount));
+  ReturnCatch(SimulatorDepository.GetSimulatorCount(SimulatorCount));
   if (SimulatorId < 0 || SimulatorId >= SimulatorCount) {
     Log.Message("IN-024");
   }
-  CoreSimulator.SetSimulatorCurrent(-1);
-  return CoreSimulator.RemoveSimulator(SimulatorId);
+  SimulatorDepository.SetSimulatorCurrent(-1);
+  return SimulatorDepository.RemoveSimulator(SimulatorId);
 }
 
-ReturnType setsim_new_neuron_type(CommandManager &LocalManagerP)
+ReturnType setsim_new_neuron_type(CommandLine &LocalManagerP)
 {
   string Name;
   ReturnCatch(LocalManagerP.GetFlag("name", Name));
@@ -201,20 +200,20 @@ ReturnType setsim_new_neuron_type(CommandManager &LocalManagerP)
   }
   string DataType;
   ReturnCatch(LocalManagerP.GetFlag("data_type", DataType));
-  ReturnCatch(CoreSimulator.AddNeuronType(Name, DataType, ActivationLevels, ActivationFunctions, ParametersName, ParametersType));
+  ReturnCatch(SimulatorDepository.AddNeuronType(Name, DataType, ActivationLevels, ActivationFunctions, ParametersName, ParametersType));
   string FastInput;
   if (LocalManagerP.GetFlag("fast_input", FastInput) != ReturnFail) {
-    ReturnCatch(CoreSimulator.SetNeuronTypeFastInput(Name, FastInput));
+    ReturnCatch(SimulatorDepository.SetNeuronTypeFastInput(Name, FastInput));
   }
   return ReturnSuccess;
 }
 
-ReturnType setsim_add_neuron(CommandManager &LocalManagerP)
+ReturnType setsim_add_neuron(CommandLine &LocalManagerP)
 {
   NeuronType *NewNeuronType;
   string NeuronTypeName;
   ReturnCatch(LocalManagerP.GetFlag("neuron_type", NeuronTypeName));
-  ReturnCatch(CoreSimulator.GetNeuronType(NeuronTypeName, &NewNeuronType));
+  ReturnCatch(SimulatorDepository.GetNeuronType(NeuronTypeName, &NewNeuronType));
   string Group;
   ReturnCatch(LocalManagerP.GetFlag("group", Group));
   string IdAsString;
@@ -226,12 +225,13 @@ ReturnType setsim_add_neuron(CommandManager &LocalManagerP)
   ReturnCatch(LocalManagerP.GetFlag("base_activation", BaseActivation));
   string FastInput;
   vector<string> FastInputTokens;
-  ReturnCatch(LocalManagerP.GetFlag("fast_input", FastInput));
-  ReturnCatch(Tokenize(FastInput, FastInputTokens));
   vector<string> FastInputList;
-  ReturnCatch(NewNeuronType->GetFastInput(FastInputList));
-  if (FastInputList.size() != FastInputTokens.size()) {
-    Log.Message("DV-039");
+  if (LocalManagerP.GetFlag("fast_input", FastInput) != ReturnFail) {
+    ReturnCatch(Tokenize(FastInput, FastInputTokens));
+    ReturnCatch(NewNeuronType->GetFastInput(FastInputList));
+    if (FastInputList.size() != FastInputTokens.size()) {
+      Log.Message("DV-039");
+    }
   }
   vector<string> ParametersName;
   ReturnCatch(NewNeuronType->GetParametersName(ParametersName));
@@ -255,14 +255,62 @@ ReturnType setsim_add_neuron(CommandManager &LocalManagerP)
     } else {
       ParameterValues.push_back(FastInputTokens[FastIndex]);
     }
-
   }
-  return CoreSimulator.CurrentSimulator()->AddNeuron(NewNeuronType, Group, Id, BaseActivation, ParameterValues);
+  return SimulatorDepository.CurrentSimulator()->AddNeuron(NewNeuronType, Group, Id, BaseActivation, ParameterValues);
+}
+
+ReturnType setsim_add_link(CommandLine &LocalManagerP)
+{
+  string ToId;
+  string ToType;
+  string ToGroup;
+  LocalManagerP.GetFlag("to_id", ToId);
+  LocalManagerP.GetFlag("to_type", ToType);
+  LocalManagerP.GetFlag("to_group", ToGroup);
+  vector<Neuron*> ToNeuronsPointers;
+  SimulatorDepository.CurrentSimulator()->GetNeurons(ToNeuronsPointers, ToId, ToType, ToGroup);
+  string FromId;
+  string FromType;
+  string FromGroup;
+  LocalManagerP.GetFlag("from_id", FromId);
+  LocalManagerP.GetFlag("from_type", FromType);
+  LocalManagerP.GetFlag("from_group", FromGroup);
+  bool Verbose = false;
+  if (LocalManagerP.GetFlag("verbose") != ReturnFail) {
+    Verbose = true;
+  }
+  vector<Neuron*> FromNeuronsPointers;
+  SimulatorDepository.CurrentSimulator()->GetNeurons(FromNeuronsPointers, FromId, FromType, FromGroup);
+  string Parameters;
+  LocalManagerP.GetFlag("parameters", Parameters);
+  vector<string> ParametersVector;
+  if(Parameters.length()>0){
+    Tokenize(Parameters, ParametersVector);
+  }else{
+    ParametersVector.clear();
+  }
+  if (Verbose) {
+    Log.Output(MessageAllways, "Generating links"); //Lothar: fix labels
+  }
+  for (int i = 0; i < ToNeuronsPointers.size(); i++) {
+    for (int j = 0; j < FromNeuronsPointers.size(); j++) {
+      if (Verbose) {
+        Log.Output(MessageAllways, "Linking neuron " + ToString(i) + " with neuron " + ToString(j)); //Lothar: fix labels
+      }
+      ToNeuronsPointers[i]->AddLink(FromNeuronsPointers[j], ParametersVector);
+    }
+  }
+  return ReturnSuccess;
+}
+
+ReturnType runsim_simulate(CommandLine &LocalManagerP)
+{
+  return SimulatorDepository.CurrentSimulator()->Simulate();
 }
 
 #if 0
 
-bool InterpreterManager::RunsimCall(vector<string> TokensP)
+bool Interpreter::RunsimCall(vector<string> TokensP)
 {
   bool Result = false;
   bool Found = false;
@@ -302,7 +350,7 @@ bool InterpreterManager::RunsimCall(vector<string> TokensP)
   return Result;
 }
 
-bool InterpreterManager::ReportCall(vector<string> TokensP)
+bool Interpreter::ReportCall(vector<string> TokensP)
 {
   bool Result = false;
   bool Found = false;
@@ -378,13 +426,13 @@ bool InterpreterManager::ReportCall(vector<string> TokensP)
   return Result;
 }
 
-bool InterpreterManager::VarmanCall_SET(vector<string> TokensP)
+bool Interpreter::VarmanCall_SET(vector<string> TokensP)
 {
 
   return Variables.StoreSetting(TokensP);
 }
 
-bool InterpreterManager::VarmanCall_PRINT(vector<string> TokensP)
+bool Interpreter::VarmanCall_PRINT(vector<string> TokensP)
 {
   if (TokensP.size() == 3) {
     bool Valid = Variables.GetSettingValid(DeleteTrailingZeros(TokensP[2]));
@@ -428,7 +476,7 @@ bool InterpreterManager::VarmanCall_PRINT(vector<string> TokensP)
   }
 }
 
-bool InterpreterManager::RescueCall_RETURN(vector<string> TokensP)
+bool Interpreter::RescueCall_RETURN(vector<string> TokensP)
 {
   EarlyReturn = true;
   return true;

@@ -2,28 +2,49 @@
 #include <vector>
 using namespace std;
 #include "NeuronType.h"
+#include "Simulator.h"
 
 #ifndef NEURON_H
 #define NEURON_H
 
-template <class DataType> class Neuron {
+class Neuron {
 public:
-    Neuron();
-    Neuron(const Neuron& orig);
-    virtual ~Neuron();
-    Neuron(NeuronType *TypeP, string GroupP, int IdP, vector<DataType> BaseActivationP, vector<string> ParameterValuesP);
+  Neuron();
+  Neuron(const Neuron& orig);
+  virtual ~Neuron();
+  Neuron(NeuronType *TypeP, string GroupP, int IdP, vector<string> BaseActivationP, vector<string> ParameterValuesP);
+  ReturnType AddLink(Neuron *NeuronP, vector<string> ParametersP);
+  ReturnType LoadActivation(vector<vector<double> > ExternalActivationP);
+  ReturnType LoadActivation(vector<double> ExternalActivationP, int LevelP);
+  ReturnType Calculate(int StepP);
+  ReturnType GetActivation(int LevelP, int StepP, double &ActivationP);//Lothar: replicate for other data types
+//  ReturnType GetLinks(vector<Neuron*> &LinksP);
+//  ReturnType GetActivationSize(int &ActivationSize);
+//  ReturnType CalculateActivationStep();
+//  template <class DataType> ReturnType GetActivationStep(int StepP, DataType &ActivationP);
+  ReturnType ActivationPushBack(int LevelP, double ValueP); // Lothar check for other types
+  ReturnType GetTypeParameter(string NameP, string &ValueP);
+  ReturnType GetTypeParameter(string NameP, double &ValueP); //Lothar check for other types
+  ReturnType GetLinkParameter(int LinkP, string NameP, double &ValueP); //Lothar: replicar para diferentes data types
+  ReturnType GetLinksCount(int &CountP);
+  ReturnType GetLinksNeuron(int IndexP, Neuron* &NeuronP);
+  ReturnType GetActivationSize(int LevelP, int &SizeP);
+  ReturnType IsId(string IdP);
+  ReturnType IsGroup(string GroupP);
+  ReturnType IsType(string TypeP);
 private:
-    int Id;
-    string Group;
-    NeuronType *Type;
-    vector<string> ParameterValues;
-    vector<vector<DataType> > Activation;
-    vector<Neuron<int>* > LinksInt;
-    vector<Neuron<bool>* > LinksBool;
-    vector<Neuron<double>* > LinksDouble;
-    vector<Neuron<string>* > LinksString;
-    int CurrentPointer;
+  // Identification parameters
+  int Id;
+  string Group;
+  NeuronType *Type;
+  // Behavior parameters
+  vector<string> ParameterValues;
+  // Linking parameters
+  vector<Neuron*> LinkingPointers;
+  vector<vector<string> > LinkingParameters;
+  vector<vector<string> > LinkingParametersLabels;
+  // Activation storage
+  vector<vector<double> > Activation_double;
 };
 
-#endif /* NEURON_H */
-
+#endif

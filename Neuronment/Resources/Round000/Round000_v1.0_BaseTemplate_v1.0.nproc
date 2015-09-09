@@ -2,19 +2,19 @@
 # Author: Pedro F. Toledo <pedrotoledocorrea@gmail.com>
 # This file has been designed as base template for Neuronment v1.0
 
+# Load the neuron types library
+  rescue nproc -nproc Resources/Round000/Round000_v1.0_NeuronTypes.nproc > /dev/null
+
 # Creates testing simulator
-setsim add_simulator
+  setsim add_simulator
 
-# Load V1Neuron Settings
-rescue nproc -nproc Resources/Round000/Round000_v1.0_V1Neurons.nproc
+# Configure and create V1 Neurons and MT Neurons
+  rescue nproc -nproc Resources/Round000/Round000_v1.0_V1Neurons.nproc > /dev/null
+  rescue nproc -nproc Resources/Round000/Round000_v1.0_MTNeurons.nproc > /dev/null
 
-rescue end_nproc
+  rescue end_nproc
 
-# Load MTNeuron Settings
-rescue nproc -silent -file Resources/Round000/Round000_v1.0_MTNeurons.nproc
-
-# Load V1Neuron Links
-rescue nproc -silent -file Resources/Round000/Round000_v1.0_V1V1_Links.nproc
+  rescue nproc -nproc Resources/Round000/Round000_v1.0_V1V1_Links.nproc
 
 # Sets the V1MT connection description
 rescue nproc -silent -file Resources/Round000/Round000_v1.0_V1MT_Links.nproc

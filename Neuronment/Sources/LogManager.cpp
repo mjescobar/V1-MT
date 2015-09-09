@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
- */
 
 //#include <vector>
 //#include <string>
@@ -119,7 +115,7 @@ ReturnType LogManager::Message(string IdP, bool SkipAssertionP)
   }
   return ReturnSuccess;
 }
-
+//Lothar: eliminar indentación de outputs
 ReturnType LogManager::MessageFail()
 {
   Output(MessageAllways, string(LABEL_FAIL));

@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 2.0
- */
 
 //#include <vector>
 //#include <sstream>
@@ -15,21 +11,21 @@
 //#include "LogManager.h"
 //#include "SettingsManager.h"
 //#include "Globals.h"
-#include "InterpreterManager.h"
+#include "Interpreter.h"
 #include "LogManager.h"
-#include "CommandManager.h"
+#include "CommandLine.h"
 
-InterpreterManager::InterpreterManager()
+Interpreter::Interpreter()
 {
   RuntimeAssertion();
 }
 
-InterpreterManager::InterpreterManager(const InterpreterManager& orig)
+Interpreter::Interpreter(const Interpreter& orig)
 {
   Log.Message("DV-008: InterpreterManager");
 }
 
-InterpreterManager::InterpreterManager(string NprocFileP) :
+Interpreter::Interpreter(string NprocFileP) :
 Commands(INTERPRETER_MANAGER_COMMANDS_HASH_SIZE)
 {
   NprocFile = NprocFileP;
@@ -39,12 +35,12 @@ Commands(INTERPRETER_MANAGER_COMMANDS_HASH_SIZE)
   InitializeInterpreter();
 }
 
-InterpreterManager::~InterpreterManager()
+Interpreter::~Interpreter()
 {
   delete LocalManager;
 }
 
-ReturnType InterpreterManager::LoadFile()
+ReturnType Interpreter::LoadFile()
 {
   if (NprocFile.length() < 1) {
     Log.Message("UI-006");
@@ -60,7 +56,7 @@ ReturnType InterpreterManager::LoadFile()
   return ReturnSuccess;
 }
 
-ReturnType InterpreterManager::CloseFile()
+ReturnType Interpreter::CloseFile()
 {
   ReadyForReading = false;
   Log.OutputNproc(MessageInformation, "==> Close: " + NprocFile);
@@ -76,14 +72,14 @@ ReturnType InterpreterManager::CloseFile()
   return ReturnSuccess;
 }
 
-ReturnType InterpreterManager::Process()
+ReturnType Interpreter::Process()
 {
   bool CommandReady;
   bool EarlyReturnInternal = false;
   ;
   bool LastLine = false;
   string Line;
-  LocalManager = new CommandManager();
+  LocalManager = new CommandLine();
   while (!EndOfFileReached || LastLine) {
     ReturnCatch(LocalManager->IsReady(CommandReady));
     if (CommandReady) {
@@ -132,7 +128,7 @@ ReturnType InterpreterManager::Process()
   return ReturnSuccess;
 }
 
-ReturnType InterpreterManager::GetNextLine(string &LineP)
+ReturnType Interpreter::GetNextLine(string &LineP)
 {
   string InternalLine;
   if (!ReadyForReading) {
@@ -156,7 +152,7 @@ ReturnType InterpreterManager::GetNextLine(string &LineP)
   return ReturnSuccess;
 }
 
-ReturnType InterpreterManager::ProcessLine(CommandManager &LocalManagerP)
+ReturnType Interpreter::ProcessLine(CommandLine &LocalManagerP)
 {
   // Retrieving values
   bool HasCommand;
@@ -203,7 +199,7 @@ ReturnType InterpreterManager::ProcessLine(CommandManager &LocalManagerP)
   }
 }
 
-ReturnType InterpreterManager::ProcessCommand(CommandManager &LocalManagerP)
+ReturnType Interpreter::ProcessCommand(CommandLine &LocalManagerP)
 {
   // Calculate function name
   string FunctionName = "";
@@ -218,5 +214,5 @@ ReturnType InterpreterManager::ProcessCommand(CommandManager &LocalManagerP)
     return ReturnSuccessWarning;
   }
   // Execute function
-  return ((ReturnType(*)(CommandManager&))Function)(LocalManagerP);
+  return ((ReturnType(*)(CommandLine&))Function)(LocalManagerP);
 }

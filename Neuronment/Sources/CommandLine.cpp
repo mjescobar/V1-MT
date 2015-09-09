@@ -1,15 +1,11 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
- */
 
 #include "extern.h"
 #include "tools.h"
 #include "define.h"
 #include "LogManager.h"
-#include "CommandManager.h"
+#include "CommandLine.h"
 
-CommandManager::CommandManager()
+CommandLine::CommandLine()
 {
   FullCommand = "";
   Directives.clear();
@@ -21,12 +17,12 @@ CommandManager::CommandManager()
   FlagValues = new HashTable<string>(COMMAND_MANAGER_HASH_SIZE);
 }
 
-CommandManager::CommandManager(const CommandManager& orig)
+CommandLine::CommandLine(const CommandLine& orig)
 {
   Log.Message("DV-008: CommandManager");
 }
 
-CommandManager::CommandManager(int argcP, char** argvP) 
+CommandLine::CommandLine(int argcP, char** argvP) 
 {
   FullCommand = "";
   Directives.clear();
@@ -39,12 +35,12 @@ CommandManager::CommandManager(int argcP, char** argvP)
   Append(argcP, argvP);
 }
 
-CommandManager::~CommandManager()
+CommandLine::~CommandLine()
 {
   delete FlagValues;
 }
 
-ReturnType CommandManager::Append(int argc, char** argv)
+ReturnType CommandLine::Append(int argc, char** argv)
 {
   ReturnCatch(DataCheck(argv, "NotNull"));
   string Tmp = "";
@@ -62,7 +58,7 @@ ReturnType CommandManager::Append(int argc, char** argv)
   return ReturnSuccess;
 }
 
-ReturnType CommandManager::Append(string StringP)
+ReturnType CommandLine::Append(string StringP)
 {
   if (Ready) {
     Ready = false;
@@ -80,7 +76,7 @@ ReturnType CommandManager::Append(string StringP)
   }
 }
 
-ReturnType CommandManager::ProcessFullCommand()
+ReturnType CommandLine::ProcessFullCommand()
 {
   // Storing the full line
   ReturnMessage = "";
@@ -293,7 +289,7 @@ ReturnType CommandManager::ProcessFullCommand()
   }
 }
 
-ReturnType CommandManager::GetAllowedChars(vector<string>& AllowedCharsP)
+ReturnType CommandLine::GetAllowedChars(vector<string>& AllowedCharsP)
 {
   AllowedCharsP.clear();
   AllowedCharsP.push_back("IsTab");
@@ -309,16 +305,17 @@ ReturnType CommandManager::GetAllowedChars(vector<string>& AllowedCharsP)
   AllowedCharsP.push_back("IsBackSlash");
   AllowedCharsP.push_back("IsUnderscore");
   AllowedCharsP.push_back("IsCurlyBraces");
+  AllowedCharsP.push_back("IsColon");
   return ReturnSuccess;
 }
 
-ReturnType CommandManager::IsReady(bool &ReadyP)
+ReturnType CommandLine::IsReady(bool &ReadyP)
 {
   ReadyP = Ready;
   return ReturnSuccess;
 }
 
-ReturnType CommandManager::GetFlag(string FlagP, string &ValueP)
+ReturnType CommandLine::GetFlag(string FlagP, string &ValueP)
 {
   if (Ready) {
     return FlagValues->GetEntryQuick(FlagP, ValueP);
@@ -328,7 +325,18 @@ ReturnType CommandManager::GetFlag(string FlagP, string &ValueP)
   }
 }
 
-ReturnType CommandManager::GetDirectives(vector<string> &DirectivesP)
+ReturnType CommandLine::GetFlag(string FlagP)
+{
+  if (Ready) {
+    string Dummy;
+    return FlagValues->GetEntryQuick(FlagP, Dummy);
+  } else {
+    Log.Message("DV-024");
+    return ReturnFail;
+  }
+}
+
+ReturnType CommandLine::GetDirectives(vector<string> &DirectivesP)
 {
   if (Ready) {
     DirectivesP = Directives;
@@ -339,7 +347,7 @@ ReturnType CommandManager::GetDirectives(vector<string> &DirectivesP)
   }
 }
 
-ReturnType CommandManager::GetCleanCommand(string &CleanCommandP, string Separator)
+ReturnType CommandLine::GetCleanCommand(string &CleanCommandP, string Separator)
 {
   if (Ready) {
     CleanCommandP = "";
@@ -357,7 +365,7 @@ ReturnType CommandManager::GetCleanCommand(string &CleanCommandP, string Separat
   }
 }
 
-ReturnType CommandManager::GetComment(string &CommentP)
+ReturnType CommandLine::GetComment(string &CommentP)
 {
   if (Ready) {
     CommentP = Comment;
@@ -368,7 +376,7 @@ ReturnType CommandManager::GetComment(string &CommentP)
   }
 }
 
-ReturnType CommandManager::GetCommand(string &CommandP)
+ReturnType CommandLine::GetCommand(string &CommandP)
 {
   if (Ready) {
     CommandP = Command;
@@ -379,7 +387,7 @@ ReturnType CommandManager::GetCommand(string &CommandP)
   }
 }
 
-ReturnType CommandManager::GetRedirection(string &RedirectionP)
+ReturnType CommandLine::GetRedirection(string &RedirectionP)
 {
   if (Ready) {
     RedirectionP = Redirection;
@@ -390,7 +398,7 @@ ReturnType CommandManager::GetRedirection(string &RedirectionP)
   }
 }
 
-ReturnType CommandManager::GetRedirectionType(RedirectionType &RedirectionModeP)
+ReturnType CommandLine::GetRedirectionType(RedirectionType &RedirectionModeP)
 {
   if (Ready) {
     RedirectionModeP = RedirectionMode;
@@ -401,7 +409,7 @@ ReturnType CommandManager::GetRedirectionType(RedirectionType &RedirectionModeP)
   }
 }
 
-ReturnType CommandManager::GetFullLine(string &FullLineP)
+ReturnType CommandLine::GetFullLine(string &FullLineP)
 {
   if (Ready) {
     FullLineP = FullLine;
@@ -412,7 +420,7 @@ ReturnType CommandManager::GetFullLine(string &FullLineP)
   }
 }
 
-ReturnType CommandManager::HasCommand(bool &HasCommandP)
+ReturnType CommandLine::HasCommand(bool &HasCommandP)
 {
   if (Ready) {
     if (Command.length() > 0) {
@@ -427,7 +435,7 @@ ReturnType CommandManager::HasCommand(bool &HasCommandP)
   }
 }
 
-ReturnType CommandManager::HasComment(bool &HasCommentP)
+ReturnType CommandLine::HasComment(bool &HasCommentP)
 {
   if (Ready) {
     if (Comment.length() > 0) {
@@ -442,7 +450,7 @@ ReturnType CommandManager::HasComment(bool &HasCommentP)
   }
 }
 
-ReturnType CommandManager::HasRedirection(bool &HasRedirectionP)
+ReturnType CommandLine::HasRedirection(bool &HasRedirectionP)
 {
   if (Ready) {
     if (Redirection.length() > 0) {
@@ -457,7 +465,7 @@ ReturnType CommandManager::HasRedirection(bool &HasRedirectionP)
   }
 }
 
-ReturnType CommandManager::Restart()
+ReturnType CommandLine::Restart()
 {
   FullCommand = "";
   Directives.clear();

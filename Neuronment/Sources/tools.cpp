@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
- */
 
 #include <string>
 //#include <ctime>
@@ -253,6 +249,12 @@ ReturnType DataCheck(char DataP, string ConditionsP)
   }
   if (ConditionsP == "IsCurlyBracesClose") {
     if (DataP == 125) {
+      return ReturnSuccess;
+    }
+    return ReturnFail;
+  }
+  if (ConditionsP == "IsColon") {
+    if (DataP == 58) {
       return ReturnSuccess;
     }
     return ReturnFail;

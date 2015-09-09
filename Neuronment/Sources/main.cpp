@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
- */
 
 //#include <vector>
 //#include <string>
@@ -15,27 +11,30 @@
 //#include "HashTable.h"
 //#include "LogManager.h"
 #include "VariableManager.h"
-#include "CommandManager.h"
-#include "InterpreterManager.h"
+#include "CommandLine.h"
+#include "Interpreter.h"
 //#include "Globals.h"
 #include "extern.h"
 #include "main.h"
-#include "NeuronmentCommand.h"
-#include "CommandManager.h"
+#include "FunctionsManager.h"
+#include "InterpreterCommands.h"
+#include "CommandLine.h"
 
 // Stores the warning messages after a function termination
 string ReturnMessage;
 // Sets the log management instance of LogManager
 LogManager Log;
 // Stores the variables
-VariableManager Variable;
+VariableManager GlobalVariables;
 // Core simulator manager
-SimulatorManager CoreSimulator;
+SimulatorManager SimulatorDepository;
+// Neuronment Functions for Neurons
+FunctionsManager FunctionDepository;
 // For early terminating a nproc reading
 bool EarlyReturn = false;
 
 int main(int argc, char** argv)
-{
+{   
   // Initialize global variables that require initialization
   ReturnCatch(SetGlobals());
   // Program Header
@@ -49,7 +48,7 @@ int main(int argc, char** argv)
 
 ReturnType ProcessCommandLine(int argcP, char** argvP)
 {
-  CommandManager CommandLine(argcP, argvP);
+  CommandLine CommandLine(argcP, argvP);
   //Lothar:
   //-verbose_messages
   //-no_verbose_messages
@@ -62,6 +61,5 @@ ReturnType SetGlobals()
 {
   // Initialize system variables list
   //Variables.InitializeVariables();
-  // Returning process result
   return ReturnSuccess;
 }

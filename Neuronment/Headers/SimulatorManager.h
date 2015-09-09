@@ -15,6 +15,7 @@ public:
     SimulatorManager(const SimulatorManager& orig);
     virtual ~SimulatorManager();
     Simulator* CurrentSimulator();
+    Simulator* GetSimulator(int IdP);
     ReturnType AddSimulator();
     ReturnType RemoveSimulator(int SimulatorIdP);
     ReturnType SetSimulatorCurrent(int SimulatorIdP);
@@ -31,4 +32,3 @@ private:
 };
 
 #endif /* SIMULATORMANAGER_H */
-

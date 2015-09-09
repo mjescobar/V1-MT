@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 2.0
- */
 
 #include "tools.h"
 #include "HashEntry.h"
@@ -31,6 +27,13 @@ template <class EntryType> HashEntry<EntryType>::HashEntry(const HashEntry& orig
 
 template <class EntryType> HashEntry<EntryType>::~HashEntry()
 {
+}
+
+template <class EntryType> HashEntry<EntryType> & HashEntry<EntryType>::operator=(const HashEntry<EntryType>& orig)
+{
+  Key = orig.Key;
+  HashKey = orig.HashKey;
+  Content = orig.Content;
 }
 
 template <class EntryType> ReturnType HashEntry<EntryType>::GetKey(string &KeyP)

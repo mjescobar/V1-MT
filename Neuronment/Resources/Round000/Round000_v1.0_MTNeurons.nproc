@@ -4,31 +4,14 @@
 # Y: 0.0
 # 8 Orientations (45.00[Deg] Step)
 
-setsim neuron_type MT                             \ 
-                  -activation_levels 1            \
-                  -fact0 MT_001                   \
-                  -parameters {X Y Z Orientation}
+varman set -simulator current -type string -name MT_001:connection_list -value FromV1
 
-setsim add_neuron -name MT'000000 \
-                  -group MT \
-                  -act0 0.0 \
-                  -act1 0.0 \
-                  -X 0.0 \
-                  -Y 0.0 \
-                  -Z 0.0 \
-                  -Orientation 000.00
-
-varman set SIM:MT_first_calculation activation
-
-varman set SIM:MT_act_method        MT_A001
-varman set SIM:MT_dac_method        MT_D001
-
-               #ID       #X  #Y  #Z  #Or    #DA #DD
-varman set SIM:MT'000000 0.0 0.0 0.0 000.00 0.0 0.0
-varman set SIM:MT'000001 0.0 0.0 0.0 045.00 0.0 0.0
-varman set SIM:MT'000002 0.0 0.0 0.0 090.00 0.0 0.0
-varman set SIM:MT'000003 0.0 0.0 0.0 135.00 0.0 0.0
-varman set SIM:MT'000004 0.0 0.0 0.0 180.00 0.0 0.0
-varman set SIM:MT'000005 0.0 0.0 0.0 225.00 0.0 0.0
-varman set SIM:MT'000006 0.0 0.0 0.0 270.00 0.0 0.0
-varman set SIM:MT'000007 0.0 0.0 0.0 315.00 0.0 0.0
+#                                                      ID                        DA                  X   Y   Z   Or
+setsim add_neuron -neuron_type MT -group MT_Cortex -id 000000 -base_activation { 0.0 } -fast_input { 0.0 0.0 0.0 000.00 }
+setsim add_neuron -neuron_type MT -group MT_Cortex -id 000001 -base_activation { 0.0 } -fast_input { 0.0 0.0 0.0 045.00 }
+setsim add_neuron -neuron_type MT -group MT_Cortex -id 000002 -base_activation { 0.0 } -fast_input { 0.0 0.0 0.0 090.00 }
+setsim add_neuron -neuron_type MT -group MT_Cortex -id 000003 -base_activation { 0.0 } -fast_input { 0.0 0.0 0.0 135.00 }
+setsim add_neuron -neuron_type MT -group MT_Cortex -id 000004 -base_activation { 0.0 } -fast_input { 0.0 0.0 0.0 180.00 }
+setsim add_neuron -neuron_type MT -group MT_Cortex -id 000005 -base_activation { 0.0 } -fast_input { 0.0 0.0 0.0 225.00 }
+setsim add_neuron -neuron_type MT -group MT_Cortex -id 000006 -base_activation { 0.0 } -fast_input { 0.0 0.0 0.0 270.00 }
+setsim add_neuron -neuron_type MT -group MT_Cortex -id 000007 -base_activation { 0.0 } -fast_input { 0.0 0.0 0.0 315.00 }

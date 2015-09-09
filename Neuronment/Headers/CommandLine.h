@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
- */
 
 #ifndef COMMANDMANAGER_H
 #define	COMMANDMANAGER_H
@@ -12,15 +8,18 @@ using namespace std;
 #include <enum.h>
 #include <HashTable.h>
 
-class CommandManager {
+//Lothar: baseactivation not mandatory
+
+class CommandLine {
 public:
-  CommandManager();
-  CommandManager(const CommandManager& orig);
-  CommandManager(int argcP, char** argvP);
-  virtual ~CommandManager();
+  CommandLine();
+  CommandLine(const CommandLine& orig);
+  CommandLine(int argcP, char** argvP);
+  virtual ~CommandLine();
   ReturnType Append(int argc, char** argv);
   ReturnType Append(string StringP);
   ReturnType IsReady(bool &ReadyP);
+  ReturnType GetFlag(string FlagP);
   ReturnType GetFlag(string FlagP, string &ValueP);
   ReturnType GetDirectives(vector<string> &DirectivesP);
   ReturnType GetCleanCommand(string &CleanCommandP, string Separator = " ");
@@ -47,5 +46,4 @@ private:
   HashTable<string> *FlagValues;
 };
 
-#endif	/* COMMANDMANAGER_H */
-
+#endif

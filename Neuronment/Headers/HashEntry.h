@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 2.0
- */
 
 #ifndef HASHENTRY_H
 #define	HASHENTRY_H
@@ -12,6 +8,7 @@ public:
   HashEntry(string KeyP, vector<EntryType> ContentP);
   HashEntry(const HashEntry& orig);
   virtual ~HashEntry();
+  HashEntry & operator=(const HashEntry& orig);
   ReturnType GetHashKey(unsigned int &HashKeyP);
   ReturnType GetKey(string &KeyP);
   ReturnType GetCount(int &CountP);
@@ -22,4 +19,4 @@ private:
   vector<EntryType> Content;
 };
 
-#endif	/* HASHENTRY_H */
+#endif

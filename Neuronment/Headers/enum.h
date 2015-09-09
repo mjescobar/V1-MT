@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
- */
 
 #ifndef ENUMS_H
 #define	ENUMS_H
@@ -76,4 +72,4 @@ enum DataType {
 };
 #endif
 
-#endif	/* ENUMS_H */
+#endif

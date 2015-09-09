@@ -35,16 +35,19 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/Sources/CommandManager.o \
+	${OBJECTDIR}/FunctionsManager.Init.o \
+	${OBJECTDIR}/Sources/CommandLine.o \
+	${OBJECTDIR}/Sources/Functions.o \
+	${OBJECTDIR}/Sources/FunctionsManager.o \
 	${OBJECTDIR}/Sources/HashEntry.o \
 	${OBJECTDIR}/Sources/HashTable.o \
-	${OBJECTDIR}/Sources/InterpreterManager.Init.o \
-	${OBJECTDIR}/Sources/InterpreterManager.o \
+	${OBJECTDIR}/Sources/Interpreter.Init.o \
+	${OBJECTDIR}/Sources/Interpreter.o \
+	${OBJECTDIR}/Sources/InterpreterCommands.o \
 	${OBJECTDIR}/Sources/LogManager.Init.o \
 	${OBJECTDIR}/Sources/LogManager.o \
 	${OBJECTDIR}/Sources/Neuron.o \
 	${OBJECTDIR}/Sources/NeuronType.o \
-	${OBJECTDIR}/Sources/NeuronmentCommand.o \
 	${OBJECTDIR}/Sources/Simulator.o \
 	${OBJECTDIR}/Sources/SimulatorManager.o \
 	${OBJECTDIR}/Sources/VariableManager.o \
@@ -76,10 +79,25 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/neuronment: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/neuronment ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/Sources/CommandManager.o: Sources/CommandManager.cpp 
+${OBJECTDIR}/FunctionsManager.Init.o: FunctionsManager.Init.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FunctionsManager.Init.o FunctionsManager.Init.cpp
+
+${OBJECTDIR}/Sources/CommandLine.o: Sources/CommandLine.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/CommandManager.o Sources/CommandManager.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/CommandLine.o Sources/CommandLine.cpp
+
+${OBJECTDIR}/Sources/Functions.o: Sources/Functions.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/Functions.o Sources/Functions.cpp
+
+${OBJECTDIR}/Sources/FunctionsManager.o: Sources/FunctionsManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/FunctionsManager.o Sources/FunctionsManager.cpp
 
 ${OBJECTDIR}/Sources/HashEntry.o: Sources/HashEntry.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
@@ -91,15 +109,20 @@ ${OBJECTDIR}/Sources/HashTable.o: Sources/HashTable.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/HashTable.o Sources/HashTable.cpp
 
-${OBJECTDIR}/Sources/InterpreterManager.Init.o: Sources/InterpreterManager.Init.cpp 
+${OBJECTDIR}/Sources/Interpreter.Init.o: Sources/Interpreter.Init.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/InterpreterManager.Init.o Sources/InterpreterManager.Init.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/Interpreter.Init.o Sources/Interpreter.Init.cpp
 
-${OBJECTDIR}/Sources/InterpreterManager.o: Sources/InterpreterManager.cpp 
+${OBJECTDIR}/Sources/Interpreter.o: Sources/Interpreter.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/InterpreterManager.o Sources/InterpreterManager.cpp
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/Interpreter.o Sources/Interpreter.cpp
+
+${OBJECTDIR}/Sources/InterpreterCommands.o: Sources/InterpreterCommands.cpp 
+	${MKDIR} -p ${OBJECTDIR}/Sources
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/InterpreterCommands.o Sources/InterpreterCommands.cpp
 
 ${OBJECTDIR}/Sources/LogManager.Init.o: Sources/LogManager.Init.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources
@@ -120,11 +143,6 @@ ${OBJECTDIR}/Sources/NeuronType.o: Sources/NeuronType.cpp
 	${MKDIR} -p ${OBJECTDIR}/Sources
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/NeuronType.o Sources/NeuronType.cpp
-
-${OBJECTDIR}/Sources/NeuronmentCommand.o: Sources/NeuronmentCommand.cpp 
-	${MKDIR} -p ${OBJECTDIR}/Sources
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -Werror -IHeaders -ISources -std=c++98 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Sources/NeuronmentCommand.o Sources/NeuronmentCommand.cpp
 
 ${OBJECTDIR}/Sources/Simulator.o: Sources/Simulator.cpp 
 	${MKDIR} -p ${OBJECTDIR}/Sources

@@ -80,6 +80,7 @@ bool MT_Neuron::AddV1Link(V1_Neuron* NeuronP, SimulationManager SimulatorP)
   return false;
 }
 
+/*
 double MT_Neuron::CalculateActivation()
 {
   double TemporalActivation = 0;
@@ -97,6 +98,7 @@ double MT_Neuron::CalculateActivation()
   }
   return (TemporalActivation < 0) ? 0 : TemporalActivation;
 }
+*/
 
 double MT_Neuron::GetOri()
 {

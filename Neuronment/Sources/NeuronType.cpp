@@ -1,7 +1,8 @@
 
 #include <vector>
-
-
+using namespace std;
+#include "tools.h"
+#include "extern.h"
 #include "NeuronType.h"
 
 NeuronType::NeuronType()
@@ -14,6 +15,7 @@ NeuronType::NeuronType(const NeuronType& orig)
   DataType = orig.DataType;
   ActivationLevels = orig.ActivationLevels;
   ActivationFunctions = orig.ActivationFunctions;
+  ActivationFunctionsPointers = orig.ActivationFunctionsPointers;
   ParametersName = orig.ParametersName;
   ParametersType = orig.ParametersType;
   FastInput = orig.FastInput;
@@ -33,6 +35,11 @@ NeuronType::NeuronType(string NameP, string DataTypeP, int ActivationLevelsP, ve
   ParametersName = ParametersNameP;
   ParametersType = ParametersTypeP;
   FastInput.clear();
+  for (int i = 0; i < ActivationLevels; i++) {
+    void* Tmp;
+    ReturnCatch(FunctionDepository.GetFunction(ActivationFunctions[i], Tmp));
+    ActivationFunctionsPointers.push_back(Tmp);
+  }
 }
 
 ReturnType NeuronType::GetName(string &NameP)
@@ -69,4 +76,42 @@ ReturnType NeuronType::GetParametersName(vector<string> &ParametersNameP)
 {
   ParametersNameP = ParametersName;
   return ReturnSuccess;
+}
+
+ReturnType NeuronType::GetActivationFunction(int LevelP, void* &FunctionP)
+{
+  if (LevelP < 0 || LevelP >= ActivationLevels) {
+    //Lothar error
+    return ReturnFail;
+  }
+  FunctionP = ActivationFunctionsPointers[LevelP];
+  return ReturnSuccess;
+  // Lothar: hacer un catch mas completo y elegante. Estoy chato en el avión
+}
+
+ReturnType NeuronType::IsName(string NameP)
+{
+  if (NameP == Name) {
+    return ReturnSuccess;
+  } else {
+    return ReturnFail;
+  }
+}
+
+ReturnType NeuronType::IsDataType(string DataTypeP)
+{
+  if (DataTypeP == DataType) {
+    return ReturnSuccess;
+  } else {
+    return ReturnFail;
+  }
+}
+
+ReturnType NeuronType::IsActivationLevels(string ActivationLevelsP)
+{
+  if (ToInt(ActivationLevelsP) == ActivationLevels) {
+    return ReturnSuccess;
+  } else {
+    return ReturnFail;
+  }
 }

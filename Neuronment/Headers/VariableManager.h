@@ -28,4 +28,4 @@ private:
     HashTable<string> HashString;
 };
 
-#endif /* VARIABLEMANAGER_H */
+#endif

@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 2.0
- */
 
 #ifndef HASHTABLE_H
 #define	HASHTABLE_H
@@ -15,6 +11,7 @@ public:
   HashTable(int SizeP);
   HashTable(const HashTable& orig);
   virtual ~HashTable();
+  HashTable & operator= (const HashTable & orig);
   ReturnType PutEntry(string KeyP, vector<TableType> ContentP);
   ReturnType PutEntryQuick(string KeyP, TableType Content);
   ReturnType GetEntry(string KeyP, vector<TableType> &ContentP);
@@ -27,4 +24,4 @@ private:
   HashEntry<TableType> **Table;
 };
 
-#endif	/* HASHTABLE_H */
+#endif

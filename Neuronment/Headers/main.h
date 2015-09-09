@@ -1,7 +1,3 @@
-/* 
- * @author  Pedro F. Toledo <pedrotoledocorrea@gmail.com>
- * @version 1.0
- */
 
 #ifndef MAIN_H
 #define	MAIN_H
@@ -16,4 +12,7 @@ ReturnType ProcessCommandLine(int argcP, char** argvP);
 bool ReadCommandLineArguments(int argc, char** argv);
 #endif
 
-#endif	/* MAIN_H */
+#endif
+
+//Lothar: crear metodos de asignación
+//Lothar: quitar indentación en log

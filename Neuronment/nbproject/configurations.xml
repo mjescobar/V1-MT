@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>Headers/CommandManager.h</itemPath>
+      <itemPath>Headers/CommandLine.h</itemPath>
+      <itemPath>Headers/Functions.h</itemPath>
+      <itemPath>Headers/FunctionsManager.h</itemPath>
       <itemPath>Headers/HashEntry.h</itemPath>
       <itemPath>Headers/HashTable.h</itemPath>
-      <itemPath>Headers/InterpreterManager.h</itemPath>
+      <itemPath>Headers/Interpreter.h</itemPath>
+      <itemPath>Headers/InterpreterCommands.h</itemPath>
       <itemPath>Headers/LogManager.h</itemPath>
       <itemPath>Headers/Neuron.h</itemPath>
       <itemPath>Headers/NeuronType.h</itemPath>
-      <itemPath>Headers/NeuronmentCommand.h</itemPath>
       <itemPath>Headers/Simulator.h</itemPath>
       <itemPath>Headers/SimulatorManager.h</itemPath>
       <itemPath>Headers/VariableManager.h</itemPath>
@@ -25,6 +27,7 @@
       <logicalFolder name="f1" displayName="Round000" projectFiles="true">
         <itemPath>Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</itemPath>
         <itemPath>Resources/Round000/Round000_v1.0_MTNeurons.nproc</itemPath>
+        <itemPath>Resources/Round000/Round000_v1.0_NeuronTypes.nproc</itemPath>
         <itemPath>Resources/Round000/Round000_v1.0_V1MT_Links.nproc</itemPath>
         <itemPath>Resources/Round000/Round000_v1.0_V1Neurons.nproc</itemPath>
         <itemPath>Resources/Round000/Round000_v1.0_V1Neurons_BaseActivation.nproc</itemPath>
@@ -35,20 +38,30 @@
         <itemPath>Resources/Round001/BaseTesting001.nproc</itemPath>
         <itemPath>Resources/Round001/BaseTesting002.nproc</itemPath>
       </logicalFolder>
+      <logicalFolder name="f3" displayName="Round002" projectFiles="true">
+        <logicalFolder name="f1" displayName="data" projectFiles="true">
+          <itemPath>Resources/Round002/data/Input_000000.txt</itemPath>
+        </logicalFolder>
+        <itemPath>Resources/Round002/MinimalTest_Library.nproc</itemPath>
+        <itemPath>Resources/Round002/MinimalTest_Main.nproc</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>Sources/CommandManager.cpp</itemPath>
+      <itemPath>Sources/CommandLine.cpp</itemPath>
+      <itemPath>Sources/Functions.cpp</itemPath>
+      <itemPath>FunctionsManager.Init.cpp</itemPath>
+      <itemPath>Sources/FunctionsManager.cpp</itemPath>
       <itemPath>Sources/HashEntry.cpp</itemPath>
       <itemPath>Sources/HashTable.cpp</itemPath>
-      <itemPath>Sources/InterpreterManager.Init.cpp</itemPath>
-      <itemPath>Sources/InterpreterManager.cpp</itemPath>
+      <itemPath>Sources/Interpreter.Init.cpp</itemPath>
+      <itemPath>Sources/Interpreter.cpp</itemPath>
+      <itemPath>Sources/InterpreterCommands.cpp</itemPath>
       <itemPath>Sources/LogManager.Init.cpp</itemPath>
       <itemPath>Sources/LogManager.cpp</itemPath>
       <itemPath>Sources/Neuron.cpp</itemPath>
       <itemPath>Sources/NeuronType.cpp</itemPath>
-      <itemPath>Sources/NeuronmentCommand.cpp</itemPath>
       <itemPath>Sources/Simulator.cpp</itemPath>
       <itemPath>Sources/SimulatorManager.cpp</itemPath>
       <itemPath>Sources/VariableManager.cpp</itemPath>
@@ -87,21 +100,27 @@
           <warningLevel>3</warningLevel>
         </ccTool>
       </compileType>
-      <item path="Headers/CommandManager.h" ex="false" tool="3" flavor2="0">
+      <item path="FunctionsManager.Init.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Headers/CommandLine.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/Functions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/FunctionsManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/HashEntry.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/HashTable.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/InterpreterManager.h" ex="false" tool="3" flavor2="0">
+      <item path="Headers/Interpreter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/InterpreterCommands.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/LogManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/Neuron.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/NeuronType.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Headers/NeuronmentCommand.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/Simulator.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -125,6 +144,11 @@
             flavor2="0">
       </item>
       <item path="Resources/Round000/Round000_v1.0_MTNeurons.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round000/Round000_v1.0_NeuronTypes.nproc"
             ex="false"
             tool="3"
             flavor2="0">
@@ -164,18 +188,36 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="Sources/CommandManager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="Resources/Round002/MinimalTest_Library.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round002/MinimalTest_Main.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round002/data/Input_000000.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sources/CommandLine.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/Functions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/FunctionsManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/HashEntry.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/HashTable.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Sources/InterpreterManager.Init.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="Sources/Interpreter.Init.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Sources/InterpreterManager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="Sources/Interpreter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/InterpreterCommands.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/LogManager.Init.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -184,8 +226,6 @@
       <item path="Sources/Neuron.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/NeuronType.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/NeuronmentCommand.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/Simulator.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -224,21 +264,27 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Headers/CommandManager.h" ex="false" tool="3" flavor2="0">
+      <item path="FunctionsManager.Init.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Headers/CommandLine.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/Functions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/FunctionsManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/HashEntry.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/HashTable.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/InterpreterManager.h" ex="false" tool="3" flavor2="0">
+      <item path="Headers/Interpreter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Headers/InterpreterCommands.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/LogManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/Neuron.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/NeuronType.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Headers/NeuronmentCommand.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Headers/Simulator.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -262,6 +308,11 @@
             flavor2="0">
       </item>
       <item path="Resources/Round000/Round000_v1.0_MTNeurons.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round000/Round000_v1.0_NeuronTypes.nproc"
             ex="false"
             tool="3"
             flavor2="0">
@@ -301,18 +352,36 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="Sources/CommandManager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="Resources/Round002/MinimalTest_Library.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round002/MinimalTest_Main.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round002/data/Input_000000.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Sources/CommandLine.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/Functions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/FunctionsManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/HashEntry.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/HashTable.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Sources/InterpreterManager.Init.cpp"
-            ex="false"
-            tool="1"
-            flavor2="0">
+      <item path="Sources/Interpreter.Init.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="Sources/InterpreterManager.cpp" ex="false" tool="1" flavor2="0">
+      <item path="Sources/Interpreter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Sources/InterpreterCommands.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/LogManager.Init.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -321,8 +390,6 @@
       <item path="Sources/Neuron.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/NeuronType.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/NeuronmentCommand.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Sources/Simulator.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -29,10 +29,17 @@ Simulator* SimulatorManager::CurrentSimulator()
   return &(SimulatorList[Current]);
 }
 
+Simulator* SimulatorManager::GetSimulator(int IdP)
+{
+  if (IdP < 0 || IdP >= SimulatorList.size()) {
+    Log.Message("DV-038");
+  }
+  return &(SimulatorList[IdP]);
+}
+
 ReturnType SimulatorManager::AddSimulator()
 {
-  Simulator ToAdd;
-  SimulatorList.push_back(ToAdd);
+  SimulatorList.push_back(Simulator());
   if (Current < 0) {
     Current = 0;
   }

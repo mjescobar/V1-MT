@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="95">
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
@@ -26,7 +26,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Round000/Resources/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -no_output -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
@@ -36,9 +35,10 @@
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Round001/BaseTesting.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -nproc Resources/Round001/BaseTesting.nproc</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" -time -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" -time -nproc Resources/Round002/MinimalTest_Main.nproc</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" -time -nproc Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc</runcommand>
-        <rundir></rundir>
+        <runcommand>"${OUTPUT_PATH}" -time -nproc Resources/Round002/MinimalTest_Main.nproc</runcommand>
+        <rundir>/home/ptoledo/Dropbox/My NetBeansProjects/V1-MT/Neuronment/.</rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>
         <remove-instrumentation>0</remove-instrumentation>
