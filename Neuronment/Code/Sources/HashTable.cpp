@@ -74,6 +74,7 @@ template <class TableType> HashTable<TableType> & HashTable<TableType>::operator
       Table[i] = NULL;
     }
   }
+  return *this;
 }
 
 template <class TableType> ReturnType HashTable<TableType>::PutEntry(string KeyP, vector<TableType> ContentP)

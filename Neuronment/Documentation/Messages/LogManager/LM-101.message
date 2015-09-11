@@ -1,0 +1,11 @@
+LM-101
+
+%RuntimeAssertion
+
+%InlineMessage
+LogMonitor assignment operator invoked
+
+%CompleteMessage
+The assignment operator  has been invoked for an instance of LogMonitor. As 
+there should only one instance of LogMonitor on the system, this behavior is 
+very unexpected.

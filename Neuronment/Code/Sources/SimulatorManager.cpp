@@ -24,7 +24,7 @@ SimulatorManager::~SimulatorManager()
 Simulator* SimulatorManager::CurrentSimulator()
 {
   if (Current < 0 || Current >= SimulatorList.size()) {
-    Log.Message("DV-038");
+    Log.CodedMessage("DV-038");
   }
   return &(SimulatorList[Current]);
 }
@@ -32,7 +32,7 @@ Simulator* SimulatorManager::CurrentSimulator()
 Simulator* SimulatorManager::GetSimulator(int IdP)
 {
   if (IdP < 0 || IdP >= SimulatorList.size()) {
-    Log.Message("DV-038");
+    Log.CodedMessage("DV-038");
   }
   return &(SimulatorList[IdP]);
 }
@@ -112,6 +112,6 @@ ReturnType SimulatorManager::GetNeuronType(string NameP, NeuronType **TypeP)
       return ReturnSuccess;
     }
   }
-  Log.Message("DV-034");
+  Log.CodedMessage("DV-034");
   return ReturnFail;
 }

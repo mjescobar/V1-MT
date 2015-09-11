@@ -22,7 +22,7 @@ Interpreter::Interpreter()
 
 Interpreter::Interpreter(const Interpreter& orig)
 {
-  Log.Message("DV-008: InterpreterManager");
+  Log.CodedMessage("DV-008: InterpreterManager");
 }
 
 Interpreter::Interpreter(string NprocFileP) :
@@ -43,30 +43,28 @@ Interpreter::~Interpreter()
 ReturnType Interpreter::LoadFile()
 {
   if (NprocFile.length() < 1) {
-    Log.Message("UI-006");
+    Log.CodedMessage("UI-006");
     return ReturnFail;
   }
   NprocStream.open(NprocFile.c_str());
   if (NprocStream.fail()) {
-    Log.Message("ER-003: " + NprocFile);
+    Log.CodedMessage("ER-003: " + NprocFile);
     return ReturnFail;
   }
   ReadyForReading = true;
-  Log.OutputNproc(MessageInformation, "==> Start: " + NprocFile);
   return ReturnSuccess;
 }
 
 ReturnType Interpreter::CloseFile()
 {
   ReadyForReading = false;
-  Log.OutputNproc(MessageInformation, "==> Close: " + NprocFile);
   if (!NprocStream.is_open()) {
-    Log.Message("ER-009: " + NprocFile);
+    Log.CodedMessage("ER-009: " + NprocFile);
     return ReturnFail;
   }
   NprocStream.close();
   if (NprocStream.is_open()) {
-    Log.Message("ER-004: " + NprocFile);
+    Log.CodedMessage("ER-004: " + NprocFile);
     return ReturnFail;
   }
   return ReturnSuccess;
@@ -89,7 +87,7 @@ ReturnType Interpreter::Process()
       if (EarlyReturn == true) {
         EarlyReturn = false;
         EarlyReturnInternal = true;
-        Log.Message("WN-001");
+        Log.CodedMessage("WN-001");
       }
       if (!(ThisCommand == "rescue nproc" || ThisCommand == "")) {
         if (ThisCommandResult == ReturnFail) {
@@ -120,7 +118,7 @@ ReturnType Interpreter::Process()
   if (!EarlyReturnInternal) {
     ReturnCatch(LocalManager->IsReady(CommandReady));
     if (!CommandReady) {
-      Log.Message("IN-018");
+      Log.CodedMessage("IN-018");
       ReturnMessage = "File ended with an incomplete command";
       return ReturnSuccessWarning;
     }
@@ -132,15 +130,15 @@ ReturnType Interpreter::GetNextLine(string &LineP)
 {
   string InternalLine;
   if (!ReadyForReading) {
-    Log.Message("ER-005: " + NprocFile);
+    Log.CodedMessage("ER-005: " + NprocFile);
     return ReturnFail;
   }
   if (EndOfFileReached) {
-    Log.Message("ER-006: " + NprocFile);
+    Log.CodedMessage("ER-006: " + NprocFile);
     return ReturnFail;
   }
   if (NprocStream.eof()) {
-    Log.Message("ER-010: " + NprocFile);
+    Log.CodedMessage("ER-010: " + NprocFile);
     return ReturnFail;
   }
   getline(NprocStream, InternalLine);
@@ -183,12 +181,12 @@ ReturnType Interpreter::ProcessLine(CommandLine &LocalManagerP)
       // 01X
       if (!HasComment) {
         // 010
-        Log.Message("IN-019");
+        Log.CodedMessage("IN-019");
         ReturnMessage = "IN-019";
         return ReturnSuccessWarning;
       } else {
         // 011
-        Log.Message("IN-020");
+        Log.CodedMessage("IN-020");
         ReturnMessage = "IN-020";
         return ReturnSuccessWarning;
       }
@@ -209,7 +207,7 @@ ReturnType Interpreter::ProcessCommand(CommandLine &LocalManagerP)
   // Retrieve function name
   void* Function = NULL;
   if (Commands.GetEntryQuick(FunctionName, Function) == ReturnFail) {
-    Log.Message("IN-001: " + FunctionNameToPrint);
+    Log.CodedMessage("IN-001: " + FunctionNameToPrint);
     ReturnMessage = "IN-001";
     return ReturnSuccessWarning;
   }

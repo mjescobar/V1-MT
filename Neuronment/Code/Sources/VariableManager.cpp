@@ -42,7 +42,7 @@ ReturnType VariableManager::SetSettingFromString(string VariableP, string TypeP,
   vector<double> ValuesDouble;
   vector<string> ValuesString;
   if (IsValidType(TypeP) == ReturnFail) {
-    Log.Message("DV-033");
+    Log.CodedMessage("DV-033");
     return ReturnFail;
   }
   ReturnCatch(Tokenize(ValueP, TokenizedValueP));
@@ -56,7 +56,7 @@ ReturnType VariableManager::SetSettingFromString(string VariableP, string TypeP,
     } else if (TypeP == "string") {
       ValuesString.push_back(TokenizedValueP[i]);
     } else {
-      Log.Message("DV-033");
+      Log.CodedMessage("DV-033");
       return ReturnFail;
     }
   }
@@ -69,7 +69,7 @@ ReturnType VariableManager::SetSettingFromString(string VariableP, string TypeP,
   } else if (TypeP == "string") {
     SetSetting(VariableP, ValuesString);
   } else {
-    Log.Message("DV-033");
+    Log.CodedMessage("DV-033");
     return ReturnFail;
   }
   return ReturnSuccess;
@@ -80,7 +80,7 @@ template <class VariableType> ReturnType VariableManager::SetSetting(string Vari
   HashTable<VariableType> *LocalTable = NULL;
   ReturnCatch(GetHashTable(VariableType(), &LocalTable));
   if (CheckUnicity(LocalTable, VariableP) == ReturnFail) {
-    Log.Message("DV-002");
+    Log.CodedMessage("DV-002");
     return ReturnFail;
   }
   ReturnCatch(LocalTable->PutEntry(VariableP, ValueP));
@@ -111,10 +111,10 @@ ReturnType VariableManager::GetSettingAsString(string VariableP, string &Variabl
     TotalFound++;
   }
   if (TotalFound < 1) {
-    Log.Message("IN-002: " + VariableP);
+    Log.CodedMessage("IN-002: " + VariableP);
     return ReturnFail;
   } else if (TotalFound > 1) {
-    Log.Message("IN-013: " + VariableP);
+    Log.CodedMessage("IN-013: " + VariableP);
     return ReturnFail;
   } else {
     string ToReturn;
@@ -152,7 +152,7 @@ template <class VariableType> ReturnType VariableManager::GetSetting(string Vari
   HashTable<VariableType> *LocalTable = NULL;
   ReturnCatch(GetHashTable(VariableType(), &LocalTable));
   if (CheckUnicity(LocalTable, VariableP) == ReturnFail) {
-    Log.Message("DV-002");
+    Log.CodedMessage("DV-002");
     return ReturnFail;
   }
   return LocalTable->GetEntry(VariableP, ValueP);

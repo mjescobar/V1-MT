@@ -11,7 +11,7 @@ public:
   HashTable(int SizeP);
   HashTable(const HashTable& orig);
   virtual ~HashTable();
-  HashTable & operator= (const HashTable & orig);
+  HashTable & operator=(const HashTable & orig);
   ReturnType PutEntry(string KeyP, vector<TableType> ContentP);
   ReturnType PutEntryQuick(string KeyP, TableType Content);
   ReturnType GetEntry(string KeyP, vector<TableType> &ContentP);

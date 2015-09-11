@@ -37,13 +37,13 @@ ReturnType rescue_nproc(CommandLine &LocalManagerP)
         Interpreter LocalInterpreter(NprocFiles[i]);
         ReturnCatch(LocalInterpreter.LoadFile());
         if (HasRedirection) {
-          ReturnCatch(Log.StartOutput(Redirection, RedirectionMode));
+          ReturnCatch(Log.InitiateRedirection(Redirection, RedirectionMode));
         } else {
           ReturnCatch(Log.IncreaseOutputLevel());
         }
         ThisFileResult = LocalInterpreter.Process(); //Done label
         if (HasRedirection) {
-          ReturnCatch(Log.StopOutput());
+          ReturnCatch(Log.TerminateRedirection());
           RedirectionMode = RedirectionAppend;
         } else {
           ReturnCatch(Log.DecreaseOutputLevel());
@@ -51,11 +51,11 @@ ReturnType rescue_nproc(CommandLine &LocalManagerP)
         ReturnCatch(LocalInterpreter.CloseFile());
       }
     } else {
-      Log.Message("UI-006");
+      Log.CodedMessage("UI-006");
       return ReturnFail;
     }
   } else {
-    Log.Message("UI-006");
+    Log.CodedMessage("UI-006");
     return ReturnFail;
   }
   return ReturnSuccess;
@@ -133,7 +133,7 @@ ReturnType setsim_set_current_simulator(CommandLine &LocalManagerP)
   int SimulatorId;
   string SimulatorIdString;
   if (LocalManagerP.GetFlag("simulator_id", SimulatorIdString) == ReturnFail) {
-    Log.Message("IN-006: SimulatorId");
+    Log.CodedMessage("IN-006: SimulatorId");
     return ReturnFail;
   }
   SimulatorId = ToInt(SimulatorIdString);
@@ -141,7 +141,7 @@ ReturnType setsim_set_current_simulator(CommandLine &LocalManagerP)
   int SimulatorCount;
   ReturnCatch(SimulatorDepository.GetSimulatorCount(SimulatorCount));
   if (SimulatorId < 0 || SimulatorId >= SimulatorCount) {
-    Log.Message("IN-024");
+    Log.CodedMessage("IN-024");
   }
   return SimulatorDepository.SetSimulatorCurrent(SimulatorId);
 }
@@ -152,7 +152,7 @@ ReturnType setsim_remove_simulator(CommandLine &LocalManagerP)
   int SimulatorId;
   string SimulatorIdString;
   if (LocalManagerP.GetFlag("simulator_id", SimulatorIdString) == ReturnFail) {
-    Log.Message("IN-006: SimulatorId");
+    Log.CodedMessage("IN-006: SimulatorId");
     return ReturnFail;
   }
   SimulatorId = ToInt(SimulatorIdString);
@@ -160,7 +160,7 @@ ReturnType setsim_remove_simulator(CommandLine &LocalManagerP)
   int SimulatorCount;
   ReturnCatch(SimulatorDepository.GetSimulatorCount(SimulatorCount));
   if (SimulatorId < 0 || SimulatorId >= SimulatorCount) {
-    Log.Message("IN-024");
+    Log.CodedMessage("IN-024");
   }
   SimulatorDepository.SetSimulatorCurrent(-1);
   return SimulatorDepository.RemoveSimulator(SimulatorId);
@@ -185,14 +185,14 @@ ReturnType setsim_new_neuron_type(CommandLine &LocalManagerP)
   ReturnCatch(LocalManagerP.GetFlag("parameters", Parameters));
   ReturnCatch(Tokenize(Parameters, ParametersTokenized));
   if (ParametersTokenized.size() % 2 != 0) {
-    Log.Message("IN-025");
+    Log.CodedMessage("IN-025");
     return ReturnFail;
   }
   vector<string> ParametersName;
   vector<string> ParametersType;
   for (int i = 0; i < ParametersTokenized.size(); i = i + 2) {
     if (IsValidType(ParametersTokenized[i]) == ReturnFail) {
-      Log.Message("IN-025");
+      Log.CodedMessage("IN-025");
       return ReturnFail;
     }
     ParametersName.push_back(ParametersTokenized[i + 1]);
@@ -230,7 +230,7 @@ ReturnType setsim_add_neuron(CommandLine &LocalManagerP)
     ReturnCatch(Tokenize(FastInput, FastInputTokens));
     ReturnCatch(NewNeuronType->GetFastInput(FastInputList));
     if (FastInputList.size() != FastInputTokens.size()) {
-      Log.Message("DV-039");
+      Log.CodedMessage("DV-039");
     }
   }
   vector<string> ParametersName;
@@ -247,7 +247,7 @@ ReturnType setsim_add_neuron(CommandLine &LocalManagerP)
     if (FastIndex < 0) {
       string Dummy;
       if (LocalManagerP.GetFlag(ParametersName[i], Dummy) == ReturnFail) {
-        Log.Message("DV-040: " + ParametersName[i]);
+        Log.CodedMessage("DV-040: " + ParametersName[i]);
         return ReturnFail;
       } else {
         ParameterValues.push_back(Dummy);
@@ -340,11 +340,11 @@ bool Interpreter::RunsimCall(vector<string> TokensP)
     }
   }
   if (!Found) {
-    Log.Message("IN-004: " + TokensP[1]);
+    Log.CodedMessage("IN-004: " + TokensP[1]);
   } else {
     if (!Arguments) {
 
-      Log.Message("IN-010");
+      Log.CodedMessage("IN-010");
     }
   }
   return Result;
@@ -416,11 +416,11 @@ bool Interpreter::ReportCall(vector<string> TokensP)
     }
   }
   if (!Found) {
-    Log.Message("IN-004: " + TokensP[1]);
+    Log.CodedMessage("IN-004: " + TokensP[1]);
   } else {
     if (!Arguments) {
 
-      Log.Message("IN-010");
+      Log.CodedMessage("IN-010");
     }
   }
   return Result;
@@ -437,7 +437,7 @@ bool Interpreter::VarmanCall_PRINT(vector<string> TokensP)
   if (TokensP.size() == 3) {
     bool Valid = Variables.GetSettingValid(DeleteTrailingZeros(TokensP[2]));
     if (!Valid) {
-      Log.Message("IN-002");
+      Log.CodedMessage("IN-002");
       return false;
     }
     DataType SettingType = Variables.GetSettingType(DeleteTrailingZeros(TokensP[2]));
@@ -463,14 +463,14 @@ bool Interpreter::VarmanCall_PRINT(vector<string> TokensP)
         ToPrint = ToPrint + " " + ((string*) Variables.GetSettingContent(DeleteTrailingZeros(TokensP[2])))[i];
         break;
       default:
-        Log.Message("DV-001");
+        Log.CodedMessage("DV-001");
         return false;
       }
     }
     Log.Output(Message_Allways, ToPrint);
     return true;
   } else {
-    Log.Message("IN-010");
+    Log.CodedMessage("IN-010");
 
     return false;
   }

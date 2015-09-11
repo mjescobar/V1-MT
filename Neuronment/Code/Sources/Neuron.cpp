@@ -37,7 +37,7 @@ Neuron::Neuron(NeuronType *TypeP, string GroupP, int IdP, vector<string> BaseAct
   int ActivationLevels;
   ReturnCatch(Type->GetActivationLevels(ActivationLevels));
   if (BaseActivationP.size() != ActivationLevels) {
-    Log.Message("DV-035");
+    Log.CodedMessage("DV-035");
   }
   string DataType;
   ReturnCatch(Type->GetDataType(DataType));

@@ -1,0 +1,11 @@
+LM-100
+
+%RuntimeAssertion
+
+%InlineMessage
+LogMonitor copy constructor invoked
+
+%CompleteMessage
+The copy constructor has been invoked for an instance of LogMonitor. As there 
+should be only one instance of LogMonitor on the system, this behavior is very
+unexpected.

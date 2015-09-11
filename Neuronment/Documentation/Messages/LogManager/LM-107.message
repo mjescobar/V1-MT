@@ -1,0 +1,11 @@
+LM-107
+
+%DevelopmentAssertion
+
+%InlineMessage
+LogMonitor was not able to find information for the coded message
+
+%CompleteMessage
+LogMonitor was not able to find information for the coded message. If you are 
+running debugging mode, the system will assert, otherwise it will try to 
+continue.

@@ -1,0 +1,10 @@
+LM-104
+
+%RuntimeAssertion
+
+%InlineMessage
+LogMonitor found an unexpected state for the current output stream
+
+%CompleteMessage
+When closing the newest redirection, the output stream reported a "not good" 
+status.

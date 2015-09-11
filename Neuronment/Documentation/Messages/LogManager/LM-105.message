@@ -1,0 +1,10 @@
+LM-105
+
+%RuntimeAssertion
+
+%InlineMessage
+LogMonitor found no stream to close
+
+%CompleteMessage
+LogMonitor is been asked to close the newest stream but there is no stream to 
+close.

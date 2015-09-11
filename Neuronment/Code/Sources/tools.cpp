@@ -25,32 +25,32 @@ using namespace std;
 
 void ReturnAssertion()
 {
-  Log.Message("DV-019");
+  Log.CodedMessage("DV-019");
   assert(0);
 }
 
 void DevelopmentAssertion()
 {
 #ifdef DEVELOPMENT
-  Log.Message("ER-001", true);
-  Log.OutputEmptyLine(MessageAllways);
+  Log.CodedMessage("ER-001", true);
+  Log.Output(MessageAllways,"");
   assert(0);
 #else
-  Log.Message("ER-011");
+  Log.CodedMessage("ER-011");
 #endif
 }
 
 void ImplementationAssertion()
 {
-  Log.Message("ER-008", true);
-  Log.OutputEmptyLine(MessageAllways);
+  Log.CodedMessage("ER-008", true);
+  Log.Output(MessageAllways,"");
   assert(0);
 }
 
 void RuntimeAssertion()
 {
-  Log.Message("ER-002", true);
-  Log.OutputEmptyLine(MessageAllways);
+  Log.CodedMessage("ER-002", true);
+  Log.Output(MessageAllways,"");
   assert(0);
 }
 
@@ -60,12 +60,9 @@ void RuntimeAssertion()
 
 ReturnType ReturnCatch(ReturnType ReturnP, string ConditionsP)
 {
-  if (ConditionsP == "ContinueOnFail") {
-    return ReturnSuccess;
-  }
   if (ConditionsP == "FailAssertOnDebug") {
     if (ReturnP == ReturnFail) {
-      Log.Message("DV-021: " + ReturnMessage);
+      Log.CodedMessage("DV-021: " + ReturnMessage);
     }
     return ReturnSuccess;
   }
@@ -73,10 +70,10 @@ ReturnType ReturnCatch(ReturnType ReturnP, string ConditionsP)
     ReturnAssertion();
   }
   if (ReturnP == ReturnSuccessWarning) {
-    Log.Message("DV-020: " + ReturnMessage);
+    Log.CodedMessage("DV-020: " + ReturnMessage);
   }
   if (ReturnP == ReturnFail) {
-    Log.Message("DV-021: " + ReturnMessage);
+    Log.CodedMessage("DV-021: " + ReturnMessage);
   }
   return ReturnSuccess;
 }
@@ -104,13 +101,13 @@ ReturnType DataCheck(string DataP, string ConditionsP)
 {
   if (ConditionsP == "NonEmpty") {
     if (DataP == "") {
-      Log.Message("SD-003");
+      Log.CodedMessage("SD-003");
       return ReturnFail;
     }
     return ReturnSuccess;
   }
   if (ConditionsP != "") {
-    Log.Message("DV-022");
+    Log.CodedMessage("DV-022");
     return ReturnFail;
   }
   return ReturnSuccess;
@@ -120,20 +117,20 @@ ReturnType DataCheck(int DataP, string ConditionsP)
 {
   if (ConditionsP == "GreaterThanZero") {
     if (DataP <= 0) {
-      Log.Message("SD-008");
+      Log.CodedMessage("SD-008");
       return ReturnFail;
     }
     return ReturnSuccess;
   }
   if (ConditionsP == "NonNegative") {
     if (DataP < 0) {
-      Log.Message("SD-009");
+      Log.CodedMessage("SD-009");
       return ReturnFail;
     }
     return ReturnSuccess;
   }
   if (ConditionsP != "") {
-    Log.Message("DV-009: " + ConditionsP);
+    Log.CodedMessage("DV-009: " + ConditionsP);
     return ReturnFail;
   }
   return ReturnSuccess;
@@ -143,13 +140,13 @@ ReturnType DataCheck(char** DataP, string ConditionsP)
 {
   if (ConditionsP == "NotNull") {
     if (DataP < 0) {
-      Log.Message("SD-010");
+      Log.CodedMessage("SD-010");
       return ReturnFail;
     }
     return ReturnSuccess;
   }
   if (ConditionsP != "") {
-    Log.Message("DV-009: " + ConditionsP);
+    Log.CodedMessage("DV-009: " + ConditionsP);
     return ReturnFail;
   }
   return ReturnSuccess;
@@ -260,7 +257,7 @@ ReturnType DataCheck(char DataP, string ConditionsP)
     return ReturnFail;
   }
   if (ConditionsP != "") {
-    Log.Message("DV-009: " + ConditionsP);
+    Log.CodedMessage("DV-009: " + ConditionsP);
     return ReturnFail;
   }
   return ReturnSuccess;
@@ -388,7 +385,7 @@ ReturnType ToBool(string StringP, bool &ReturnP)
       || StringP == "0") {
       ReturnP = false;
     } else {
-      Log.Message("IN-007"); //Lothar
+      Log.CodedMessage("IN-007"); //Lothar
       ReturnMessage = "IN-007";
       ReturnP = false;
       return ReturnSuccessWarning;
@@ -497,20 +494,20 @@ ReturnType CheckInt(int IntP, string ConditionsP)
 {
   if (ConditionsP == "GreaterThanZero") {
     if (IntP <= 0) {
-      Log.Message("SD-004");
+      Log.CodedMessage("SD-004");
       return ReturnFail;
     }
     return ReturnSuccess;
   }
   if (ConditionsP == "NonNegative") {
     if (IntP < 0) {
-      Log.Message("SD-004");
+      Log.CodedMessage("SD-004");
       return ReturnFail;
     }
     return ReturnSuccess;
   }
   if (ConditionsP != "") {
-    Log.Message("DV-009");
+    Log.CodedMessage("DV-009");
     return ReturnFail;
   }
   return ReturnSuccess;
@@ -520,34 +517,34 @@ ReturnType CheckInt(int IntP, string ConditionsP, int LowerP, int UpperP)
 {
   if (ConditionsP == "Range[]") {
     if (IntP < LowerP || IntP > UpperP) {
-      Log.Message("SD-004");
+      Log.CodedMessage("SD-004");
       return ReturnFail;
     }
     return ReturnSuccess;
   }
   if (ConditionsP == "Range[[") {
     if (IntP < LowerP || IntP >= UpperP) {
-      Log.Message("SD-004");
+      Log.CodedMessage("SD-004");
       return ReturnFail;
     }
     return ReturnSuccess;
   }
   if (ConditionsP == "Range]]") {
     if (IntP <= LowerP || IntP > UpperP) {
-      Log.Message("SD-004");
+      Log.CodedMessage("SD-004");
       return ReturnFail;
     }
     return ReturnSuccess;
   }
   if (ConditionsP == "Range][") {
     if (IntP <= LowerP || IntP >= UpperP) {
-      Log.Message("SD-004");
+      Log.CodedMessage("SD-004");
       return ReturnFail;
     }
     return ReturnSuccess;
   }
   if (ConditionsP != "") {
-    Log.Message("DV-009");
+    Log.CodedMessage("DV-009");
     return ReturnFail;
   }
   return ReturnSuccess;
@@ -605,7 +602,7 @@ void* DuplicateArray(void* SourceP, int CountP, DataType TypeP)
     }
     break;
   default:
-    Log.Message("DV-001");
+    Log.CodedMessage("DV-001");
     ImplementationAssertion();
     return NULL;
   }
@@ -732,7 +729,7 @@ string GetFlagValue(vector<string> TokensP, string FlagP)
       }
     }
   }
-  Log.Message("IN-006: In command \"" + TokensP[0] + " " + TokensP[1] + "\" flag \"" + FlagP + "\"");
+  Log.CodedMessage("IN-006: In command \"" + TokensP[0] + " " + TokensP[1] + "\" flag \"" + FlagP + "\"");
   return "";
 }
 

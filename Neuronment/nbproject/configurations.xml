@@ -1,27 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
-    <logicalFolder name="HeaderFiles"
-                   displayName="Header Files"
-                   projectFiles="true">
-      <itemPath>Headers/CommandLine.h</itemPath>
-      <itemPath>Headers/Functions.h</itemPath>
-      <itemPath>Headers/FunctionsManager.h</itemPath>
-      <itemPath>Headers/HashEntry.h</itemPath>
-      <itemPath>Headers/HashTable.h</itemPath>
-      <itemPath>Headers/Interpreter.h</itemPath>
-      <itemPath>Headers/InterpreterCommands.h</itemPath>
-      <itemPath>Headers/LogManager.h</itemPath>
-      <itemPath>Headers/Neuron.h</itemPath>
-      <itemPath>Headers/NeuronType.h</itemPath>
-      <itemPath>Headers/Simulator.h</itemPath>
-      <itemPath>Headers/SimulatorManager.h</itemPath>
-      <itemPath>Headers/VariableManager.h</itemPath>
-      <itemPath>Headers/define.h</itemPath>
-      <itemPath>Headers/enum.h</itemPath>
-      <itemPath>Headers/extern.h</itemPath>
-      <itemPath>Headers/main.h</itemPath>
-      <itemPath>Headers/tools.h</itemPath>
+    <logicalFolder name="f1" displayName="Code" projectFiles="true">
+      <logicalFolder name="HeaderFiles"
+                     displayName="Header Files"
+                     projectFiles="true">
+        <itemPath>Code/Headers/CommandLine.h</itemPath>
+        <itemPath>Code/Headers/Functions.h</itemPath>
+        <itemPath>Code/Headers/FunctionsManager.h</itemPath>
+        <itemPath>Code/Headers/HashEntry.h</itemPath>
+        <itemPath>Code/Headers/HashTable.h</itemPath>
+        <itemPath>Code/Headers/Interpreter.h</itemPath>
+        <itemPath>Code/Headers/InterpreterCommands.h</itemPath>
+        <itemPath>Code/Headers/LogManager.h</itemPath>
+        <itemPath>Code/Headers/Neuron.h</itemPath>
+        <itemPath>Code/Headers/NeuronType.h</itemPath>
+        <itemPath>Code/Headers/Simulator.h</itemPath>
+        <itemPath>Code/Headers/SimulatorManager.h</itemPath>
+        <itemPath>Code/Headers/VariableManager.h</itemPath>
+        <itemPath>Code/Headers/define.h</itemPath>
+        <itemPath>Code/Headers/enum.h</itemPath>
+        <itemPath>Code/Headers/extern.h</itemPath>
+        <itemPath>Code/Headers/main.h</itemPath>
+        <itemPath>Code/Headers/tools.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="SourceFiles"
+                     displayName="Source Files"
+                     projectFiles="true">
+        <itemPath>Code/Sources/CommandLine.cpp</itemPath>
+        <itemPath>Code/Sources/Functions.cpp</itemPath>
+        <itemPath>Code/Sources/FunctionsManager.Init.cpp</itemPath>
+        <itemPath>Code/Sources/FunctionsManager.cpp</itemPath>
+        <itemPath>Code/Sources/HashEntry.cpp</itemPath>
+        <itemPath>Code/Sources/HashTable.cpp</itemPath>
+        <itemPath>Code/Sources/Interpreter.Init.cpp</itemPath>
+        <itemPath>Code/Sources/Interpreter.cpp</itemPath>
+        <itemPath>Code/Sources/InterpreterCommands.cpp</itemPath>
+        <itemPath>Code/Sources/LogManager.Init.cpp</itemPath>
+        <itemPath>Code/Sources/LogManager.cpp</itemPath>
+        <itemPath>Code/Sources/Neuron.cpp</itemPath>
+        <itemPath>Code/Sources/NeuronType.cpp</itemPath>
+        <itemPath>Code/Sources/Simulator.cpp</itemPath>
+        <itemPath>Code/Sources/SimulatorManager.cpp</itemPath>
+        <itemPath>Code/Sources/VariableManager.cpp</itemPath>
+        <itemPath>Code/Sources/main.cpp</itemPath>
+        <itemPath>Code/Sources/tools.cpp</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="f2" displayName="Documentation" projectFiles="true">
+      <logicalFolder name="f1" displayName="Messages" projectFiles="true">
+        <logicalFolder name="f1" displayName="LogManager" projectFiles="true">
+          <itemPath>Documentation/Messages/LogManager/LM-100.message</itemPath>
+          <itemPath>Documentation/Messages/LogManager/LM-101.message</itemPath>
+          <itemPath>Documentation/Messages/LogManager/LM-102.message</itemPath>
+          <itemPath>Documentation/Messages/LogManager/LM-103.message</itemPath>
+          <itemPath>Documentation/Messages/LogManager/LM-104.message</itemPath>
+          <itemPath>Documentation/Messages/LogManager/LM-105.message</itemPath>
+          <itemPath>Documentation/Messages/LogManager/LM-106.message</itemPath>
+          <itemPath>Documentation/Messages/LogManager/LM-107.message</itemPath>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ResourceFiles" displayName="Resources" projectFiles="true">
       <logicalFolder name="f1" displayName="Round000" projectFiles="true">
@@ -45,28 +83,6 @@
         <itemPath>Resources/Round002/MinimalTest_Library.nproc</itemPath>
         <itemPath>Resources/Round002/MinimalTest_Main.nproc</itemPath>
       </logicalFolder>
-    </logicalFolder>
-    <logicalFolder name="SourceFiles"
-                   displayName="Source Files"
-                   projectFiles="true">
-      <itemPath>Sources/CommandLine.cpp</itemPath>
-      <itemPath>Sources/Functions.cpp</itemPath>
-      <itemPath>FunctionsManager.Init.cpp</itemPath>
-      <itemPath>Sources/FunctionsManager.cpp</itemPath>
-      <itemPath>Sources/HashEntry.cpp</itemPath>
-      <itemPath>Sources/HashTable.cpp</itemPath>
-      <itemPath>Sources/Interpreter.Init.cpp</itemPath>
-      <itemPath>Sources/Interpreter.cpp</itemPath>
-      <itemPath>Sources/InterpreterCommands.cpp</itemPath>
-      <itemPath>Sources/LogManager.Init.cpp</itemPath>
-      <itemPath>Sources/LogManager.cpp</itemPath>
-      <itemPath>Sources/Neuron.cpp</itemPath>
-      <itemPath>Sources/NeuronType.cpp</itemPath>
-      <itemPath>Sources/Simulator.cpp</itemPath>
-      <itemPath>Sources/SimulatorManager.cpp</itemPath>
-      <itemPath>Sources/VariableManager.cpp</itemPath>
-      <itemPath>Sources/main.cpp</itemPath>
-      <itemPath>Sources/tools.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -93,50 +109,130 @@
           <architecture>2</architecture>
           <standard>4</standard>
           <incDir>
-            <pElem>Headers</pElem>
-            <pElem>Sources</pElem>
+            <pElem>Code/Headers</pElem>
+            <pElem>Code/Sources</pElem>
           </incDir>
           <commandLine>-DDEVELOPMENT</commandLine>
           <warningLevel>3</warningLevel>
         </ccTool>
       </compileType>
-      <item path="FunctionsManager.Init.cpp" ex="false" tool="1" flavor2="0">
+      <item path="Code/Headers/CommandLine.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/CommandLine.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/Functions.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/Functions.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/FunctionsManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/FunctionsManager.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/HashEntry.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/HashEntry.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/HashTable.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/HashTable.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/Interpreter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/Interpreter.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/InterpreterCommands.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/InterpreterCommands.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/LogManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/LogManager.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/Neuron.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/Neuron.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/NeuronType.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/NeuronType.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/Simulator.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/Simulator.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/SimulatorManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/SimulatorManager.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/VariableManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/VariableManager.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/define.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/define.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/enum.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/enum.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/extern.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/extern.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/main.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/main.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/tools.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/tools.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Sources/CommandLine.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/Functions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/FunctionsManager.Init.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Code/Sources/FunctionsManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/HashEntry.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/HashTable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/Interpreter.Init.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/Interpreter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/InterpreterCommands.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Code/Sources/LogManager.Init.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/LogManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/Neuron.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/NeuronType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/Simulator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/SimulatorManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/VariableManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/tools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-100.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-101.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-102.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-103.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-104.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-105.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-106.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-107.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc"
             ex="false"
@@ -202,40 +298,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="Sources/CommandLine.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/Functions.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/FunctionsManager.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/HashEntry.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/HashTable.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/Interpreter.Init.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/Interpreter.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/InterpreterCommands.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/LogManager.Init.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/LogManager.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/Neuron.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/NeuronType.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/Simulator.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/SimulatorManager.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/VariableManager.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/tools.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -264,43 +326,123 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="FunctionsManager.Init.cpp" ex="false" tool="1" flavor2="0">
+      <item path="Code/Headers/CommandLine.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/CommandLine.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/Functions.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/Functions.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/FunctionsManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/FunctionsManager.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/HashEntry.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/HashEntry.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/HashTable.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/HashTable.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/Interpreter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/Interpreter.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/InterpreterCommands.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/InterpreterCommands.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/LogManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/LogManager.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/Neuron.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/Neuron.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/NeuronType.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/NeuronType.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/Simulator.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/Simulator.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/SimulatorManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/SimulatorManager.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/VariableManager.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/VariableManager.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/define.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/define.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/enum.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/enum.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/extern.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/extern.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/main.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/main.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Headers/tools.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Headers/tools.h" ex="false" tool="3" flavor2="0">
+      <item path="Code/Sources/CommandLine.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/Functions.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/FunctionsManager.Init.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Code/Sources/FunctionsManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/HashEntry.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/HashTable.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/Interpreter.Init.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/Interpreter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/InterpreterCommands.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="Code/Sources/LogManager.Init.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/LogManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/Neuron.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/NeuronType.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/Simulator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/SimulatorManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/VariableManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Code/Sources/tools.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-100.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-101.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-102.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-103.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-104.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-105.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-106.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Documentation/Messages/LogManager/LM-107.message"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="Resources/Round000/Round000_v1.0_BaseTemplate_v1.0.nproc"
             ex="false"
@@ -366,40 +508,6 @@
             ex="false"
             tool="3"
             flavor2="0">
-      </item>
-      <item path="Sources/CommandLine.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/Functions.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/FunctionsManager.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/HashEntry.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/HashTable.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/Interpreter.Init.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/Interpreter.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/InterpreterCommands.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/LogManager.Init.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/LogManager.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/Neuron.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/NeuronType.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/Simulator.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/SimulatorManager.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/VariableManager.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Sources/tools.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>

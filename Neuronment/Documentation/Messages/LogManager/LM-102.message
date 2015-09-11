@@ -1,0 +1,15 @@
+LM-102
+
+%RuntimeAssertion
+
+%InlineMessage
+Invalid redirection mode specified
+
+%CompleteMessage
+A redirection can have any of the following redirection modes:
+--RedirectionNew
+-:A new empty file is created. If already exists it will be erased
+--RedirectionAppend
+-:A previously created file is opened for append new content at the end. If 
+-:the file does not exists gets created
+In this case, a non listed mode has been indicated for redirection.

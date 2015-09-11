@@ -1,0 +1,10 @@
+LM-103
+
+%RuntimeAssertion
+
+%InlineMessage
+LogMonitor could not open the indicated stream
+
+%CompleteMessage
+When initiating a redirection to the indicated destination, the stream was not 
+properly opened and reported a "not good" state at checking.

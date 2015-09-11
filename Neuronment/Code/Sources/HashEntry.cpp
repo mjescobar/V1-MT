@@ -34,6 +34,7 @@ template <class EntryType> HashEntry<EntryType> & HashEntry<EntryType>::operator
   Key = orig.Key;
   HashKey = orig.HashKey;
   Content = orig.Content;
+  return *this;
 }
 
 template <class EntryType> ReturnType HashEntry<EntryType>::GetKey(string &KeyP)

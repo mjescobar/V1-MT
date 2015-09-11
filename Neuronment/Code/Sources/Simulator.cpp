@@ -165,7 +165,7 @@ bool Simulator::CreateV1NeuronVector()
   Log.Output(Message_Allways, "Total V1_Neuron inserted: " + IIntToString(V1_Neurons.size()));
   Log.Output(Message_Allways, "V1 Radius:                " + IDoubleToString(V1Radius));
   if (V1_Neurons.size() == 0) {
-    Log.Message("SD-015");
+    Log.CodedMessage("SD-015");
     return false;
   }
   return true;
@@ -180,7 +180,7 @@ bool Simulator::SetV1ActMethod()
       V1_Neurons[i].SetActivationMethod(V1_A001);
     }
   } else {
-    Log.Message("SD-036: " + V1ActivationMethod + " for " + V1_ACTIVATION_METHOD);
+    Log.CodedMessage("SD-036: " + V1ActivationMethod + " for " + V1_ACTIVATION_METHOD);
     return false;
   }
   return true;
@@ -199,7 +199,7 @@ bool Simulator::SetV1DacMethod()
       V1_Neurons[i].SetDActivationMethod(V1_D001);
     }
   } else {
-    Log.Message("SD-036: " + V1DActivationMethod + " for " + V1_DACTIVATION_METHOD);
+    Log.CodedMessage("SD-036: " + V1DActivationMethod + " for " + V1_DACTIVATION_METHOD);
     return false;
   }
   return true;
@@ -226,7 +226,7 @@ bool Simulator::CreateMTNeuronVector()
   Log.Output(Message_Allways, "");
   Log.Output(Message_Allways, "Total MT_Neuron inserted: " + IIntToString(MT_Neurons.size()));
   if (MT_Neurons.size() == 0) {
-    Log.Message("SD-016");
+    Log.CodedMessage("SD-016");
     return false;
   }
   return true;
@@ -241,7 +241,7 @@ bool Simulator::SetMTActMethod()
       MT_Neurons[i].SetActivationMethod(MT_A001);
     }
   } else {
-    Log.Message("SD-036: " + MTActivationMethod + " for " + MT_ACTIVATION_METHOD);
+    Log.CodedMessage("SD-036: " + MTActivationMethod + " for " + MT_ACTIVATION_METHOD);
     return false;
   }
   return true;
@@ -256,7 +256,7 @@ bool Simulator::SetMTDacMethod()
       MT_Neurons[i].SetActivationMethod(MT_D001);
     }
   } else {
-    Log.Message("SD-036: " + MTDActivationMethod + " for " + MT_DACTIVATION_METHOD);
+    Log.CodedMessage("SD-036: " + MTDActivationMethod + " for " + MT_DACTIVATION_METHOD);
     return false;
   }
   return true;
@@ -278,12 +278,12 @@ bool Simulator::SetV1V1ConnectionLinks()
     for (int i = 0; i < V1_Neurons.size(); i++) {
       for (int j = 0; j < V1_Neurons.size(); j++) {
         V1_Neurons[i].SetLinkingWeight(V1_Neurons[j].GetName(), V1_Neurons[i].GetLinkingWeight(V1_Neurons[j].GetName()) / (double) V1_Neurons[i].ConnectionCount(Neuron_V1));
-        Log.Message("WN-006: V1V1 LinkWeight count correction");
+        Log.CodedMessage("WN-006: V1V1 LinkWeight count correction");
       }
     }
     return true;
   }
-  Log.Message("SD-036: " + V1V1ConnectionMethod + " for " + V1V1_CONNECTION_METHOD);
+  Log.CodedMessage("SD-036: " + V1V1ConnectionMethod + " for " + V1V1_CONNECTION_METHOD);
   return false;
 }
 
@@ -304,7 +304,7 @@ bool Simulator::SetV1MTConnectionLinks()
       }
     }
   } else {
-    Log.Message("SD-036: " + V1MTConnectionMethod + " for " + V1MT_CONNECTION_METHOD);
+    Log.CodedMessage("SD-036: " + V1MTConnectionMethod + " for " + V1MT_CONNECTION_METHOD);
     return false;
   }
   return true;
@@ -321,7 +321,7 @@ bool Simulator::AddV1Diffusion()
 bool Simulator::Simulate(int StepsP)
 {
   if (StepsP < 1) {
-    Log.Message("SD-028");
+    Log.CodedMessage("SD-028");
     return false;
   }
   for (int i = 1; i < StepsP; i++) {
@@ -413,7 +413,7 @@ bool Simulator::PrintV1Activation(OrientationType OTypeP)
     }
     return true;
   } else {
-    Log.Message("SD-001");
+    Log.CodedMessage("SD-001");
     return false;
   }
 }
@@ -485,7 +485,7 @@ bool Simulator::PrintMTActivation(OrientationType OTypeP)
     }
     return true;
   } else {
-    Log.Message("SD-001");
+    Log.CodedMessage("SD-001");
     return false;
   }
 }
@@ -516,7 +516,7 @@ bool Simulator::PrintV1ExternalExcitation(int TimeStepP)
     }
     return true;
   } else {
-    Log.Message("SD-001");
+    Log.CodedMessage("SD-001");
     return false;
   }
 }

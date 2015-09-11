@@ -19,7 +19,7 @@ CommandLine::CommandLine()
 
 CommandLine::CommandLine(const CommandLine& orig)
 {
-  Log.Message("DV-008: CommandManager");
+  Log.CodedMessage("DV-008: CommandManager");
 }
 
 CommandLine::CommandLine(int argcP, char** argvP) 
@@ -51,7 +51,7 @@ ReturnType CommandLine::Append(int argc, char** argv)
     }
   }
   if (DataCheck(Tmp, "NonEmpty") == ReturnFail) {
-    Log.Message("SD-011");
+    Log.CodedMessage("SD-011");
     return ReturnFail;
   }
   ReturnCatch(Append(Tmp));
@@ -122,7 +122,7 @@ ReturnType CommandLine::ProcessFullCommand()
         RedirectionDetected = true;
         i = FullCommand.size();
         if (Redirection.size() < 1) {
-          Log.Message("IN-021");
+          Log.CodedMessage("IN-021");
           ReturnMessage = "IN-021";
         }
       }
@@ -140,13 +140,13 @@ ReturnType CommandLine::ProcessFullCommand()
       vector<string> InternalRedirectionTokenize;
       ReturnCatch(Tokenize(Redirection, InternalRedirectionTokenize));
       if (InternalRedirectionTokenize.size() > 1) {
-        Log.Message("IN-003");
+        Log.CodedMessage("IN-003");
         Redirection = InternalRedirectionTokenize[0];
       }
       ReturnCatch(trim(Redirection));
       ReturnCatch(Tokenize(Redirection, InternalRedirectionTokenize));
       if (InternalRedirectionTokenize.size() > 1) {
-        Log.Message("IN-003");
+        Log.CodedMessage("IN-003");
         Redirection = InternalRedirectionTokenize[0];
       }
     }
@@ -163,7 +163,7 @@ ReturnType CommandLine::ProcessFullCommand()
         }
       }
       if (!Allowed) {
-        Log.Message("IN-011");
+        Log.CodedMessage("IN-011");
         return ReturnFail;
       }
     }
@@ -188,7 +188,7 @@ ReturnType CommandLine::ProcessFullCommand()
           Value = "";
           Flag = Token.substr(1, Token.size() - 1);
           if (Flag.size() < 1) {
-            Log.Message("IN-014");
+            Log.CodedMessage("IN-014");
             return ReturnFail;
           }
         }
@@ -201,15 +201,15 @@ ReturnType CommandLine::ProcessFullCommand()
                 InFlag = false;
                 FlagValues->PutEntryQuick(Flag, Value);
               } else {
-                Log.Message("IN-013");
+                Log.CodedMessage("IN-013");
                 return ReturnFail;
               }
             } else {
               if (DataCheck(Token[0], "IsCurlyBracesOpen") == ReturnSuccess) {
                 if (Token.size() == 1) {
-                  Log.Message("IN-021");
+                  Log.CodedMessage("IN-021");
                 } else {
-                  Log.Message("IN-013");
+                  Log.CodedMessage("IN-013");
                 }
                 return ReturnFail;
               }
@@ -225,7 +225,7 @@ ReturnType CommandLine::ProcessFullCommand()
               if (Token.size() == 1) {
                 InList = true;
               } else {
-                Log.Message("IN-013");
+                Log.CodedMessage("IN-013");
                 return ReturnFail;
               }
             } else {
@@ -236,7 +236,7 @@ ReturnType CommandLine::ProcessFullCommand()
                 Value = "";
                 Flag = Token.substr(1, Token.size() - 1);
                 if (Flag.size() < 1) {
-                  Log.Message("IN-014");
+                  Log.CodedMessage("IN-014");
                   return ReturnFail;
                 }
               } else {
@@ -249,19 +249,19 @@ ReturnType CommandLine::ProcessFullCommand()
             InFlag = true;
             Flag = Token.substr(1, Token.size() - 1);
             if (Flag.size() < 1) {
-              Log.Message("IN-014");
+              Log.CodedMessage("IN-014");
               return ReturnFail;
             }
             Value = "";
           } else {
-            Log.Message("IN-012");
+            Log.CodedMessage("IN-012");
             return ReturnFail;
           }
         }
       }
     }
     if (InList) {
-      Log.Message("IN-015");
+      Log.CodedMessage("IN-015");
       return ReturnFail;
     }
     if (InFlag) {
@@ -320,7 +320,7 @@ ReturnType CommandLine::GetFlag(string FlagP, string &ValueP)
   if (Ready) {
     return FlagValues->GetEntryQuick(FlagP, ValueP);
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
@@ -331,7 +331,7 @@ ReturnType CommandLine::GetFlag(string FlagP)
     string Dummy;
     return FlagValues->GetEntryQuick(FlagP, Dummy);
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
@@ -342,7 +342,7 @@ ReturnType CommandLine::GetDirectives(vector<string> &DirectivesP)
     DirectivesP = Directives;
     return ReturnSuccess;
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
@@ -360,7 +360,7 @@ ReturnType CommandLine::GetCleanCommand(string &CleanCommandP, string Separator)
     }
     return ReturnSuccess;
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
@@ -371,7 +371,7 @@ ReturnType CommandLine::GetComment(string &CommentP)
     CommentP = Comment;
     return ReturnSuccess;
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
@@ -382,7 +382,7 @@ ReturnType CommandLine::GetCommand(string &CommandP)
     CommandP = Command;
     return ReturnSuccess;
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
@@ -393,7 +393,7 @@ ReturnType CommandLine::GetRedirection(string &RedirectionP)
     RedirectionP = Redirection;
     return ReturnSuccess;
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
@@ -404,7 +404,7 @@ ReturnType CommandLine::GetRedirectionType(RedirectionType &RedirectionModeP)
     RedirectionModeP = RedirectionMode;
     return ReturnSuccess;
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
@@ -415,7 +415,7 @@ ReturnType CommandLine::GetFullLine(string &FullLineP)
     FullLineP = FullLine;
     return ReturnSuccess;
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
@@ -430,7 +430,7 @@ ReturnType CommandLine::HasCommand(bool &HasCommandP)
     }
     return ReturnSuccess;
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
@@ -445,7 +445,7 @@ ReturnType CommandLine::HasComment(bool &HasCommentP)
     }
     return ReturnSuccess;
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
@@ -460,7 +460,7 @@ ReturnType CommandLine::HasRedirection(bool &HasRedirectionP)
     }
     return ReturnSuccess;
   } else {
-    Log.Message("DV-024");
+    Log.CodedMessage("DV-024");
     return ReturnFail;
   }
 }
