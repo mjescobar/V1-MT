@@ -158,7 +158,6 @@ template <class TableType> ReturnType HashTable<TableType>::GetEntry(string KeyP
     IndexOk = IndexChecking(Index, KeyP);
   }
   if (Table[Index] == NULL) {
-    ReturnMessage = "Key not found in the HashTable";
     return ReturnFail;
   } else {
     ReturnCatch(Table[Index]->GetContent(ContentP));
@@ -174,7 +173,6 @@ template <class TableType> ReturnType HashTable<TableType>::GetEntryQuick(string
   } else {
     ContentP = Temporal[0];
     if (Temporal.size() != 1) {
-      ReturnMessage = "Quick access to a entry with more than 1 element";
       DevelopmentAssertion();
       return ReturnSuccessWarning;
     }

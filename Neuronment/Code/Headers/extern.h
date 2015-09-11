@@ -9,7 +9,6 @@
 #include "VariableManager.h"
 #include "FunctionsManager.h"
 
-extern string ReturnMessage;
 extern LogManager Log;
 extern VariableManager GlobalVariables;
 extern SimulatorManager SimulatorDepository;

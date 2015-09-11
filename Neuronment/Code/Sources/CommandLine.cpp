@@ -22,7 +22,7 @@ CommandLine::CommandLine(const CommandLine& orig)
   Log.CodedMessage("DV-008: CommandManager");
 }
 
-CommandLine::CommandLine(int argcP, char** argvP) 
+CommandLine::CommandLine(int argcP, char** argvP)
 {
   FullCommand = "";
   Directives.clear();
@@ -79,7 +79,6 @@ ReturnType CommandLine::Append(string StringP)
 ReturnType CommandLine::ProcessFullCommand()
 {
   // Storing the full line
-  ReturnMessage = "";
   for (int i = 0; i < FullCommand.size(); i++) {
     if (DataCheck(FullCommand[i], "IsBackSlash") == ReturnSuccess) {
       FullCommand[i] = ' ';
@@ -123,7 +122,6 @@ ReturnType CommandLine::ProcessFullCommand()
         i = FullCommand.size();
         if (Redirection.size() < 1) {
           Log.CodedMessage("IN-021");
-          ReturnMessage = "IN-021";
         }
       }
     }
@@ -268,11 +266,7 @@ ReturnType CommandLine::ProcessFullCommand()
       FlagValues->PutEntryQuick(Flag, "");
     }
     Ready = true;
-    if (ReturnMessage.size() == 0) {
-      return ReturnSuccess;
-    } else {
-      return ReturnSuccessWarning;
-    }
+    return ReturnSuccess;
   } else {
     FullCommand = "";
     Directives.clear();
@@ -281,11 +275,7 @@ ReturnType CommandLine::ProcessFullCommand()
     RedirectionMode = RedirectionNone;
     Command = "";
     Comment = "";
-    if (ReturnMessage.size() == 0) {
-      return ReturnSuccess;
-    } else {
-      return ReturnSuccessWarning;
-    }
+    return ReturnSuccess;
   }
 }
 

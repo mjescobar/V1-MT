@@ -2,17 +2,12 @@
 #ifndef MAIN_H
 #define	MAIN_H
 
-//#include "LogManager.h"
-
-ReturnType SetGlobals();
-
-ReturnType ProcessCommandLine(int argcP, char** argvP);
-
-#if 0
-bool ReadCommandLineArguments(int argc, char** argv);
-#endif
+#include "tools.h"
+#include "LogManager.h"
+#include "CommandLine.h"
+#include "VariableManager.h"
+#include "SimulatorManager.h"
+#include "FunctionsManager.h"
+#include "InterpreterCommands.h"
 
 #endif
-
-//Lothar: crear metodos de asignación
-//Lothar: quitar indentación en log

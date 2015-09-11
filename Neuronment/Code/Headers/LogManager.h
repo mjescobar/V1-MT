@@ -33,8 +33,8 @@ private:
   ReturnType ToPrint(MessageType MessageTypeP);
   // Members
   vector<ostream*> Destination;
-  HashTable<int> MessagesDisabling; //Maximum number of message apparitions
-  HashTable<int> MessagesCount; //Counter of message apparitions
+  HashTable<int> MessagesDisabling;
+  HashTable<int> MessagesCount;
   bool ShowMessageInformation;
   bool ShowMessageCodedInformation;
   bool ShowMessageCoded;

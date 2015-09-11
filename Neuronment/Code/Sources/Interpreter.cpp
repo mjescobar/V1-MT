@@ -119,7 +119,6 @@ ReturnType Interpreter::Process()
     ReturnCatch(LocalManager->IsReady(CommandReady));
     if (!CommandReady) {
       Log.CodedMessage("IN-018");
-      ReturnMessage = "File ended with an incomplete command";
       return ReturnSuccessWarning;
     }
   }
@@ -182,12 +181,10 @@ ReturnType Interpreter::ProcessLine(CommandLine &LocalManagerP)
       if (!HasComment) {
         // 010
         Log.CodedMessage("IN-019");
-        ReturnMessage = "IN-019";
         return ReturnSuccessWarning;
       } else {
         // 011
         Log.CodedMessage("IN-020");
-        ReturnMessage = "IN-020";
         return ReturnSuccessWarning;
       }
     }
@@ -208,7 +205,6 @@ ReturnType Interpreter::ProcessCommand(CommandLine &LocalManagerP)
   void* Function = NULL;
   if (Commands.GetEntryQuick(FunctionName, Function) == ReturnFail) {
     Log.CodedMessage("IN-001: " + FunctionNameToPrint);
-    ReturnMessage = "IN-001";
     return ReturnSuccessWarning;
   }
   // Execute function

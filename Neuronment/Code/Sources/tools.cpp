@@ -62,7 +62,7 @@ ReturnType ReturnCatch(ReturnType ReturnP, string ConditionsP)
 {
   if (ConditionsP == "FailAssertOnDebug") {
     if (ReturnP == ReturnFail) {
-      Log.CodedMessage("DV-021: " + ReturnMessage);
+      Log.CodedMessage("DV-021");
     }
     return ReturnSuccess;
   }
@@ -70,10 +70,10 @@ ReturnType ReturnCatch(ReturnType ReturnP, string ConditionsP)
     ReturnAssertion();
   }
   if (ReturnP == ReturnSuccessWarning) {
-    Log.CodedMessage("DV-020: " + ReturnMessage);
+    Log.CodedMessage("DV-020");
   }
   if (ReturnP == ReturnFail) {
-    Log.CodedMessage("DV-021: " + ReturnMessage);
+    Log.CodedMessage("DV-021");
   }
   return ReturnSuccess;
 }
@@ -386,7 +386,6 @@ ReturnType ToBool(string StringP, bool &ReturnP)
       ReturnP = false;
     } else {
       Log.CodedMessage("IN-007"); //Lothar
-      ReturnMessage = "IN-007";
       ReturnP = false;
       return ReturnSuccessWarning;
     }
