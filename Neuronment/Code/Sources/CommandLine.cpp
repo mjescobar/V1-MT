@@ -1,6 +1,6 @@
 
-#include "extern.h"
 #include "tools.h"
+#include "extern.h"
 #include "define.h"
 #include "LogManager.h"
 #include "CommandLine.h"
@@ -457,12 +457,15 @@ ReturnType CommandLine::HasRedirection(bool &HasRedirectionP)
 
 ReturnType CommandLine::Restart()
 {
-  FullCommand = "";
-  Directives.clear();
   Ready = false;
-  Redirection = "";
-  RedirectionMode = RedirectionNone;
+  FullLine = "";
+  FullCommand = "";
   Command = "";
+  Redirection = "";
   Comment = "";
+  Directives.clear();
+  RedirectionMode = RedirectionNone;
+  delete FlagValues;
+  FlagValues = new HashTable<string>(COMMAND_MANAGER_HASH_SIZE);
   return ReturnSuccess;
 }

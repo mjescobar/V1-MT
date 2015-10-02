@@ -17,6 +17,34 @@ ReturnType report_test(CommandLine &LocalManagerP)
   return ReturnSuccess;
 }
 
+ReturnType report_neuron_activation(CommandLine &LocalManagerP)
+{
+  string Id;
+  string Type;
+  string Group;
+  LocalManagerP.GetFlag("id", Id);
+  LocalManagerP.GetFlag("type", Type);
+  LocalManagerP.GetFlag("group", Group);
+  vector<Neuron*> NeuronsPointers;
+  SimulatorDepository.CurrentSimulator()->GetNeurons(NeuronsPointers, Id, Type, Group);
+  Log.Output(MessageAllways, "");
+  string FromString;
+  string ToString;
+  int From = -1;
+  int To = -1;
+  if (LocalManagerP.GetFlag("from", FromString) == ReturnSuccess) {
+    From = ToInt(FromString);
+  }
+  if (LocalManagerP.GetFlag("to", ToString) == ReturnSuccess) {
+    To = ToInt(ToString);
+  }
+  for (int i = 0; i < NeuronsPointers.size(); i++) {
+    NeuronsPointers[i]->PrintActivation(From, To);
+  }
+  return ReturnSuccess;
+
+}
+
 ReturnType rescue_nproc(CommandLine &LocalManagerP)
 {
   bool HasRedirection;
@@ -222,7 +250,7 @@ ReturnType setsim_add_neuron(CommandLine &LocalManagerP)
   Id = ToInt(IdAsString);
   //Lothar check for repeated IDs
   string BaseActivation;
-  ReturnCatch(LocalManagerP.GetFlag("base_activation", BaseActivation));
+  LocalManagerP.GetFlag("base_activation", BaseActivation);
   string FastInput;
   vector<string> FastInputTokens;
   vector<string> FastInputList;
@@ -284,9 +312,9 @@ ReturnType setsim_add_link(CommandLine &LocalManagerP)
   string Parameters;
   LocalManagerP.GetFlag("parameters", Parameters);
   vector<string> ParametersVector;
-  if(Parameters.length()>0){
+  if (Parameters.length() > 0) {
     Tokenize(Parameters, ParametersVector);
-  }else{
+  } else {
     ParametersVector.clear();
   }
   if (Verbose) {

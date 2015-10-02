@@ -5,36 +5,42 @@
 #include <vector>
 #include <string>
 using namespace std;
-#include <enum.h>
-#include <HashTable.h>
-
-//Lothar: baseactivation not mandatory
+#include "enum.h"
+#include "HashTable.h"
 
 class CommandLine {
 public:
+  //Standard methods
   CommandLine();
   CommandLine(const CommandLine& orig);
-  CommandLine(int argcP, char** argvP);
   virtual ~CommandLine();
+  CommandLine & operator=(const CommandLine & orig); //Lothar: to implement
+  //Special constructor
+  CommandLine(int argcP, char** argvP);
+  //Command line process methods
+  ReturnType Restart();
   ReturnType Append(int argc, char** argv);
   ReturnType Append(string StringP);
-  ReturnType IsReady(bool &ReadyP);
+  //Command line data methods
   ReturnType GetFlag(string FlagP);
   ReturnType GetFlag(string FlagP, string &ValueP);
-  ReturnType GetDirectives(vector<string> &DirectivesP);
-  ReturnType GetCleanCommand(string &CleanCommandP, string Separator = " ");
-  ReturnType GetComment(string &CommentP);
   ReturnType GetCommand(string &CommandP);
+  ReturnType GetCleanCommand(string &CleanCommandP, string Separator = " ");
   ReturnType GetRedirection(string &RedirectionP);
   ReturnType GetRedirectionType(RedirectionType &RedirectionModeP);
-  ReturnType GetFullLine(string &FullLine);
+  //Command line information methods
+  ReturnType IsReady(bool &ReadyP);
   ReturnType HasCommand(bool &HasCommandP);
   ReturnType HasComment(bool &HasCommentP);
   ReturnType HasRedirection(bool &HasRedirectionP);
-  ReturnType Restart();
 private:
+  //Methods
+  ReturnType GetComment(string &CommentP);
+  ReturnType GetFullLine(string &FullLine);
+  ReturnType GetDirectives(vector<string> &DirectivesP);
   ReturnType ProcessFullCommand();
   ReturnType GetAllowedChars(vector<string> &AllowedChars);
+  //Members
   bool Ready;
   string FullLine;
   string FullCommand;

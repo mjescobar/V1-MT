@@ -6,6 +6,7 @@
 #include "CommandLine.h"
 
 ReturnType report_test(CommandLine &LocalManagerP);
+ReturnType report_neuron_activation(CommandLine &LocalManagerP);
 ReturnType rescue_nproc(CommandLine &LocalManagerP);
 ReturnType rescue_end_nproc(CommandLine &LocalManagerP);
 ReturnType varman_set(CommandLine &LocalManagerP);

@@ -158,6 +158,16 @@ template <class VariableType> ReturnType VariableManager::GetSetting(string Vari
   return LocalTable->GetEntry(VariableP, ValueP);
 }
 
+template <class VariableType> ReturnType VariableManager::GetSetting(string VariableP, VariableType &ValueP)
+{
+  vector<VariableType> Tmp;
+  if (GetSetting(VariableP, Tmp) == ReturnFail) {
+    return ReturnFail;
+  }
+  ValueP = Tmp[0];
+  return ReturnSuccess;
+}
+
 template <class VariableType > ReturnType VariableManager::CheckUnicity(HashTable<VariableType> *LocalTableP, string VariableP)
 {
   if ((void*) &HashInt != (void*) LocalTableP) {
@@ -216,3 +226,8 @@ template ReturnType VariableManager::GetSetting<int>(string VariableP, vector<in
 template ReturnType VariableManager::GetSetting<bool>(string VariableP, vector<bool> &ValueP);
 template ReturnType VariableManager::GetSetting<double>(string VariableP, vector<double> &ValueP);
 template ReturnType VariableManager::GetSetting<string>(string VariableP, vector<string> &ValueP);
+
+template ReturnType VariableManager::GetSetting<int>(string VariableP, int &ValueP);
+template ReturnType VariableManager::GetSetting<bool>(string VariableP, bool &ValueP);
+template ReturnType VariableManager::GetSetting<double>(string VariableP, double &ValueP);
+template ReturnType VariableManager::GetSetting<string>(string VariableP, string &ValueP);

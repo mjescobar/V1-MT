@@ -17,7 +17,9 @@ public:
   ReturnType LoadActivation(vector<vector<double> > ExternalActivationP);
   ReturnType LoadActivation(vector<double> ExternalActivationP, int LevelP);
   ReturnType Calculate(int StepP);
+  ReturnType Calculate(int StepP, int LevelP);
   ReturnType GetActivation(int LevelP, int StepP, double &ActivationP);//Lothar: replicate for other data types
+  ReturnType GetActivation(vector<vector <double> > &ActivationP);
 //  ReturnType GetLinks(vector<Neuron*> &LinksP);
 //  ReturnType GetActivationSize(int &ActivationSize);
 //  ReturnType CalculateActivationStep();
@@ -32,6 +34,9 @@ public:
   ReturnType IsId(string IdP);
   ReturnType IsGroup(string GroupP);
   ReturnType IsType(string TypeP);
+  ReturnType PrintActivation(int FromP, int ToP);
+  ReturnType GetGroupName(string &GroupNameP);
+  ReturnType GetTypeName(string &TypeNameP);
 private:
   // Identification parameters
   int Id;

@@ -17,7 +17,7 @@
 
 Interpreter::Interpreter()
 {
-  RuntimeAssertion();
+  RuntimeAssertion();//Lothar:why this?
 }
 
 Interpreter::Interpreter(const Interpreter& orig)

@@ -86,6 +86,13 @@ string TypeToString(bool DummyP);
 string TypeToString(double DummyP);
 string TypeToString(string DummyP);
 
+////////////////////////////////////////////////////////////////////////////////////
+// Math
+////////////////////////////////////////////////////////////////////////////////////
+
+double deg_cos(double AngleP);
+double deg_sin(double AngleP);
+
 #if 0
 /**
  * Transforms a string in a set of tokens without deleting the delimeters

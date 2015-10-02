@@ -21,7 +21,6 @@
         <itemPath>Code/Headers/define.h</itemPath>
         <itemPath>Code/Headers/enum.h</itemPath>
         <itemPath>Code/Headers/extern.h</itemPath>
-        <itemPath>Code/Headers/main.h</itemPath>
         <itemPath>Code/Headers/tools.h</itemPath>
       </logicalFolder>
       <logicalFolder name="SourceFiles"
@@ -49,6 +48,8 @@
     </logicalFolder>
     <logicalFolder name="f2" displayName="Documentation" projectFiles="true">
       <logicalFolder name="f1" displayName="Messages" projectFiles="true">
+        <logicalFolder name="f2" displayName="CommandLine" projectFiles="true">
+        </logicalFolder>
         <logicalFolder name="f1" displayName="LogManager" projectFiles="true">
           <itemPath>Documentation/Messages/LogManager/LM-100.message</itemPath>
           <itemPath>Documentation/Messages/LogManager/LM-101.message</itemPath>
@@ -82,6 +83,22 @@
         </logicalFolder>
         <itemPath>Resources/Round002/MinimalTest_Library.nproc</itemPath>
         <itemPath>Resources/Round002/MinimalTest_Main.nproc</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="Round003" projectFiles="true">
+        <logicalFolder name="f1" displayName="data" projectFiles="true">
+          <itemPath>Resources/Round003/data/Input_000001.txt</itemPath>
+          <itemPath>Resources/Round003/data/Input_000002.txt</itemPath>
+        </logicalFolder>
+        <itemPath>Resources/Round003/XorTest_Library.nproc</itemPath>
+        <itemPath>Resources/Round003/XorTest_Main.nproc</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5" displayName="Round004" projectFiles="true">
+        <itemPath>Resources/Round004/V1Test_Library.nproc</itemPath>
+        <itemPath>Resources/Round004/V1Test_Main.nproc</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f6" displayName="Round005" projectFiles="true">
+        <itemPath>Resources/Round005/V1MTTest_Library.nproc</itemPath>
+        <itemPath>Resources/Round005/V1MTTest_Main.nproc</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -148,8 +165,6 @@
       </item>
       <item path="Code/Headers/extern.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Code/Headers/main.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Code/Headers/tools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Code/Sources/CommandLine.cpp" ex="false" tool="1" flavor2="0">
@@ -295,6 +310,46 @@
             flavor2="0">
       </item>
       <item path="Resources/Round002/data/Input_000000.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round003/XorTest_Library.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round003/XorTest_Main.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round003/data/Input_000001.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round003/data/Input_000002.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round004/V1Test_Library.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round004/V1Test_Main.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round005/V1MTTest_Library.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round005/V1MTTest_Main.nproc"
             ex="false"
             tool="3"
             flavor2="0">
@@ -358,8 +413,6 @@
       </item>
       <item path="Code/Headers/extern.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Code/Headers/main.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Code/Headers/tools.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Code/Sources/CommandLine.cpp" ex="false" tool="1" flavor2="0">
@@ -505,6 +558,46 @@
             flavor2="0">
       </item>
       <item path="Resources/Round002/data/Input_000000.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round003/XorTest_Library.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round003/XorTest_Main.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round003/data/Input_000001.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round003/data/Input_000002.txt"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round004/V1Test_Library.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round004/V1Test_Main.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round005/V1MTTest_Library.nproc"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Resources/Round005/V1MTTest_Main.nproc"
             ex="false"
             tool="3"
             flavor2="0">

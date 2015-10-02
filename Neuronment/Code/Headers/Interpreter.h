@@ -4,8 +4,8 @@
 
 #include <fstream>
 using namespace std;
-#include "CommandLine.h"
 #include "HashTable.h"
+#include "CommandLine.h"
 
 class Interpreter {
 public:

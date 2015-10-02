@@ -11,12 +11,10 @@ setsim add_simulator
 setsim add_neuron -neuron_type Input                                             \
                   -group Input                                                   \
                   -id 000000                                                     \
-                  -base_activation { 0.0 }                                       \
                   -InputFile Resources/Round002/data/Input_000000.txt
 setsim add_neuron -neuron_type MultiplicationSum                                 \
                   -group Cortex                                                  \
                   -id 000001                                                     \
-                  -base_activation { 0.0 }                                       \
                   -DefaultFactor 4
 
 # Linking Neurons
@@ -25,6 +23,9 @@ setsim add_link -from_id 000000 -to_id 000001 -verbose -parameters { factor 2 }
 # Running simulation
 varman set -name SIM:Steps -type int -value 20
 runsim simulate
+
+# Printing activation
+report neuron_activation -id 1
 
 rescue end_nproc
 

@@ -5,7 +5,7 @@
 //#include <assert.h>
 //#include <vector>
 //#include <stdlib.h>
-//#include <cmath>
+#include <cmath>
 #include <iomanip>
 //#include <fstream>
 using namespace std;
@@ -471,6 +471,20 @@ string TypeToString(string DummyP)
   return "string";
 }
 
+////////////////////////////////////////////////////////////////////////////////////
+// Math
+////////////////////////////////////////////////////////////////////////////////////
+
+double deg_cos(double AngleP)
+{
+  return cos(AngleP * PI / 180);
+}
+
+double deg_sin(double AngleP)
+{
+  return sin(AngleP * PI / 180);
+}
+
 #if 0
 
 void TokenizeNoDelete(const string& str, vector<string>& tokens, const string& delimiters)
@@ -676,15 +690,6 @@ string DeleteTrailingZeros(string OriginalP)
     }
   }
   return CleanString;
-}
-
-////////////////////////////////////////////////////////////////////////////////////
-// Math
-////////////////////////////////////////////////////////////////////////////////////
-
-double deg_cos(double AngleP)
-{
-  return cos(AngleP * PI / 180);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

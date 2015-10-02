@@ -27,11 +27,11 @@ public:
   //Coded messages
   ReturnType CodedMessage(string CodeP, bool SkipAssertionP = false);
 private:
-  // Methods
+  //Methods
   ReturnType InitializeMessages();
   template <class VariableType> ReturnType GetInternalValue(string CodeP, HashTable<VariableType> TableP, vector<VariableType> &ContentP);
   ReturnType ToPrint(MessageType MessageTypeP);
-  // Members
+  //Members
   vector<ostream*> Destination;
   HashTable<int> MessagesDisabling;
   HashTable<int> MessagesCount;
