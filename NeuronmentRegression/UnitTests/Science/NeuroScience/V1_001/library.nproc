@@ -1,0 +1,28 @@
+
+setsim new_neuron_type -name                  V1Input                               \
+                       -data_type             double                                \
+                       -activation_levels     1                                     \
+                       -activation_function_0 Neuroscience_Diffusion                \
+                       -parameters {                                                \
+                                     double A                                       \
+                                     double B                                       \
+                                     double Magnitude                               \
+                                     double Orientation                             \
+                                     double PreferredOrientation                    \
+                                   }                                                \
+                       -fast_input { A B Magnitude PreferredOrientation Orientation }
+
+setsim new_neuron_type -name                  V1Neuron                              \
+                       -data_type             double                                \
+                       -activation_levels     2                                     \
+                       -activation_function_0 Neuroscience_V1Neuron_act             \
+                       -activation_function_1 Neuroscience_V1Neuron_dac             \
+                       -parameters {                                                \
+                                     double X                                       \
+                                     double Y                                       \
+                                     double Z                                       \
+                                     double SpatialFrequency                        \
+                                     double TemporalFrequency                       \
+                                     double Orientation                             \
+                                   }                                                \
+                       -fast_input { X Y Z SpatialFrequency TemporalFrequency Orientation }

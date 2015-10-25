@@ -1,0 +1,34 @@
+# Neuronment_v1.0_BaseTemplate_v1.0.nproc
+# Author: Pedro F. Toledo <pedrotoledocorrea@gmail.com>
+# This file has been designed as base template for Neuronment v1.0
+
+# Load the neuron types library
+  rescue nproc -nproc Resources/Round000/Round000_v1.0_NeuronTypes.nproc > /dev/null
+
+# Creates testing simulator
+  setsim add_simulator
+
+# Configure and create V1 Neurons and MT Neurons
+  rescue nproc -nproc Resources/Round000/Round000_v1.0_V1Neurons.nproc > /dev/null
+  rescue nproc -nproc Resources/Round000/Round000_v1.0_MTNeurons.nproc > /dev/null
+
+  rescue end_nproc
+
+  rescue nproc -nproc Resources/Round000/Round000_v1.0_V1V1_Links.nproc
+
+# Sets the V1MT connection description
+rescue nproc -silent -file Resources/Round000/Round000_v1.0_V1MT_Links.nproc
+
+# Initializing simulator
+runsim ss_initialize
+
+# Link External Excitation
+rescue nproc -silent -file Resources/Round000/Round000_v1.0_V1Neurons_BaseActivation.nproc
+
+varman set SIM:simulator_time_step 0.005
+
+runsim ss_simulate 200
+
+report ss_print_V1_external_excitation 0 > Results/Round000_ReportV1ExternalExcitation.txt
+report ss_print_V1_activation > Results/Round000_ReportV1Activation.txt
+report ss_print_MT_activation > Results/Round000_ReportMTActivation.txt
