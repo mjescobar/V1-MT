@@ -1,0 +1,95 @@
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Purpose}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Style convention}{1}{section.1.2}
+\contentsline {section}{\numberline {1.3}Problem reporting}{1}{section.1.3}
+\contentsline {section}{\numberline {1.4}How to read this document}{2}{section.1.4}
+\contentsline {chapter}{\numberline {2}User's Guide}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Overview}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}How to execute Neuronment}{3}{section.2.2}
+\contentsline {section}{\numberline {2.3}Neuronment sequencer}{4}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Commands}{4}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Variables}{4}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Message system}{5}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Assertions}{5}{subsection.2.3.4}
+\contentsline {section}{\numberline {2.4}Neuronment sequencer syntax}{5}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Basic rules}{6}{subsection.2.4.1}
+\contentsline {subsubsection}{\numberline {2.4.1.1}Empty line}{7}{subsubsection.2.4.1.1}
+\contentsline {subsubsection}{\numberline {2.4.1.2}Comments}{7}{subsubsection.2.4.1.2}
+\contentsline {subsubsection}{\numberline {2.4.1.3}Redirections}{7}{subsubsection.2.4.1.3}
+\contentsline {subsubsection}{\numberline {2.4.1.4}Variables}{7}{subsubsection.2.4.1.4}
+\contentsline {subsubsection}{\numberline {2.4.1.5}Substitutions}{8}{subsubsection.2.4.1.5}
+\contentsline {subsubsection}{\numberline {2.4.1.6}Command results}{8}{subsubsection.2.4.1.6}
+\contentsline {chapter}{\numberline {3}Instructions}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}Variable Management (varman)}{9}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}varman set}{9}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}varman print}{9}{subsection.3.1.2}
+\contentsline {section}{\numberline {3.2}Run Commands (runsim)}{10}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}runsim ss\_initialize}{10}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}runsim ss\_add\_V1\_diffusion}{10}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}runsim ss\_simulate}{10}{subsection.3.2.3}
+\contentsline {section}{\numberline {3.3}Reporting Commands (report)}{10}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}report ss\_print\_V1\_activation}{11}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}report ss\_print\_V1\_external\_excitation}{11}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.3}report ss\_print\_MT\_activation}{11}{subsection.3.3.3}
+\contentsline {section}{\numberline {3.4}I/O Interaction Commands (rescue)}{11}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}rescue nproc}{11}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}rescue return}{11}{subsection.3.4.2}
+\contentsline {chapter}{\numberline {4}Messages}{12}{chapter.4}
+\contentsline {subsection}{\numberline {4.0.3}IN-001}{12}{subsection.4.0.3}
+\contentsline {subsection}{\numberline {4.0.4}IN-002}{12}{subsection.4.0.4}
+\contentsline {subsection}{\numberline {4.0.5}IN-004}{13}{subsection.4.0.5}
+\contentsline {subsection}{\numberline {4.0.6}IN-005}{13}{subsection.4.0.6}
+\contentsline {subsection}{\numberline {4.0.7}IN-006}{13}{subsection.4.0.7}
+\contentsline {subsection}{\numberline {4.0.8}IN-007}{14}{subsection.4.0.8}
+\contentsline {subsection}{\numberline {4.0.9}IN-008}{14}{subsection.4.0.9}
+\contentsline {subsection}{\numberline {4.0.10}IN-010}{14}{subsection.4.0.10}
+\contentsline {section}{\numberline {4.1}Command Line Issues}{15}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}UI-001}{15}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}UI-002}{15}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}UI-003}{16}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.4}UI-004}{16}{subsection.4.1.4}
+\contentsline {subsection}{\numberline {4.1.5}UI-006}{16}{subsection.4.1.5}
+\contentsline {section}{\numberline {4.2}File IO Issues}{17}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}ER-001}{17}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}ER-002}{17}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}ER-003}{17}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}ER-004}{18}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}ER-005}{18}{subsection.4.2.5}
+\contentsline {subsection}{\numberline {4.2.6}ER-006}{18}{subsection.4.2.6}
+\contentsline {subsection}{\numberline {4.2.7}ER-007}{19}{subsection.4.2.7}
+\contentsline {subsection}{\numberline {4.2.8}ER-008}{19}{subsection.4.2.8}
+\contentsline {subsection}{\numberline {4.2.9}ER-009}{19}{subsection.4.2.9}
+\contentsline {subsection}{\numberline {4.2.10}ER-010}{20}{subsection.4.2.10}
+\contentsline {section}{\numberline {4.3}Implementation Issues}{20}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}DV-001}{20}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}DV-002}{20}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}DV-003}{21}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}DV-005}{21}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}DV-006}{21}{subsection.4.3.5}
+\contentsline {subsection}{\numberline {4.3.6}DV-007}{22}{subsection.4.3.6}
+\contentsline {subsection}{\numberline {4.3.7}DV-008}{22}{subsection.4.3.7}
+\contentsline {subsection}{\numberline {4.3.8}DV-012}{22}{subsection.4.3.8}
+\contentsline {subsection}{\numberline {4.3.9}DV-013}{23}{subsection.4.3.9}
+\contentsline {subsection}{\numberline {4.3.10}DV-015}{23}{subsection.4.3.10}
+\contentsline {subsection}{\numberline {4.3.11}DV-017}{23}{subsection.4.3.11}
+\contentsline {subsection}{\numberline {4.3.12}DV-018}{24}{subsection.4.3.12}
+\contentsline {subsection}{\numberline {4.3.13}SD-030}{24}{subsection.4.3.13}
+\contentsline {subsection}{\numberline {4.3.14}SD-031}{24}{subsection.4.3.14}
+\contentsline {subsection}{\numberline {4.3.15}SD-032}{25}{subsection.4.3.15}
+\contentsline {section}{\numberline {4.4}Reporting Issues}{25}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}RP-002}{25}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}RP-003}{25}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Simulator Interface Issues}{26}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}SD-001}{26}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}SD-015}{26}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.3}SD-016}{26}{subsection.4.5.3}
+\contentsline {subsection}{\numberline {4.5.4}SD-021}{27}{subsection.4.5.4}
+\contentsline {subsection}{\numberline {4.5.5}SD-025}{27}{subsection.4.5.5}
+\contentsline {subsection}{\numberline {4.5.6}SD-027}{27}{subsection.4.5.6}
+\contentsline {subsection}{\numberline {4.5.7}SD-028}{28}{subsection.4.5.7}
+\contentsline {subsection}{\numberline {4.5.8}SD-033}{28}{subsection.4.5.8}
+\contentsline {subsection}{\numberline {4.5.9}SD-036}{28}{subsection.4.5.9}
+\contentsline {subsection}{\numberline {4.5.10}SD-037}{29}{subsection.4.5.10}
+\contentsline {section}{\numberline {4.6}Warnings}{29}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}WN-006}{29}{subsection.4.6.1}
+\contentsline {chapter}{\numberline {A}First Appendix}{31}{appendix.A}
