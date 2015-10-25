@@ -1,0 +1,82 @@
+# V1 Basic Network Testing
+# Author: Pedro F. Toledo <pedrotoledocorrea@gmail.com>
+
+# Load the V1Test library
+rescue nproc -nproc Resources/Round005/V1MTTest_Library.nproc
+
+# Creates testing simulator
+setsim add_simulator
+
+# Create input neurons
+setsim add_neuron -neuron_type V1Input -group V1_Input -id 000000 -fast_input { 5.0 0.3 1.0 095.0 000.0 }
+setsim add_neuron -neuron_type V1Input -group V1_Input -id 000001 -fast_input { 5.0 0.3 1.0 095.0 045.0 }
+setsim add_neuron -neuron_type V1Input -group V1_Input -id 000002 -fast_input { 5.0 0.3 1.0 095.0 090.0 }
+setsim add_neuron -neuron_type V1Input -group V1_Input -id 000003 -fast_input { 5.0 0.3 1.0 095.0 135.0 }
+setsim add_neuron -neuron_type V1Input -group V1_Input -id 000004 -fast_input { 5.0 0.3 1.0 095.0 180.0 }
+setsim add_neuron -neuron_type V1Input -group V1_Input -id 000005 -fast_input { 5.0 0.3 1.0 095.0 225.0 }
+setsim add_neuron -neuron_type V1Input -group V1_Input -id 000006 -fast_input { 5.0 0.3 1.0 095.0 270.0 }
+setsim add_neuron -neuron_type V1Input -group V1_Input -id 000007 -fast_input { 5.0 0.3 1.0 095.0 315.0 }
+
+# Create V1 cortex neurons
+# Common values
+varman set -name FUN:V1Neuron:V1_Cortex:NonLinearityA          -type double -value {   5.00 }
+varman set -name FUN:V1Neuron:V1_Cortex:NonLinearityB          -type double -value {   0.17 }
+varman set -name FUN:V1Neuron:V1_Cortex:NonLinearityMax        -type double -value {   1.00 }
+varman set -name FUN:V1Neuron:V1_Cortex:ExitatoryFactor        -type double -value {   0.20 }
+varman set -name FUN:V1Neuron:V1_Cortex:InhibitionFactor       -type double -value {  -0.80 }
+varman set -name FUN:V1Neuron:V1_Cortex:ConductanceLeak        -type double -value {  -0.10 }
+varman set -name FUN:V1Neuron:V1_Cortex:WeightFactor           -type double -value { 100.00 }
+varman set -name FUN:V1Neuron:V1_Cortex:ExternalExcitationType -type string -value V1Input
+# Neuron declaration
+setsim add_neuron -neuron_type V1Neuron -group V1_Cortex -id 001000 -fast_input { 0.0 0.0 0.0 000.025 001.000 000.0 } -base_activation { 0.0 0.0 }
+setsim add_neuron -neuron_type V1Neuron -group V1_Cortex -id 001001 -fast_input { 0.0 0.0 0.0 000.025 001.000 045.0 } -base_activation { 0.0 0.0 }
+setsim add_neuron -neuron_type V1Neuron -group V1_Cortex -id 001002 -fast_input { 0.0 0.0 0.0 000.025 001.000 090.0 } -base_activation { 0.0 0.0 }
+setsim add_neuron -neuron_type V1Neuron -group V1_Cortex -id 001003 -fast_input { 0.0 0.0 0.0 000.025 001.000 135.0 } -base_activation { 0.0 0.0 }
+setsim add_neuron -neuron_type V1Neuron -group V1_Cortex -id 001004 -fast_input { 0.0 0.0 0.0 000.025 001.000 180.0 } -base_activation { 0.0 0.0 }
+setsim add_neuron -neuron_type V1Neuron -group V1_Cortex -id 001005 -fast_input { 0.0 0.0 0.0 000.025 001.000 225.0 } -base_activation { 0.0 0.0 }
+setsim add_neuron -neuron_type V1Neuron -group V1_Cortex -id 001006 -fast_input { 0.0 0.0 0.0 000.025 001.000 270.0 } -base_activation { 0.0 0.0 }
+setsim add_neuron -neuron_type V1Neuron -group V1_Cortex -id 001007 -fast_input { 0.0 0.0 0.0 000.025 001.000 315.0 } -base_activation { 0.0 0.0 }
+
+# Create MT cortex neurons
+# Common values
+varman set -name FUN:MTNeuron:MT_Cortex:Modulation    -type double -value {  5.33648681640625 }
+varman set -name FUN:MTNeuron:MT_Cortex:Sigma         -type double -value {  0.66666666666666 }
+varman set -name FUN:MTNeuron:MT_Cortex:Amplification -type double -value {  1                }
+varman set -name FUN:MTNeuron:MT_Cortex:Aperture      -type double -value { 46                }
+# Neuron declaration
+setsim add_neuron -neuron_type MTNeuron -group MT_Cortex -id 002000 -fast_input { 0.0 0.0 0.0 000.00 }
+setsim add_neuron -neuron_type MTNeuron -group MT_Cortex -id 002001 -fast_input { 0.0 0.0 0.0 045.00 }
+setsim add_neuron -neuron_type MTNeuron -group MT_Cortex -id 002002 -fast_input { 0.0 0.0 0.0 090.00 }
+setsim add_neuron -neuron_type MTNeuron -group MT_Cortex -id 002003 -fast_input { 0.0 0.0 0.0 135.00 }
+setsim add_neuron -neuron_type MTNeuron -group MT_Cortex -id 002004 -fast_input { 0.0 0.0 0.0 180.00 }
+setsim add_neuron -neuron_type MTNeuron -group MT_Cortex -id 002005 -fast_input { 0.0 0.0 0.0 225.00 }
+setsim add_neuron -neuron_type MTNeuron -group MT_Cortex -id 002006 -fast_input { 0.0 0.0 0.0 270.00 }
+setsim add_neuron -neuron_type MTNeuron -group MT_Cortex -id 002007 -fast_input { 0.0 0.0 0.0 315.00 }
+
+# Create VectorAverage Neurons
+setsim add_neuron -neuron_type VectorAverage -group Results -id 003000 -Parameter Angle
+setsim add_neuron -neuron_type VectorAverage -group Results -id 003001 -Parameter Magnitude
+
+# Linking neurons
+# V1 Input to V1 Cortex
+setsim add_link -from_id 000000 -to_id 001000
+setsim add_link -from_id 000001 -to_id 001001
+setsim add_link -from_id 000002 -to_id 001002
+setsim add_link -from_id 000003 -to_id 001003
+setsim add_link -from_id 000004 -to_id 001004
+setsim add_link -from_id 000005 -to_id 001005
+setsim add_link -from_id 000006 -to_id 001006
+setsim add_link -from_id 000007 -to_id 001007
+# V1 Cortex to MT Cortex
+setsim add_link -from_group V1_Cortex -to_group MT_Cortex
+# MT Cortex to Results
+setsim add_link -from_group MT_Cortex -to_group Results
+
+# Running simulation
+varman set -name SIM:Steps    -type int    -value 50
+varman set -name SIM:StepSize -type double -value 0.005
+runsim simulate
+
+# Printing activation
+report neuron_activation -group MT_Cortex
+report neuron_activation -group Results

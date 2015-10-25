@@ -1,0 +1,16 @@
+
+setsim new_neuron_type -name                  Input                            \
+                       -data_type             double                           \
+                       -activation_levels     1                                \
+                       -activation_function_0 IO_ReadFromFile                  \
+                       -parameters {                                           \
+                                     string InputFile                          \
+                                   }
+
+setsim new_neuron_type -name                  MultiplicationSum                \
+                       -data_type             double                           \
+                       -activation_levels     1                                \
+                       -activation_function_0 Operations_MultiplicationSum     \
+                       -parameters {                                           \
+                                     double DefaultFactor                      \
+                                   }
