@@ -68,6 +68,8 @@ def main(argv):
       return '  ','FAIL - Error: %s' % e
   print '  ', 'DONE'
   # Running tests
+  result_types = []
+  result_count = []
   print 'Running tests:'
   for i in tests_list:
     try:
@@ -76,18 +78,48 @@ def main(argv):
       print '  ', 'FAIL - Error: %s' % e
       return
     if os.path.isfile('main.customrun'):
-      os.chmod("main.run", 0755)
-      os.system("./main.customrun > main.result")
+      os.chmod("main.customrun", 0755)
+      os.system("./main.customrun > main.result 2> main.error")
     else:
       os.system('./neuronment -nproc main.nproc > main.result 2> main.error')
-      result = evaluate_result(current_path + "/" + i);
-      print '  ', '[%s] %s' % (result, i);
+    result = evaluate_result(current_path + "/" + i);
+    index = -1;
+    try:
+      index = result_types.index(result)
+    except:
+      result_types.append(result)
+      result_count.append(0)
+    if index == -1:
+      try:
+        index = result_types.index(result)
+      except:
+        return '  ', 'FAIL - Could not get the result type index'
+    result_count[index] += 1
+    print '  ', '[%s] %s' % (result, i);
+  # Presenting results
+  print 'Global results:'
+  for i in result_types:
+    flag = ""
+    if i == "ASRT":
+      flag = '<- Assertions detected'
+    if i == "ERRO":
+      flag = '<- Errsor detected'
+    print '  ', '%s: %s %s' % (i, result_count[result_types.index(i)], flag)
 
 def evaluate_result(test_folder):
   if os.stat(test_folder + "/" + 'main.error').st_size > 0:
     return 'ASRT'
   else:
-    return 'DONE'
+    if os.stat(test_folder + "/" + 'main.result').st_size < 10:
+      return readfile(test_folder + "/" + 'main.result')[0:4]
+    else:
+      return 'DONE'
+
+def readfile(filename):
+  with open(filename) as f:
+    toreturn = f.read()
+    f.close()
+    return toreturn
 
 def foldercopy(src, dest):
   try:
