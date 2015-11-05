@@ -7,12 +7,13 @@ template <class EntryType> HashEntry<EntryType>::HashEntry()
   Key = "";
   HashKey = 0;
   Content.empty();
+  //Lothar: should be asserted?
 }
 
 template <class EntryType> HashEntry<EntryType>::HashEntry(string KeyP, vector<EntryType> ContentP)
 {
   unsigned int HashKeyP;
-  ReturnCatch(KeyToHashKey(KeyP, HashKeyP));
+  KeyToHashKey(KeyP, HashKeyP);
   Key = KeyP;
   HashKey = HashKeyP;
   Content = ContentP;
@@ -40,25 +41,25 @@ template <class EntryType> HashEntry<EntryType> & HashEntry<EntryType>::operator
 template <class EntryType> ReturnType HashEntry<EntryType>::GetKey(string &KeyP)
 {
   KeyP = Key;
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 template <class EntryType> ReturnType HashEntry<EntryType>::GetHashKey(unsigned int &HashKeyP)
 {
   HashKeyP = HashKey;
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 template <class EntryType> ReturnType HashEntry<EntryType>::GetCount(int &CountP)
 {
   CountP = Content.size();
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 template <class EntryType> ReturnType HashEntry<EntryType>::GetContent(vector<EntryType> &ContentP)
 {
   ContentP = Content;
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 template class HashEntry<int>;
