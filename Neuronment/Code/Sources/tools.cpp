@@ -1,21 +1,9 @@
 
 #include <string>
-//#include <ctime>
-#include <sstream>
-//#include <assert.h>
-//#include <vector>
-//#include <stdlib.h>
 #include <cmath>
+#include <sstream>
 #include <iomanip>
-//#include <fstream>
 using namespace std;
-//#include "enum.h"
-//#include "define.h"
-//#include "HashEntry.h"
-//#include "HashTable.h"
-//#include "LogManager.h"
-//#include "SettingsManager.h"
-//#include "Globals.h"
 #include "tools.h"
 #include "extern.h"
 
@@ -23,17 +11,11 @@ using namespace std;
 // Assertions
 ////////////////////////////////////////////////////////////////////////////////////
 
-void ReturnAssertion()
-{
-  Log.CodedMessage("DV-019");
-  assert(0);
-}
-
 void DevelopmentAssertion()
 {
 #ifdef DEVELOPMENT
   Log.CodedMessage("ER-001", true);
-  Log.Output(MessageAllways,"");
+  Log.Output(MessageAllways, "");
   assert(0);
 #else
   Log.CodedMessage("ER-011");
@@ -43,14 +25,14 @@ void DevelopmentAssertion()
 void ImplementationAssertion()
 {
   Log.CodedMessage("ER-008", true);
-  Log.Output(MessageAllways,"");
+  Log.Output(MessageAllways, "");
   assert(0);
 }
 
 void RuntimeAssertion()
 {
   Log.CodedMessage("ER-002", true);
-  Log.Output(MessageAllways,"");
+  Log.Output(MessageAllways, "");
   assert(0);
 }
 
@@ -58,8 +40,15 @@ void RuntimeAssertion()
 // Catching error returns
 ////////////////////////////////////////////////////////////////////////////////////
 
-ReturnType ReturnCatch(ReturnType ReturnP, string ConditionsP)
+ReturnType Return(ReturnType ReturnP, string ConditionsP, string ReturnMessageP)
 {
+  ErrorReturn = ReturnP;
+  ErrorMessage = ReturnMessageP;
+  if (ReturnMessageP.length() > 0) {
+    Log.CodedMessage(ReturnMessageP);
+  }
+
+  /*
   if (ConditionsP == "FailAssertOnDebug") {
     if (ReturnP == ReturnFail) {
       Log.CodedMessage("DV-021");
@@ -67,15 +56,19 @@ ReturnType ReturnCatch(ReturnType ReturnP, string ConditionsP)
     return ReturnSuccess;
   }
   if (ConditionsP != "") {
-    ReturnAssertion();
+    ImplementationAssertion();
   }
   if (ReturnP == ReturnSuccessWarning) {
     Log.CodedMessage("DV-020");
   }
+  return ReturnSuccess;
+   */
+
   if (ReturnP == ReturnFail) {
     Log.CodedMessage("DV-021");
   }
-  return ReturnSuccess;
+
+  return ReturnP;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +83,7 @@ ReturnType KeyToHashKey(string KeyP, unsigned int &HashKeyP)
     HashKey = (HashKey * HASH_A) ^ (KeyP[i] * HASH_B);
   }
   HashKeyP = HashKey;
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -101,37 +94,32 @@ ReturnType DataCheck(string DataP, string ConditionsP)
 {
   if (ConditionsP == "NonEmpty") {
     if (DataP == "") {
-      Log.CodedMessage("SD-003");
-      return ReturnFail;
+      return Return(ReturnFail, "", "SD-003");
     }
-    return ReturnSuccess;
+    return Return(ReturnSuccess);
   }
   if (ConditionsP != "") {
-    Log.CodedMessage("DV-022");
-    return ReturnFail;
+    return Return(ReturnFail, "", "DV-022");
   }
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 ReturnType DataCheck(int DataP, string ConditionsP)
 {
   if (ConditionsP == "GreaterThanZero") {
     if (DataP <= 0) {
-      Log.CodedMessage("SD-008");
-      return ReturnFail;
+      return Return(ReturnFail, "", "SD-008");
     }
     return ReturnSuccess;
   }
   if (ConditionsP == "NonNegative") {
     if (DataP < 0) {
-      Log.CodedMessage("SD-009");
-      return ReturnFail;
+      return Return(ReturnFail, "", "SD-009");
     }
     return ReturnSuccess;
   }
   if (ConditionsP != "") {
-    Log.CodedMessage("DV-009: " + ConditionsP);
-    return ReturnFail;
+    return Return(ReturnFail, "", "DV-009: " + ConditionsP);
   }
   return ReturnSuccess;
 }
@@ -140,14 +128,12 @@ ReturnType DataCheck(char** DataP, string ConditionsP)
 {
   if (ConditionsP == "NotNull") {
     if (DataP < 0) {
-      Log.CodedMessage("SD-010");
-      return ReturnFail;
+      return Return(ReturnFail, "", "SD-010");
     }
     return ReturnSuccess;
   }
   if (ConditionsP != "") {
-    Log.CodedMessage("DV-009: " + ConditionsP);
-    return ReturnFail;
+    return Return(ReturnFail, "", "DV-009: " + ConditionsP);
   }
   return ReturnSuccess;
 }
@@ -156,125 +142,125 @@ ReturnType DataCheck(char DataP, string ConditionsP)
 {
   if (ConditionsP == "IsLetter") {
     if ((DataP >= 65 && DataP <= 90) || (DataP >= 97 && DataP <= 122)) {
-      return ReturnSuccess;
+      return Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsNumber") {
     if (DataP >= 48 && DataP <= 57) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsApostrophe") {
     if (DataP == 39) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsLessThan") {
     if (DataP == 60) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsGreaterThan") {
     if (DataP == 62) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsSpace") {
     if (DataP == 32) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsHyphen") {
     if (DataP == 45) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsDot") {
     if (DataP == 46) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsUnderscore") {
     if (DataP == 95) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsNumberSign") {
     if (DataP == 35) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsSlash") {
     if (DataP == 47) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsBackSlash") {
     if (DataP == 92) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsTab") {
     if (DataP == 9) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsCurlyBraces") {
     if (DataP == 123 || DataP == 125) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsCurlyBracesOpen") {
     if (DataP == 123) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsCurlyBracesClose") {
     if (DataP == 125) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP == "IsColon") {
     if (DataP == 58) {
-      return ReturnSuccess;
+      return  Return(ReturnSuccess);
     }
-    return ReturnFail;
+    return Return(ReturnFail);
   }
   if (ConditionsP != "") {
     Log.CodedMessage("DV-009: " + ConditionsP);
-    return ReturnFail;
+    return Return(ReturnFail);
   }
-  return ReturnSuccess;
+  return  Return(ReturnSuccess);
 }
 
 ReturnType IsValidType(string TypeP)
 {
   if (TypeP == "int") {
-    return ReturnSuccess;
+    return  Return(ReturnSuccess);
   } else if (TypeP == "bool") {
-    return ReturnSuccess;
+    return  Return(ReturnSuccess);
   } else if (TypeP == "double") {
-    return ReturnSuccess;
+    return  Return(ReturnSuccess);
   } else if (TypeP == "string") {
-    return ReturnSuccess;
+    return  Return(ReturnSuccess);
   }
-  return ReturnFail;
+  return Return(ReturnFail);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -294,7 +280,7 @@ ReturnType Tokenize(const string& StringP, vector<string>& TokensP, const string
     // Find next "non-delimiter"
     pos = StringP.find_first_of(DelimetersP, lastPos);
   }
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -307,7 +293,7 @@ ReturnType trim_right(string &StringP, string DelimetersP)
   if (String.length() > 0) {
     StringP = String.substr(0, String.find_last_not_of(DelimetersP) + 1);
   }
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 ReturnType trim_left(string &StringP, string DelimetersP)
@@ -316,7 +302,7 @@ ReturnType trim_left(string &StringP, string DelimetersP)
   if (String.length() > 0) {
     StringP = String.substr(String.find_first_not_of(DelimetersP));
   }
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 ReturnType trim(string &StringP, string DelimetersP)
@@ -326,7 +312,7 @@ ReturnType trim(string &StringP, string DelimetersP)
     ReturnCatch(trim_right(StringP, DelimetersP));
     ReturnCatch(trim_left(StringP, DelimetersP));
   }
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -338,7 +324,7 @@ ReturnType ToString(int ValueP, string &ReturnP)
   stringstream ss;
   ss << ValueP;
   ReturnP = ss.str();
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 string ToString(int ValueP)
@@ -351,19 +337,19 @@ string ToString(int ValueP)
 ReturnType ToInt(string StringP, int &ReturnP)
 {
   for (int i = 0; i < (int) StringP.length(); i++) {
-    if ((StringP[i] < '0' or StringP[i] > '9') and StringP[i] != '-' and StringP[i] != '.') {
-      return ReturnFail;
+    if ((StringP[i] < '0' or StringP[i] > '9') and StringP[i] != '-' and StringP[i] != '.') { //Lothar: proper char evaluation
+      return Return(ReturnFail, "", "Unauthorized chars on string conversion, runtime assert");
     }
   }
   stringstream ss(StringP);
   ss >> ReturnP;
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 int ToInt(string StringP)
 {
   int Tmp;
-  ReturnCatch(ToInt(StringP, Tmp), "FailAssertOnDebug");
+  ToInt(StringP, Tmp);
   return Tmp;
 }
 
@@ -385,37 +371,36 @@ ReturnType ToBool(string StringP, bool &ReturnP)
       || StringP == "0") {
       ReturnP = false;
     } else {
-      Log.CodedMessage("IN-007"); //Lothar
       ReturnP = false;
-      return ReturnSuccessWarning;
+      return Return(ReturnSuccess, "", "IN-007: " + StringP);
     }
   }
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 bool ToBool(string StringP)
 {
   bool Tmp;
-  ReturnCatch(ToBool(StringP, Tmp), "FailAssertOnDebug");
+  ToBool(StringP, Tmp);
   return Tmp;
 }
 
 ReturnType ToDouble(string StringP, double &ReturnP)
 {
   for (int i = 0; i < (int) StringP.length(); i++) {
-    if ((StringP[i] < '0' or StringP[i] > '9') and StringP[i] != '-' and StringP[i] != '.') {
-      return ReturnFail;
+    if ((StringP[i] < '0' or StringP[i] > '9') and StringP[i] != '-' and StringP[i] != '.') {//Lothar: proper char evaluation
+      return Return(ReturnFail); //Lothar: propper codded mesage (toint reference))
     }
   }
   stringstream ss(StringP);
   ss >> ReturnP;
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 double ToDouble(string StringP)
 {
   double Tmp;
-  ReturnCatch(ToDouble(StringP, Tmp), "FailAssertOnDebug");
+  ToDouble(StringP, Tmp);
   return Tmp;
 }
 
@@ -424,7 +409,7 @@ ReturnType ToString(double ValueP, string &ReturnP, int PrecisionP)
   stringstream ss;
   ss << fixed << setprecision(PrecisionP) << ValueP;
   ReturnP = ss.str();
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 string ToString(double ValueP, int PrecisionP)
@@ -441,7 +426,7 @@ ReturnType ToString(bool ValueP, string &ReturnP)
   } else {
     ReturnP = "false";
   }
-  return ReturnSuccess;
+  return Return(ReturnSuccess);
 }
 
 string ToString(bool ValueP)
@@ -477,275 +462,35 @@ string TypeToString(string DummyP)
 
 double deg_cos(double AngleP)
 {
-  return cos(AngleP * PI / 180);
+  return cos(AngleP * PI / 180.0);
 }
 
 double deg_sin(double AngleP)
 {
-  return sin(AngleP * PI / 180);
+  return sin(AngleP * PI / 180.0);
 }
 
-#if 0
+////////////////////////////////////////////////////////////////////////////////////
+// Deprecated
+////////////////////////////////////////////////////////////////////////////////////
 
-void TokenizeNoDelete(const string& str, vector<string>& tokens, const string& delimiters)
+ReturnType ReturnCatch(ReturnType ReturnP, string ConditionsP)
 {
-  string::size_type lastPos = 0; //str.find_first_not_of(delimiters, 0);
-  string::size_type pos = str.find_first_of(delimiters, lastPos + 1);
-  while (string::npos != pos || string::npos != lastPos) {
-    // Found a token, add it to the vector.
-    tokens.push_back(str.substr(lastPos, pos - lastPos));
-    // Skip delimiters.  Note the "not_of"
-    lastPos = pos; //str.find_first_not_of(delimiters, pos);
-    // Find next "non-delimiter"
-    if (string::npos != lastPos) {
-      pos = str.find_first_of(delimiters, lastPos + 1);
-    }
-  }
-}
-
-ReturnType CheckInt(int IntP, string ConditionsP)
-{
-  if (ConditionsP == "GreaterThanZero") {
-    if (IntP <= 0) {
-      Log.CodedMessage("SD-004");
-      return ReturnFail;
-    }
-    return ReturnSuccess;
-  }
-  if (ConditionsP == "NonNegative") {
-    if (IntP < 0) {
-      Log.CodedMessage("SD-004");
-      return ReturnFail;
+  Log.CodedMessage("SY-001");
+  if (ConditionsP == "FailAssertOnDebug") {
+    if (ReturnP == ReturnFail) {
+      Log.CodedMessage("DV-021");
     }
     return ReturnSuccess;
   }
   if (ConditionsP != "") {
-    Log.CodedMessage("DV-009");
-    return ReturnFail;
-  }
-  return ReturnSuccess;
-}
-
-ReturnType CheckInt(int IntP, string ConditionsP, int LowerP, int UpperP)
-{
-  if (ConditionsP == "Range[]") {
-    if (IntP < LowerP || IntP > UpperP) {
-      Log.CodedMessage("SD-004");
-      return ReturnFail;
-    }
-    return ReturnSuccess;
-  }
-  if (ConditionsP == "Range[[") {
-    if (IntP < LowerP || IntP >= UpperP) {
-      Log.CodedMessage("SD-004");
-      return ReturnFail;
-    }
-    return ReturnSuccess;
-  }
-  if (ConditionsP == "Range]]") {
-    if (IntP <= LowerP || IntP > UpperP) {
-      Log.CodedMessage("SD-004");
-      return ReturnFail;
-    }
-    return ReturnSuccess;
-  }
-  if (ConditionsP == "Range][") {
-    if (IntP <= LowerP || IntP >= UpperP) {
-      Log.CodedMessage("SD-004");
-      return ReturnFail;
-    }
-    return ReturnSuccess;
-  }
-  if (ConditionsP != "") {
-    Log.CodedMessage("DV-009");
-    return ReturnFail;
-  }
-  return ReturnSuccess;
-}
-
-////////////////////////////////////////////////////////////////////////////////////
-// Arrays
-////////////////////////////////////////////////////////////////////////////////////
-
-void* DuplicateArray(void* SourceP, int CountP, DataType TypeP)
-{
-  void* ToReturn = NULL;
-  if (SourceP == NULL) {
-    return NULL;
-  }
-  switch (TypeP) {
-  case Data_bool:
-    ToReturn = malloc(sizeof (bool) * CountP);
-    if (SourceP) {
-      for (int i = 0; i < CountP; i++) {
-        ((bool*)ToReturn)[i] = ((bool*)SourceP)[i];
-      }
-    }
-    break;
-  case Data_int:
-    ToReturn = malloc(sizeof (int) * CountP);
-    if (SourceP) {
-      for (int i = 0; i < CountP; i++) {
-        ((int*) ToReturn)[i] = ((int*) SourceP)[i];
-      }
-    }
-    break;
-  case Data_float:
-    ToReturn = malloc(sizeof (float) * CountP);
-    if (SourceP) {
-      for (int i = 0; i < CountP; i++) {
-        ((float*) ToReturn)[i] = ((float*) SourceP)[i];
-      }
-    }
-    break;
-  case Data_double:
-    ToReturn = malloc(sizeof (double) * CountP);
-    if (SourceP) {
-      for (int i = 0; i < CountP; i++) {
-        ((double*) ToReturn)[i] = ((double*) SourceP)[i];
-      }
-    }
-    break;
-  case Data_string:
-    ToReturn = malloc(sizeof (string) * CountP);
-    if (SourceP) {
-      for (int i = 0; i < CountP; i++) {
-        ((string*) ToReturn)[i] = ((string*) SourceP)[i];
-      }
-    }
-    break;
-  default:
-    Log.CodedMessage("DV-001");
     ImplementationAssertion();
-    return NULL;
   }
-  return ToReturn;
-}
-
-void CstringToString(char* CstringP, string &ReturnP)
-{
-  stringstream ss;
-  ss << CstringP;
-  ReturnP = ss.str();
-}
-
-string ICstringToString(char* CstringP)
-{
-  string Tmp;
-  CstringToString(CstringP, Tmp);
-  return Tmp;
-}
-
-////////////////////////////////////////////////////////////////////////////////////
-// String Formating
-////////////////////////////////////////////////////////////////////////////////////
-
-string Alignment(string OriginalP, int SizeP, char FillP, SideType SideP)
-{
-  int ToAdd = SizeP - OriginalP.length();
-  if (ToAdd < 1) {
-    return OriginalP;
+/*if (ReturnP == ReturnSuccessWarning) {
+    Log.CodedMessage("DV-020");
+  }*/
+  if (ReturnP == ReturnFail) {
+    Log.CodedMessage("DV-021");
   }
-  for (int i = 0; i < ToAdd; i++) {
-    if (SideP == Side_Right) {
-      OriginalP = OriginalP + FillP;
-    }
-    if (SideP == Side_Left) {
-      OriginalP = FillP + OriginalP;
-    }
-  }
-  return OriginalP;
+  return ReturnSuccess;
 }
-
-string DeleteTrailingZeros(string OriginalP)
-{
-  string CleanString = "";
-  bool Deleted = false;
-  for (int i = 0; i < OriginalP.size(); i++) {
-    if (OriginalP[i] == '\'') {
-      i++;
-      Deleted = true;
-      while (OriginalP[i] == '0') {
-        i++;
-      }
-    }
-    if (i < OriginalP.size()) {
-      if (OriginalP[i] <= '9' && OriginalP[i] >= '0') {
-        if (Deleted) {
-          CleanString = CleanString + "'" + OriginalP[i];
-          Deleted = false;
-        } else {
-          CleanString = CleanString + OriginalP[i];
-        }
-      } else {
-        if (Deleted) {
-          CleanString = CleanString + "'0" + OriginalP[i];
-          Deleted = false;
-        } else {
-          CleanString = CleanString + OriginalP[i];
-        }
-      }
-    } else {
-      CleanString = CleanString + "'0";
-    }
-  }
-  return CleanString;
-}
-
-////////////////////////////////////////////////////////////////////////////////////
-// Runtime Timing
-////////////////////////////////////////////////////////////////////////////////////
-
-bool PrintElapsedTime(clock_t* ElapsedTimeP)
-{
-  clock_t NewElapsedTime = clock();
-  Log.Output(Message_Allways, "TIME: " + ToString(double(NewElapsedTime - *ElapsedTimeP) / CLOCKS_PER_SEC, 3) + "[s]");
-  *ElapsedTimeP = NewElapsedTime;
-  return true;
-}
-
-////////////////////////////////////////////////////////////////////////////////////
-// Command Line Processing
-////////////////////////////////////////////////////////////////////////////////////
-
-bool GetFlag(vector<string> TokensP, string FlagP)
-{
-  for (int i = 0; i < TokensP.size(); i++) {
-    if (TokensP[i][0] == '-') {
-      if (TokensP[i].substr(1, TokensP[i].size() - 1) == FlagP) {
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-string GetFlagValue(vector<string> TokensP, string FlagP)
-{
-  for (int i = 0; i < TokensP.size(); i++) {
-    if (TokensP[i][0] == '-') {
-      if (TokensP[i].substr(1, TokensP[i].size() - 1) == FlagP) {
-        if (i + 1 < TokensP.size()) {
-          if (TokensP[i + 1][0] != '-') {
-            return TokensP[i + 1];
-          }
-        }
-      }
-    }
-  }
-  Log.CodedMessage("IN-006: In command \"" + TokensP[0] + " " + TokensP[1] + "\" flag \"" + FlagP + "\"");
-  return "";
-}
-
-////////////////////////////////////////////////////////////////////////////////////
-// Abbreviated math
-////////////////////////////////////////////////////////////////////////////////////
-
-double NonLinearity001(double ValueP, double MaxP, double AP, double BP)
-{
-  double Tem = (MaxP / (1 + exp(AP * (BP - ValueP))) - MaxP / (1 + exp(AP * (BP - 0))))*(MaxP / (MaxP - MaxP / (1 + exp(AP * (BP - 0)))));
-  Tem = (Tem > 0) ? Tem : 0;
-  return Tem;
-}
-
-#endif
