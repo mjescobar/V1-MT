@@ -1,4 +1,5 @@
 
+#include "enum.h"
 #include "tools.h"
 #include "LogManager.h"
 #include "CommandLine.h"
@@ -7,19 +8,24 @@
 #include "FunctionsManager.h"
 #include "InterpreterCommands.h"
 
-LogManager Log;
-bool EarlyReturn = false;
-VariableManager GlobalVariables;
+// Global Variables
+bool       EarlyReturn  = false;
+string     ErrorMessage = "";
+ReturnType ErrorReturn  = ReturnSuccess;
+
+// Global Object Instances
+LogManager       Log;
+VariableManager  GlobalVariables;
 FunctionsManager FunctionDepository;
 SimulatorManager SimulatorDepository;
 
 int main(int argc, char** argv)
-{   
-  ReturnCatch(Log.DisplayHeader());
-
+{
   CommandLine CommandLine(argc, argv);
-  rescue_nproc(CommandLine);
 
-  ReturnCatch(Log.DisplayFooter());
+  Log.DisplayHeader();
+  rescue_nproc(CommandLine);
+  Log.DisplayFooter();
+
   return 0;
 }
