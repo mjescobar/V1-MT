@@ -174,7 +174,7 @@ template <class TableType> ReturnType HashTable<TableType>::GetEntryQuick(string
     ContentP = Temporal[0];
     if (Temporal.size() != 1) {
       DevelopmentAssertion();
-      return ReturnSuccessWarning;
+      return ReturnSuccess;
     }
     return ReturnSuccess;
   }
