@@ -1,23 +1,27 @@
-# XOR Neural Network Testing
+
+# UnitTests/Simulations/SingleSimulator/NeuralNetwork_001
 # Author: Pedro F. Toledo <pedrotoledocorrea@gmail.com>
 
-# Load the XorTest library
-rescue nproc -nproc Resources/Round003/XorTest_Library.nproc
+# This test creates a 3 layers neural network to calculate the XOR operation between
+# the 2 inputs, which are read by the input neurons from a file
 
-# Creates testing simulator
+# Loading the test library
+rescue nproc -nproc library.nproc
+
+# Creating the test simulator
 setsim add_simulator
 
-# Create neurons
+# Creating neurons
 # X input neuron
 setsim add_neuron -neuron_type Input                                             \
                   -group Input                                                   \
                   -id 000000                                                     \
-                  -InputFile Resources/Round003/data/Input_000001.txt
+                  -InputFile data/Input_000001.txt
 # Y input neuron
 setsim add_neuron -neuron_type Input                                             \
                   -group Input                                                   \
                   -id 000001                                                     \
-                  -InputFile Resources/Round003/data/Input_000002.txt
+                  -InputFile data/Input_000002.txt
 # A middle layer neuron
 setsim add_neuron -neuron_type Perceptron                                        \
                   -group MiddleLayer                                             \
@@ -38,7 +42,7 @@ setsim add_neuron -neuron_type Output                                           
                   -group Output                                                  \
                   -id 000005
 
-# Linking Neurons
+# Linking neurons
 # Input to Middle Layer
 setsim add_link -from_id 000000 -to_id 000002 -parameters { factor  1 }
 setsim add_link -from_id 000000 -to_id 000003 -parameters { factor  1 }
@@ -55,3 +59,4 @@ runsim simulate
 
 # Printing activation
 report neuron_activation -id 000005
+

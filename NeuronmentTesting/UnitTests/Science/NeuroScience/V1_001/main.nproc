@@ -1,13 +1,17 @@
-# V1 Basic Network Testing
+
+# UnitTests/Science/NeuroScience/V1_001
 # Author: Pedro F. Toledo <pedrotoledocorrea@gmail.com>
 
-# Load the V1Test library
-rescue nproc -nproc Resources/Round004/V1Test_Library.nproc
+# This test uses 8 V1 input neurons with activation calculated from difussion as input
+# for 8 V1 neurons
 
-# Creates testing simulator
+# Loading the neuron library
+rescue nproc -nproc library.nproc
+
+# Creating testing simulator
 setsim add_simulator
 
-# Create input neurons
+# Creating input neurons
 setsim add_neuron -neuron_type V1Input -group V1_Input -id 000000 -fast_input { 5.0 0.3 1.0 000.0 000.0 }
 setsim add_neuron -neuron_type V1Input -group V1_Input -id 000001 -fast_input { 5.0 0.3 1.0 000.0 045.0 }
 setsim add_neuron -neuron_type V1Input -group V1_Input -id 000002 -fast_input { 5.0 0.3 1.0 000.0 090.0 }
@@ -17,7 +21,7 @@ setsim add_neuron -neuron_type V1Input -group V1_Input -id 000005 -fast_input { 
 setsim add_neuron -neuron_type V1Input -group V1_Input -id 000006 -fast_input { 5.0 0.3 1.0 000.0 270.0 }
 setsim add_neuron -neuron_type V1Input -group V1_Input -id 000007 -fast_input { 5.0 0.3 1.0 000.0 315.0 }
 
-# Create V1 cortex neurons
+# Creating V1 cortex neurons
 # Common values
 varman set -name FUN:V1Neuron:V1_Cortex:NonLinearityA          -type double -value {   5.00 }
 varman set -name FUN:V1Neuron:V1_Cortex:NonLinearityB          -type double -value {   0.17 }
@@ -55,3 +59,4 @@ runsim simulate
 # Printing activation
 report neuron_activation -group V1_Input -from 0 -to 0
 report neuron_activation -group V1_Cortex
+

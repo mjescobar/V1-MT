@@ -1,13 +1,21 @@
-# V1 Basic Network Testing
+
+# /UnitTests/Science/NeuroScience/V1MT_001
 # Author: Pedro F. Toledo <pedrotoledocorrea@gmail.com>
 
-# Load the V1Test library
-rescue nproc -nproc Resources/Round005/V1MTTest_Library.nproc
+# This test creates a V1MT network calculating the V1 activation input from difussion
+# considering 8 neurons on a single spaciotemporal frecuency with different 8 orientations
+# and then integrating the results with 8 MT neurons also sensitive to 8 different
+# orientations.
+# The results are finaly presented by using mathematical neurons to calculate the average
+# motion detection
 
-# Creates testing simulator
+# Loading the neuron library
+rescue nproc -nproc library.nproc
+
+# Creating testing simulator
 setsim add_simulator
 
-# Create input neurons
+# Creating input neurons
 setsim add_neuron -neuron_type V1Input -group V1_Input -id 000000 -fast_input { 5.0 0.3 1.0 095.0 000.0 }
 setsim add_neuron -neuron_type V1Input -group V1_Input -id 000001 -fast_input { 5.0 0.3 1.0 095.0 045.0 }
 setsim add_neuron -neuron_type V1Input -group V1_Input -id 000002 -fast_input { 5.0 0.3 1.0 095.0 090.0 }
@@ -17,7 +25,7 @@ setsim add_neuron -neuron_type V1Input -group V1_Input -id 000005 -fast_input { 
 setsim add_neuron -neuron_type V1Input -group V1_Input -id 000006 -fast_input { 5.0 0.3 1.0 095.0 270.0 }
 setsim add_neuron -neuron_type V1Input -group V1_Input -id 000007 -fast_input { 5.0 0.3 1.0 095.0 315.0 }
 
-# Create V1 cortex neurons
+# Creating V1 cortex neurons
 # Common values
 varman set -name FUN:V1Neuron:V1_Cortex:NonLinearityA          -type double -value {   5.00 }
 varman set -name FUN:V1Neuron:V1_Cortex:NonLinearityB          -type double -value {   0.17 }
@@ -37,7 +45,7 @@ setsim add_neuron -neuron_type V1Neuron -group V1_Cortex -id 001005 -fast_input 
 setsim add_neuron -neuron_type V1Neuron -group V1_Cortex -id 001006 -fast_input { 0.0 0.0 0.0 000.025 001.000 270.0 } -base_activation { 0.0 0.0 }
 setsim add_neuron -neuron_type V1Neuron -group V1_Cortex -id 001007 -fast_input { 0.0 0.0 0.0 000.025 001.000 315.0 } -base_activation { 0.0 0.0 }
 
-# Create MT cortex neurons
+# Creating MT cortex neurons
 # Common values
 varman set -name FUN:MTNeuron:MT_Cortex:Modulation    -type double -value {  5.33648681640625 }
 varman set -name FUN:MTNeuron:MT_Cortex:Sigma         -type double -value {  0.66666666666666 }
@@ -53,7 +61,7 @@ setsim add_neuron -neuron_type MTNeuron -group MT_Cortex -id 002005 -fast_input 
 setsim add_neuron -neuron_type MTNeuron -group MT_Cortex -id 002006 -fast_input { 0.0 0.0 0.0 270.00 }
 setsim add_neuron -neuron_type MTNeuron -group MT_Cortex -id 002007 -fast_input { 0.0 0.0 0.0 315.00 }
 
-# Create VectorAverage Neurons
+# Creating VectorAverage Neurons
 setsim add_neuron -neuron_type VectorAverage -group Results -id 003000 -Parameter Angle
 setsim add_neuron -neuron_type VectorAverage -group Results -id 003001 -Parameter Magnitude
 
@@ -80,3 +88,4 @@ runsim simulate
 # Printing activation
 report neuron_activation -group MT_Cortex
 report neuron_activation -group Results
+
