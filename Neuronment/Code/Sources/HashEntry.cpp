@@ -41,25 +41,25 @@ template <class EntryType> HashEntry<EntryType> & HashEntry<EntryType>::operator
 template <class EntryType> ReturnType HashEntry<EntryType>::GetKey(string &KeyP)
 {
   KeyP = Key;
-  return Return(ReturnSuccess);
+  return ReturnSuccess;
 }
 
 template <class EntryType> ReturnType HashEntry<EntryType>::GetHashKey(unsigned int &HashKeyP)
 {
   HashKeyP = HashKey;
-  return Return(ReturnSuccess);
+  return ReturnSuccess;
 }
 
 template <class EntryType> ReturnType HashEntry<EntryType>::GetCount(int &CountP)
 {
   CountP = Content.size();
-  return Return(ReturnSuccess);
+  return ReturnSuccess;
 }
 
 template <class EntryType> ReturnType HashEntry<EntryType>::GetContent(vector<EntryType> &ContentP)
 {
   ContentP = Content;
-  return Return(ReturnSuccess);
+  return ReturnSuccess;
 }
 
 template class HashEntry<int>;
