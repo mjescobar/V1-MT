@@ -13,7 +13,7 @@ public:
   HashTable();
   
   /**
-   * Base constructor
+   * Constructs a table considering the indicated size amount of slots
    * @param SizeP
    */
   HashTable(int SizeP);
@@ -41,7 +41,7 @@ public:
    * exists, the content is replaced
    * @param KeyP     Key for the element
    * @param ContentP Content to store
-   * @return         Not caught - Only ReturnSuccess
+   * @return
    */
   ReturnType PutEntry(string KeyP, vector<TableType> ContentP);
   
@@ -50,7 +50,7 @@ public:
    * key. If the element exists it will be replaced.
    * @param KeyP    Key for the element
    * @param Content Content to store
-   * @return        Not caught - Only ReturnSuccess
+   * @return
    */
   ReturnType PutEntryQuick(string KeyP, TableType Content);
   
@@ -68,13 +68,13 @@ public:
    * it doesn't exists returns ReturnFail
    * @param KeyP     Key of the element
    * @param ContentP Content destination
-   * @return         Not caught
+   * @return
    */
   ReturnType GetEntryQuick(string KeyP, TableType &ContentP);
 
   /**
    * Deletes the content of the hash table
-   * @return         Not caught - Only ReturnSuccess
+   * @return
    */
   ReturnType Clear();
   
@@ -87,8 +87,8 @@ private:
    */
   bool IndexChecking(int IndexP, string KeyP);
   
-  int Size;
-  int Counter;
+  int                    Size;
+  int                    Counter;
   HashEntry<TableType> **Table;
 };
 

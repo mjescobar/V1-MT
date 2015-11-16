@@ -12,7 +12,9 @@ template <class TableType> HashTable<TableType>::HashTable()
 
 template <class TableType> HashTable<TableType>::HashTable(int SizeP)
 {
-  ReturnCatch(DataCheck(SizeP, "GreaterThanZero"));
+  if (DataCheck(SizeP, "GreaterThanZero") == ReturnFail) {
+    return Return(ReturnFail, "Message for 0 size");
+  }
   Size = SizeP * HASH_TABLE_MARGIN*HASH_TABLE_MARGIN;
   Counter = 0;
   Table = new HashEntry<TableType>*[Size];
@@ -23,7 +25,9 @@ template <class TableType> HashTable<TableType>::HashTable(int SizeP)
 
 template <class TableType> HashTable<TableType>::HashTable(const HashTable& orig)
 {
-  ReturnCatch(DataCheck(orig.Size, "GreaterThanZero"));
+  if (DataCheck(orig.Size, "GreaterThanZero") == ReturnFail) {
+    return Return(ReturnFail, "Message for 0 size");
+  }
   Size = orig.Size;
   Counter = orig.Counter;
   Table = new HashEntry<TableType>*[Size];
@@ -101,8 +105,8 @@ template <class TableType> ReturnType HashTable<TableType>::PutEntry(string KeyP
         string Key;
         vector<TableType> Content;
         // Retrieving old entry values
-        ReturnCatch(OldTable[i]->GetKey(Key));
-        ReturnCatch(OldTable[i]->GetContent(Content));
+        OldTable[i]->GetKey(Key);
+        OldTable[i]->GetContent(Content);
         // Adding values to the new table;
         PutEntry(Key, Content);
         delete OldTable[i];
@@ -118,7 +122,7 @@ template <class TableType> ReturnType HashTable<TableType>::PutEntry(string KeyP
   bool IndexOk;
   unsigned int HashKeyP;
   // Inserting new entry
-  ReturnCatch(KeyToHashKey(KeyP, HashKeyP));
+  KeyToHashKey(KeyP, HashKeyP);
   Index = HashKeyP % Size;
   IndexOk = IndexChecking(Index, KeyP);
   while (IndexOk) {
@@ -139,7 +143,7 @@ template <class TableType> ReturnType HashTable<TableType>::PutEntryQuick(string
 {
   vector<TableType> Temporal;
   Temporal.push_back(ContentP);
-  ReturnCatch(PutEntry(KeyP, Temporal));
+  PutEntry(KeyP, Temporal);
   return ReturnSuccess;
 }
 
@@ -150,7 +154,7 @@ template <class TableType> ReturnType HashTable<TableType>::GetEntry(string KeyP
   bool IndexOk;
   unsigned int HashKey;
   // Calculating the key index
-  ReturnCatch(KeyToHashKey(KeyP, HashKey));
+  KeyToHashKey(KeyP, HashKey);
   Index = HashKey % Size;
   IndexOk = IndexChecking(Index, KeyP);
   while (IndexOk) {
@@ -160,7 +164,7 @@ template <class TableType> ReturnType HashTable<TableType>::GetEntry(string KeyP
   if (Table[Index] == NULL) {
     return ReturnFail;
   } else {
-    ReturnCatch(Table[Index]->GetContent(ContentP));
+    Table[Index]->GetContent(ContentP);
     return ReturnSuccess;
   }
 }
@@ -203,7 +207,7 @@ template <class TableType> bool HashTable<TableType>::IndexChecking(int IndexP, 
   if (Table[IndexP] == NULL) {
     return false;
   } else {
-    ReturnCatch(Table[IndexP]->GetKey(Key));
+    Table[IndexP]->GetKey(Key);
     if (Key == KeyP) {
       return false;
     } else {
