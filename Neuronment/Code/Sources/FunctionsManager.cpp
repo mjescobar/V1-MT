@@ -17,6 +17,6 @@ FunctionsManager::~FunctionsManager()
 
 ReturnType FunctionsManager::GetFunction(string FunctionNameP, void* &FunctionPointerP)
 {
-  ReturnCatch(Functions.GetEntryQuick(FunctionNameP, FunctionPointerP));
+  Functions.GetEntryQuick(FunctionNameP, FunctionPointerP);
   return ReturnSuccess;
 }
