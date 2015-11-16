@@ -13,7 +13,7 @@ template <class TableType> HashTable<TableType>::HashTable()
 template <class TableType> HashTable<TableType>::HashTable(int SizeP)
 {
   if (DataCheck(SizeP, "GreaterThanZero") == ReturnFail) {
-    return Return(ReturnFail, "Message for 0 size");
+    Return(ReturnFail, "Message for 0 size");
   }
   Size = SizeP * HASH_TABLE_MARGIN*HASH_TABLE_MARGIN;
   Counter = 0;
@@ -26,7 +26,7 @@ template <class TableType> HashTable<TableType>::HashTable(int SizeP)
 template <class TableType> HashTable<TableType>::HashTable(const HashTable& orig)
 {
   if (DataCheck(orig.Size, "GreaterThanZero") == ReturnFail) {
-    return Return(ReturnFail, "Message for 0 size");
+    Return(ReturnFail, "Message for 0 size");
   }
   Size = orig.Size;
   Counter = orig.Counter;
