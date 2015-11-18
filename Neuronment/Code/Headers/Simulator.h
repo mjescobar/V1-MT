@@ -12,42 +12,59 @@ class Simulator;
 
 class Simulator {
 public:
+  /**
+   * Empty constructor
+   */
   Simulator();
+  
+  /**
+   * Copy constructor
+   * @param orig
+   */
   Simulator(const Simulator& orig);
+  
+  /**
+   * Destructor
+   */
   virtual ~Simulator();
+  
+  /**
+   * Adds a neuron to the simulator
+   * @param NeuronTypeP      The type of the neuron to add
+   * @param GroupP           The group name for the neuron to add
+   * @param IdP              The id for the neuron to add
+   * @param BaseActivationP  A base activation vector for the neuron to add
+   * @param ParametersValueP A list of the parameters required to configure the neuron
+   * @return 
+   */
   ReturnType AddNeuron(NeuronType *NeuronTypeP, string GroupP, int IdP, string BaseActivationP, vector<string> ParametersValueP);
+  
+  /**
+   * Returns a vector containing the pointers to all the neurons inside the simulator
+   * @param NeuronsP Pointer to return the list
+   * @return 
+   */
   ReturnType GetNeurons(vector<Neuron*> &NeuronsP);
+  
+  /**
+   * Returns a vector containing all the neurons that match the specified parameters.
+   * If a parameter is empty, it is not considered in the exclusion process
+   * @param NeuronsP Pointer to return the vector
+   * @param IdP      ID to validate the neuron
+   * @param TypeP    Neuron type to validate the neuron
+   * @param GroupP   Neuron group name to validate the neuron
+   * @return 
+   */
   ReturnType GetNeurons(vector<Neuron*> &NeuronsP, string IdP, string TypeP, string GroupP);
+  
+  /**
+   * Calculates the activation for all the neurons declared on the simulator
+   * @return 
+   */
   ReturnType Simulate();
-#if 0
-  bool InitializeNeurons();
-  bool AddV1Diffusion();
-  bool Simulate(int StepsP);
-  bool PrintV1Activation(OrientationType OTypeP);
-  bool PrintMTActivation(OrientationType OTypeP);
-  bool PrintV1Activation(OrientationType OTypeP, string DestinationP);
-  bool PrintMTActivation(OrientationType OTypeP, string DestinationP);
-  bool PrintV1ExternalExcitation(int StepP, string DestinationP);
-  bool PrintV1ExternalExcitation(int StepP);
-  double GetV1Radius();
-private:
-  bool CreateV1NeuronVector();
-  bool SetV1ActMethod();
-  bool SetV1DacMethod();
-  bool CreateMTNeuronVector();
-  bool SetMTActMethod();
-  bool SetMTDacMethod();
-  bool SetV1V1ConnectionLinks();
-  bool SetV1MTConnectionLinks();
-#endif
   VariableManager InternalVariables;
 private:
   vector<Neuron> Neurons;
-  //double V1Radius;
-  // MT Parameters
-  //vector<MT_Neuron> MT_Neurons;
-  // Status
-  //bool Initialized;
-};
+} ;
 
 #endif
