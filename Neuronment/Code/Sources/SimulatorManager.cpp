@@ -24,7 +24,7 @@ SimulatorManager::~SimulatorManager()
 Simulator* SimulatorManager::CurrentSimulator()
 {
   if (Current < 0 || Current >= SimulatorList.size()) {
-    Log.CodedMessage("DV-038");
+    Log.CodedMessage("DV-038"); //Lothar: null return just in case??
   }
   return &(SimulatorList[Current]);
 }
@@ -32,7 +32,7 @@ Simulator* SimulatorManager::CurrentSimulator()
 Simulator* SimulatorManager::GetSimulator(int IdP)
 {
   if (IdP < 0 || IdP >= SimulatorList.size()) {
-    Log.CodedMessage("DV-038");
+    Log.CodedMessage("DV-038"); //Lothar: null return just in case??
   }
   return &(SimulatorList[IdP]);
 }
@@ -94,9 +94,9 @@ ReturnType SimulatorManager::AddNeuronType(string NameP, string DataTypeP, int A
 ReturnType SimulatorManager::SetNeuronTypeFastInput(string NameP, string FastInputP)
 {
   NeuronType *Type = NULL;
-  ReturnCatch(GetNeuronType(NameP, &Type));
+  GetNeuronType(NameP, &Type);
   vector<string> FastInputVector;
-  ReturnCatch(Tokenize(FastInputP, FastInputVector));
+  Tokenize(FastInputP, FastInputVector);
   Type->SetFastInput(FastInputVector);
   return ReturnSuccess;
 }
@@ -112,6 +112,5 @@ ReturnType SimulatorManager::GetNeuronType(string NameP, NeuronType **TypeP)
       return ReturnSuccess;
     }
   }
-  Log.CodedMessage("DV-034");
-  return ReturnFail;
+  return Return(ReturnFail,"DV-034");
 }
