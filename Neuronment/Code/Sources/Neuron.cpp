@@ -13,6 +13,7 @@ Neuron::Neuron()
 
 Neuron::Neuron(const Neuron& orig)
 {
+  //Lothar: is this necesary? Should this be asserted?
   Id = orig.Id;
   Group = orig.Group;
   Type = orig.Type;
@@ -25,7 +26,6 @@ Neuron::Neuron(const Neuron& orig)
 
 Neuron::~Neuron()
 {
-  //Nothing to do
 }
 
 Neuron::Neuron(NeuronType *TypeP, string GroupP, int IdP, vector<string> BaseActivationP, vector<string> ParameterValuesP)
@@ -35,12 +35,12 @@ Neuron::Neuron(NeuronType *TypeP, string GroupP, int IdP, vector<string> BaseAct
   ParameterValues = ParameterValuesP;
   Type = TypeP;
   int ActivationLevels;
-  ReturnCatch(Type->GetActivationLevels(ActivationLevels));
+  Type->GetActivationLevels(ActivationLevels); //Lothar: what if the activation levels need to be stair declared??
   if (BaseActivationP.size() != 0 && BaseActivationP.size() != ActivationLevels) {
     Log.CodedMessage("DV-035");
   }
   string DataType;
-  ReturnCatch(Type->GetDataType(DataType));
+  Type->GetDataType(DataType);
   if (DataType == "double") {
     for (int i = 0; i < ActivationLevels; i++) {
       Activation_double.push_back(vector<double>());
@@ -87,7 +87,7 @@ ReturnType Neuron::LoadActivation(vector<double> ExternalActivationP, int LevelP
     return ReturnFail;
   }
   int TypeLevels;
-  ReturnCatch(Type->GetActivationLevels(TypeLevels));
+  Type->GetActivationLevels(TypeLevels);
   if (TypeLevels <= LevelP) {
     return ReturnFail;
   }
@@ -95,42 +95,16 @@ ReturnType Neuron::LoadActivation(vector<double> ExternalActivationP, int LevelP
   return ReturnSuccess;
 }
 
-/*
-template <class DataType> ReturnType Neuron<DataType>::GetLink(string ListP, vector<Neuron<DataType>*> &LinksP)
-{
-  int ListId = -1;
-  for (int i = 0; i < LinksLists.size(); i++) {
-    if (ListP == LinksLists[i]) {
-      ListId = i;
-      i = LinksLists.size();
-    }
-  }
-  if (ListId == -1) {
-    //Lothar error because list name was not found
-    return ReturnFail;
-  }
-  DataType Dummy;
-  string RequestedType = TypeToString(Dummy);
-  LinksP.clear();
-  for (int i = 0; i < LinksPointers.size(); i++) {
-    if (LinksTypes[ListId][i] == RequestedType) {
-      LinksP.push_back((Neuron<DataType>*)LinksPointers[ListId][i]);
-    }
-  }
-  return ReturnSuccess;
-}
- */
-
 ReturnType Neuron::Calculate(int StepP)
 {
   int ActivationLevels;
-  ReturnCatch(Type->GetActivationLevels(ActivationLevels));
+  Type->GetActivationLevels(ActivationLevels);
   for (int i = 0; i < ActivationLevels; i++) {
     if (Type->IsDataType("double") == ReturnSuccess) {
       if (Activation_double[i].size() <= StepP) {
         void* Function;
-        ReturnCatch(Type->GetActivationFunction(i, Function));
-        ReturnCatch(((ReturnType(*)(Simulator*, Neuron*, int, int))Function)(SimulatorDepository.CurrentSimulator(), this, i, StepP));
+        Type->GetActivationFunction(i, Function);
+        ((ReturnType(*)(Simulator*, Neuron*, int, int))Function)(SimulatorDepository.CurrentSimulator(), this, i, StepP);
       }
     }
     //Lothar: check for other datatypes
@@ -141,12 +115,12 @@ ReturnType Neuron::Calculate(int StepP)
 ReturnType Neuron::Calculate(int StepP, int LevelP)
 {
   int ActivationLevels;
-  ReturnCatch(Type->GetActivationLevels(ActivationLevels));
+  Type->GetActivationLevels(ActivationLevels);
   if (Type->IsDataType("double") == ReturnSuccess) {
     if (Activation_double[LevelP].size() <= StepP) {
       void* Function;
-      ReturnCatch(Type->GetActivationFunction(LevelP, Function));
-      ReturnCatch(((ReturnType(*)(Simulator*, Neuron*, int, int))Function)(SimulatorDepository.CurrentSimulator(), this, LevelP, StepP));
+      Type->GetActivationFunction(LevelP, Function);
+      ((ReturnType(*)(Simulator*, Neuron*, int, int))Function)(SimulatorDepository.CurrentSimulator(), this, LevelP, StepP);
     }
   }
   //Lothar: check for other datatypes
@@ -162,41 +136,11 @@ ReturnType Neuron::GetActivation(int LevelP, int StepP, double &ActivationP)
       }
     }
   } else {
-    //Lothar level fuera de rango;
-    return ReturnFail;
+    return Return(ReturnFail,"Access out of range");
   }
   ActivationP = Activation_double[LevelP][StepP];
   return ReturnSuccess;
 }
-
-/*
-ReturnType Neuron::GetActivation(int LevelP, int StepP, double &ActivationP)
-{
-  if (LevelP < Activation_double.size()) {
-    if (StepP >= Activation_double[LevelP].size()) {
-      for (int i = Activation_double[LevelP].size(); i < StepP + 1; i++) {
-        //Calculate(i);
-        int ActivationLevels;
-        ReturnCatch(Type->GetActivationLevels(ActivationLevels));
-        //for (int i = 0; i < ActivationLevels; i++) {
-        //if (Type->IsDataType("double") == ReturnSuccess) {
-        if (Activation_double[i].size() <= StepP) {
-          void* Function;
-          ReturnCatch(Type->GetActivationFunction(LevelP, Function));
-          return ((ReturnType(*)(Simulator*, Neuron*, int, int))Function)(SimulatorDepository.CurrentSimulator(), this, LevelP, i);
-        }
-        //}
-        //Lothar: check for other datatypes
-        //}
-      }
-    }
-  } else {
-    //Lothar level fuera de rango;
-    return ReturnFail;
-  }
-  ActivationP = Activation_double[LevelP][StepP];
-  return ReturnSuccess;
-}*/
 
 ReturnType Neuron::GetActivation(vector<vector <double> > &ActivationP)
 {
@@ -207,10 +151,9 @@ ReturnType Neuron::GetActivation(vector<vector <double> > &ActivationP)
 
 ReturnType Neuron::ActivationPushBack(int LevelP, double ValueP)
 {
-  //Lothar, check neuron type
+  //Lothar: check neuron type
   if (LevelP >= Activation_double.size()) {
-    // Lothar acceso fuera de rango
-    return ReturnFail;
+    return Return(ReturnFail,"Access out of range");
   }
   Activation_double[LevelP].push_back(ValueP);
   return ReturnSuccess;
@@ -228,8 +171,7 @@ ReturnType Neuron::GetTypeParameter(string NameP, string &ValueP)
     }
   }
   if (ParameterId < 0) {
-    return ReturnFail;
-    //Lothar, mensaje para paramtetro no encontrado
+    return Return(ReturnFail,"Parameter not found");
   }
   ValueP = ParameterValues[ParameterId];
   return ReturnSuccess;
@@ -247,8 +189,7 @@ ReturnType Neuron::GetTypeParameter(string NameP, double &ValueP)
     }
   }
   if (ParameterId < 0) {
-    return ReturnFail;
-    //Lothar, mensaje para paramtetro no encontrado
+    return Return(ReturnFail,"Parameter not found");
   }
   ValueP = ToDouble(ParameterValues[ParameterId]);
   return ReturnSuccess;
@@ -264,8 +205,7 @@ ReturnType Neuron::GetLinkParameter(int LinkP, string NameP, double &ValueP)
     }
   }
   if (index == -1) {
-    //Lothar error, linking parameter label not found
-    return ReturnFail;
+    return Return(ReturnFail,"Linking parameter label not found");
   }
   ValueP = ToDouble(LinkingParameters[LinkP][index]);
   return ReturnSuccess;
@@ -294,13 +234,11 @@ ReturnType Neuron::GetActivationSize(int LevelP, int &SizeP)
     if (LevelP < Activation_double.size()) {
       Size = Activation_double[LevelP].size();
     } else {
-      //Lothar: mensaje de nivel incorrecto
-      return ReturnFail;
+      return Return(ReturnFail,"Incorrect activation level");
     }
   }
   if (Size == -1) {
-    //Lothar: error de datatype not found
-    return ReturnFail;
+    return Return(ReturnFail,"Neuron type DataType not found");
   }
   SizeP = Size;
   return ReturnSuccess;
@@ -351,7 +289,7 @@ ReturnType Neuron::PrintActivation(int FromP, int ToP)
     if (FromP != -1 && FromP > Starting) {
       Starting = FromP;
     }
-    //Lothar: error is MaxActivationCounter is 0
+    //Lothar: error if MaxActivationCounter is 0
     Log.Output(MessageAllways, "Id   : " + ToString(Id));
     Log.Output(MessageAllways, "Group: " + Group);
     string TypeString;
