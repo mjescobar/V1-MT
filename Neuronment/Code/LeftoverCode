@@ -1,0 +1,1125 @@
+//MT_A001
+/*
+ReturnType Function000002(Simulator *SimulatorP, Neuron *NeuronP, int LevelP, int StepP)
+{
+  return ReturnSuccess;
+  
+  double TemporalActivation = 0;
+  vector<Neuron<double>*> Links;
+  vector<string> ListNameVector;
+  SimulatorP->InternalVariables.GetSetting("MT_001:connection_list", ListNameVector);
+  if (ListNameVector.size() != 1) {
+    //Lothar error con el tamaño de la lista
+    return ReturnFail;
+  }
+  NeuronP->GetLink(ListNameVector[0], Links);
+  for (int i = 0; i < Links.size(); i++) {
+    double SourceActivation = Links[i]->Activation[LevelP].size(); //((V1_Neuron*) ActivationLinkingList[i])->GetLastActivation();
+    double SourceWeight = ToDouble((NeuronP->LinksParameters[i])[0]); //ActivationLinkingWeights.QuickGetEntry_double(((V1_Neuron*) ActivationLinkingList[i])->GetName());
+    TemporalActivation += SourceActivation * SourceWeight;
+  }
+  TemporalActivation = (TemporalActivation < 0) ? 0 : TemporalActivation;
+  NeuronP->Activation[LevelP].push_back(TemporalActivation);
+  return ReturnSuccess;
+  
+}*/
+
+  /*
+  if (ConditionsP == "FailAssertOnDebug") {
+    if (ReturnP == ReturnFail) {
+      Log.CodedMessage("DV-021");
+    }
+    return ReturnSuccess;
+  }
+  if (ConditionsP != "") {
+    ImplementationAssertion();
+  }
+  if (ReturnP == ReturnSuccessWarning) {
+    Log.CodedMessage("DV-020");
+  }
+  return ReturnSuccess;
+   */
+
+
+#if 0
+  bool InitializeNeurons();
+  bool AddV1Diffusion();
+  bool Simulate(int StepsP);
+  bool PrintV1Activation(OrientationType OTypeP);
+  bool PrintMTActivation(OrientationType OTypeP);
+  bool PrintV1Activation(OrientationType OTypeP, string DestinationP);
+  bool PrintMTActivation(OrientationType OTypeP, string DestinationP);
+  bool PrintV1ExternalExcitation(int StepP, string DestinationP);
+  bool PrintV1ExternalExcitation(int StepP);
+  double GetV1Radius();
+private:
+  bool CreateV1NeuronVector();
+  bool SetV1ActMethod();
+  bool SetV1DacMethod();
+  bool CreateMTNeuronVector();
+  bool SetMTActMethod();
+  bool SetMTDacMethod();
+  bool SetV1V1ConnectionLinks();
+  bool SetV1MTConnectionLinks();
+#endif
+
+#if 0
+
+bool Simulator::InitializeNeurons()
+{
+  bool ToReturn = false;
+  // V1 Settings
+  // Creating the V1_Neurons Vector
+  if (!CreateV1NeuronVector()) {
+    return false;
+  }
+  // Setting the V1 activation calculation method
+  if (!SetV1ActMethod()) {
+    return false;
+  }
+  // Setting the V1 dactivation calculation method
+  if (!SetV1DacMethod()) {
+    return false;
+  }
+  // MT Settings
+  // Creating the MT_Neurons Vector
+  if (!CreateMTNeuronVector()) {
+    return false;
+  }
+  // Setting the MT activation calculation method
+  if (!SetMTActMethod()) {
+    return false;
+  }
+  // Setting the MT dactivation calculation method
+  if (!SetMTDacMethod()) {
+    return false;
+  }
+  // V1V1 Settings
+  // Setting V1V1 connection links
+  if (!SetV1V1ConnectionLinks()) {
+    return false;
+  }
+  // MTMT Settings
+  // Setting MT-MT connection links
+  // None declared
+
+  // V1MT Settings
+  // Setting V1MT connection links
+  if (!SetV1MTConnectionLinks()) {
+    return false;
+  }
+  Initialized = true;
+  return true;
+}
+
+bool Simulator::CreateV1NeuronVector()
+{
+  string Name;
+  double* Data;
+  Log.Output(Message_Allways, "Filling V1_Neurons vector");
+  V1_Neurons.reserve(V1_MAX_NEURONS);
+  for (int i = 0; i < V1_MAX_NEURONS; i++) {
+    Name = V1_LABEL + string("'") + IIntToString(i);
+    if (Variables.GetSettingValid("SIM:" + Name)) {
+      Data = Variables.GetSetting_double("SIM:" + Name);
+      if (Data) {
+        V1_Neuron ToAdd = V1_Neuron(Name, Data[0], Data[1], Data[2], Data[3], Data[4], Data[5], Data[6], Data[7]);
+        ToAdd.SetFirstCalculation(*Variables.GetSetting_string(V1_FIRST_CALCULATION));
+        vector<V1_Neuron>::iterator it = lower_bound(V1_Neurons.begin(), V1_Neurons.end(), ToAdd, CompareV1_NeuronForSorting);
+        V1_Neurons.insert(it, ToAdd);
+        V1Radius = (V1Radius < sqrt(pow(Data[0], 2) + pow(Data[1], 2) + pow(Data[2], 2))) ? sqrt(pow(Data[0], 2) + pow(Data[1], 2) + pow(Data[2], 2)) : V1Radius;
+        Log.OutputNNL(Message_Allways, ".");
+      }
+    }
+  }
+  Log.Output(Message_Allways, "");
+  Log.Output(Message_Allways, "Total V1_Neuron inserted: " + IIntToString(V1_Neurons.size()));
+  Log.Output(Message_Allways, "V1 Radius:                " + IDoubleToString(V1Radius));
+  if (V1_Neurons.size() == 0) {
+    Log.CodedMessage("SD-015");
+    return false;
+  }
+  return true;
+}
+
+bool Simulator::SetV1ActMethod()
+{
+  string V1ActivationMethod = Variables.GetSingleSetting_string(V1_ACTIVATION_METHOD, DEFAULT_V1_ACTIVATION_METHOD);
+  Log.Output(Message_Allways, "V1 activation calculation method: " + V1ActivationMethod);
+  if (V1ActivationMethod == V1_A001) {
+    for (int i = 0; i < V1_Neurons.size(); i++) {
+      V1_Neurons[i].SetActivationMethod(V1_A001);
+    }
+  } else {
+    Log.CodedMessage("SD-036: " + V1ActivationMethod + " for " + V1_ACTIVATION_METHOD);
+    return false;
+  }
+  return true;
+}
+
+bool Simulator::SetV1DacMethod()
+{
+  string V1DActivationMethod = Variables.GetSingleSetting_string(V1_DACTIVATION_METHOD, DEFAULT_V1_DACTIVATION_METHOD);
+  Log.Output(Message_Allways, "V1 dactivation calculation method: " + V1DActivationMethod);
+  if (V1DActivationMethod == V1_D001) {
+    void* Dummy;
+    Dummy = Variables.GetSettingContentSafe(V1_D001_EXCITATORY_FACTOR);
+    Dummy = Variables.GetSettingContentSafe(V1_D001_CONDUCTANCE_LEAK);
+    Dummy = Variables.GetSettingContentSafe(V1_D001_INHIBITION_FACTOR);
+    for (int i = 0; i < V1_Neurons.size(); i++) {
+      V1_Neurons[i].SetDActivationMethod(V1_D001);
+    }
+  } else {
+    Log.CodedMessage("SD-036: " + V1DActivationMethod + " for " + V1_DACTIVATION_METHOD);
+    return false;
+  }
+  return true;
+}
+
+bool Simulator::CreateMTNeuronVector()
+{
+  string Name;
+  double* Data;
+  Log.Output(Message_Allways, "Filling MT_Neurons vector");
+  for (int i = 0; i < MT_MAX_NEURONS; i++) {
+    Name = string("SIM:") + string(MT_LABEL) + "'" + IIntToString(i);
+    if (Variables.GetSettingValid(Name)) {
+      Data = Variables.GetSetting_double(Name);
+      if (Data) {
+        MT_Neuron ToAdd = MT_Neuron(Name, Data[0], Data[1], Data[2], Data[3], Data[4], Data[5]);
+        ToAdd.SetFirstCalculation(*Variables.GetSetting_string(MT_FIRST_CALCULATION));
+        vector<MT_Neuron>::iterator it = lower_bound(MT_Neurons.begin(), MT_Neurons.end(), ToAdd, CompareMT_NeuronForSorting);
+        MT_Neurons.insert(it, ToAdd);
+        Log.OutputNNL(Message_Allways, ".");
+      }
+    }
+  }
+  Log.Output(Message_Allways, "");
+  Log.Output(Message_Allways, "Total MT_Neuron inserted: " + IIntToString(MT_Neurons.size()));
+  if (MT_Neurons.size() == 0) {
+    Log.CodedMessage("SD-016");
+    return false;
+  }
+  return true;
+}
+
+bool Simulator::SetMTActMethod()
+{
+  string MTActivationMethod = Variables.GetSingleSetting_string(MT_ACTIVATION_METHOD, DEFAULT_MT_ACTIVATION_METHOD);
+  Log.Output(Message_Allways, "MT activation calculation method: " + MTActivationMethod);
+  if (MTActivationMethod == MT_A001) {
+    for (int i = 0; i < MT_Neurons.size(); i++) {
+      MT_Neurons[i].SetActivationMethod(MT_A001);
+    }
+  } else {
+    Log.CodedMessage("SD-036: " + MTActivationMethod + " for " + MT_ACTIVATION_METHOD);
+    return false;
+  }
+  return true;
+}
+
+bool Simulator::SetMTDacMethod()
+{
+  string MTDActivationMethod = Variables.GetSingleSetting_string(MT_DACTIVATION_METHOD, DEFAULT_MT_DACTIVATION_METHOD);
+  Log.Output(Message_Allways, "MT dactivation calculation method: " + MTDActivationMethod);
+  if (MTDActivationMethod == MT_D001) {
+    for (int i = 0; i < MT_Neurons.size(); i++) {
+      MT_Neurons[i].SetActivationMethod(MT_D001);
+    }
+  } else {
+    Log.CodedMessage("SD-036: " + MTDActivationMethod + " for " + MT_DACTIVATION_METHOD);
+    return false;
+  }
+  return true;
+}
+
+bool Simulator::SetV1V1ConnectionLinks()
+{
+  Log.Output(Message_Allways, "Creating V1V1 links");
+  string V1V1ConnectionMethod = Variables.GetSingleSetting_string(V1V1_CONNECTION_METHOD, DEFAULT_V1V1_CONNECTION_METHOD);
+  Log.Output(Message_Allways, "V1V1 connection method: " + V1V1ConnectionMethod);
+  if (V1V1ConnectionMethod == V1V1_L001) {
+    string V1V1BaseWeightSource = Variables.GetSingleSetting_string(V1V1_L001_BASE_WEIGHT_SOURCE, DEFAULT_V1V1_L001_BASE_WEIGHT_SOURCE);
+    Log.Output(Message_Allways, "V1V1_L001 Base Weight Source: " + V1V1BaseWeightSource);
+    for (int i = 0; i < V1_Neurons.size(); i++) {
+      for (int j = 0; j < V1_Neurons.size(); j++) {
+        V1_Neurons[i].AddV1Link(&(V1_Neurons[j]), *this);
+      }
+    }
+    for (int i = 0; i < V1_Neurons.size(); i++) {
+      for (int j = 0; j < V1_Neurons.size(); j++) {
+        V1_Neurons[i].SetLinkingWeight(V1_Neurons[j].GetName(), V1_Neurons[i].GetLinkingWeight(V1_Neurons[j].GetName()) / (double) V1_Neurons[i].ConnectionCount(Neuron_V1));
+        Log.CodedMessage("WN-006: V1V1 LinkWeight count correction");
+      }
+    }
+    return true;
+  }
+  Log.CodedMessage("SD-036: " + V1V1ConnectionMethod + " for " + V1V1_CONNECTION_METHOD);
+  return false;
+}
+
+bool Simulator::SetV1MTConnectionLinks()
+{
+  Log.Output(Message_Allways, "Creating V1MT links");
+  string V1MTConnectionMethod = Variables.GetSingleSetting_string(V1MT_CONNECTION_METHOD, DEFAULT_V1MT_CONNECTION_METHOD);
+  Log.Output(Message_Allways, "V1MT linking method: " + V1MTConnectionMethod);
+  if (V1MTConnectionMethod == "V1MT_L001") {
+    void* Dummy;
+    Dummy = Variables.GetSettingContentSafe(V1MT_L001_SIGMA);
+    Dummy = Variables.GetSettingContentSafe(V1MT_L001_AMPLIFICATION);
+    Dummy = Variables.GetSettingContentSafe(V1MT_L001_MODULATION);
+    Dummy = Variables.GetSettingContentSafe(V1MT_L001_APERTURE);
+    for (int i = 0; i < MT_Neurons.size(); i++) {
+      for (int j = 0; j < V1_Neurons.size(); j++) {
+        MT_Neurons[i].AddV1Link(&(V1_Neurons[j]), *this);
+      }
+    }
+  } else {
+    Log.CodedMessage("SD-036: " + V1MTConnectionMethod + " for " + V1MT_CONNECTION_METHOD);
+    return false;
+  }
+  return true;
+}
+
+bool Simulator::AddV1Diffusion()
+{
+  for (int i = 0; i < V1_Neurons.size(); i++) {
+    V1_Neurons[i].SetExternalExcitation();
+  }
+  return true;
+}
+
+bool Simulator::Simulate(int StepsP)
+{
+  if (StepsP < 1) {
+    Log.CodedMessage("SD-028");
+    return false;
+  }
+  for (int i = 1; i < StepsP; i++) {
+    for (int j = 0; j < V1_Neurons.size(); j++) {
+      V1_Neurons[j].SimulateStep(i);
+    }
+    for (int j = 0; j < MT_Neurons.size(); j++) {
+      MT_Neurons[j].SimulateStep(i);
+    }
+    Log.OutputNNL(Message_Allways, ".");
+  }
+  Log.Output(Message_Allways, "");
+  return true;
+}
+
+bool Simulator::PrintV1Activation(OrientationType OTypeP)
+{
+  if (Initialized) {
+    if (OTypeP == Orientation_Vertical) {
+      Log.OutputNNL(Message_Allways, "V1_Neuron Name       :\t");
+      for (int i = 0; i < V1_Neurons.size(); i++) {
+        Log.OutputNNL(Message_Allways, V1_Neurons[i].GetName());
+        if (i == V1_Neurons.size() - 1) {
+          Log.OutputNNL(Message_Allways, "\n");
+        } else {
+          Log.OutputNNL(Message_Allways, "\t");
+        }
+      }
+      Log.OutputNNL(Message_Allways, "Spatial Frequency    :\t");
+      for (int i = 0; i < V1_Neurons.size(); i++) {
+        Log.OutputNNL(Message_Allways, IDoubleToString(V1_Neurons[i].GetSpa()));
+        if (i == V1_Neurons.size() - 1) {
+          Log.OutputNNL(Message_Allways, "\n");
+        } else {
+          Log.OutputNNL(Message_Allways, "\t");
+        }
+      }
+      Log.OutputNNL(Message_Allways, "Temporal Frequency   :\t");
+      for (int i = 0; i < V1_Neurons.size(); i++) {
+        Log.OutputNNL(Message_Allways, IDoubleToString(V1_Neurons[i].GetTem()));
+        if (i == V1_Neurons.size() - 1) {
+          Log.OutputNNL(Message_Allways, "\n");
+        } else {
+          Log.OutputNNL(Message_Allways, "\t");
+        }
+      }
+      Log.OutputNNL(Message_Allways, "Pref. Orientation:\t");
+      for (int i = 0; i < V1_Neurons.size(); i++) {
+        Log.OutputNNL(Message_Allways, IDoubleToString(V1_Neurons[i].GetOri()));
+        if (i == V1_Neurons.size() - 1) {
+          Log.OutputNNL(Message_Allways, "\n");
+        } else {
+          Log.OutputNNL(Message_Allways, "\t");
+        }
+      }
+      for (int j = 0; j < V1_Neurons[0].GetActivationSteps(); j++) {
+        Log.OutputNNL(Message_Allways, IIntToString(j) + "\t");
+        for (int i = 0; i < V1_Neurons.size(); i++) {
+          Log.OutputNNL(Message_Allways, IDoubleToString(V1_Neurons[i].GetActivation(j)));
+          if (i == V1_Neurons.size() - 1) {
+            Log.OutputNNL(Message_Allways, "\n");
+          } else {
+            Log.OutputNNL(Message_Allways, "\t");
+          }
+        }
+      }
+    }
+    if (OTypeP == Orientation_Horizontal) {
+      Log.OutputNNL(Message_Allways, "Name\tSpatial Freq.\tTemporal Freq.\tPref. Orientation\t");
+      for (int i = 0; i < V1_Neurons[0].GetActivationSteps(); i++) {
+        Log.OutputNNL(Message_Allways, IIntToString(i));
+        if (i == V1_Neurons[0].GetActivationSteps() - 1) {
+          Log.OutputNNL(Message_Allways, "\n");
+        } else {
+          Log.OutputNNL(Message_Allways, "\t");
+        }
+      }
+      for (int i = 0; i < V1_Neurons.size(); i++) {
+        Log.OutputNNL(Message_Allways, V1_Neurons[i].GetName() + "\t" + IDoubleToString(V1_Neurons[i].GetSpa()) + "\t" + IDoubleToString(V1_Neurons[i].GetTem()) + "\t" + IDoubleToString(V1_Neurons[i].GetOri()) + "\t");
+        for (int j = 0; j < V1_Neurons[i].GetActivationSteps(); j++) {
+          Log.OutputNNL(Message_Allways, IDoubleToString(V1_Neurons[i].GetActivation(j)));
+          if (j == V1_Neurons[i].GetActivationSteps() - 1) {
+            Log.OutputNNL(Message_Allways, "\n");
+          } else {
+            Log.OutputNNL(Message_Allways, "\t");
+          }
+        }
+      }
+    }
+    return true;
+  } else {
+    Log.CodedMessage("SD-001");
+    return false;
+  }
+}
+
+bool Simulator::PrintV1Activation(OrientationType OTypeP, string DestinationP)
+{
+  Log.StartOutputRedirection(DestinationP);
+  PrintV1Activation(OTypeP);
+  Log.StopOutputRedirection();
+  return true;
+}
+
+bool Simulator::PrintMTActivation(OrientationType OTypeP)
+{
+  if (Initialized) {
+    if (OTypeP == Orientation_Vertical) {
+      Log.OutputNNL(Message_Allways, "MT_Neuron Name       :\t");
+      for (int i = 0; i < MT_Neurons.size(); i++) {
+        Log.OutputNNL(Message_Allways, MT_Neurons[i].GetName());
+        if (i == MT_Neurons.size() - 1) {
+          Log.OutputNNL(Message_Allways, "\n");
+        } else {
+          Log.OutputNNL(Message_Allways, "\t");
+        }
+      }
+      Log.OutputNNL(Message_Allways, "Preferred Orientation:\t");
+      for (int i = 0; i < MT_Neurons.size(); i++) {
+        Log.OutputNNL(Message_Allways, IDoubleToString(MT_Neurons[i].GetOri()));
+        if (i == MT_Neurons.size() - 1) {
+          Log.OutputNNL(Message_Allways, "\n");
+        } else {
+          Log.OutputNNL(Message_Allways, "\t");
+        }
+      }
+      for (int j = 0; j < MT_Neurons[0].GetActivationSteps(); j++) {
+        Log.OutputNNL(Message_Allways, IIntToString(j) + "\t");
+        for (int i = 0; i < MT_Neurons.size(); i++) {
+          Log.OutputNNL(Message_Allways, IDoubleToString(MT_Neurons[i].GetActivation(j)));
+          if (i == MT_Neurons.size() - 1) {
+            Log.OutputNNL(Message_Allways, "\n");
+          } else {
+            Log.OutputNNL(Message_Allways, "\t");
+          }
+        }
+      }
+      return true;
+    }
+    if (OTypeP == Orientation_Horizontal) {
+      Log.OutputNNL(Message_Allways, "Name\tPref. Orientation\t");
+      for (int i = 0; i < MT_Neurons[0].GetActivationSteps(); i++) {
+        Log.OutputNNL(Message_Allways, IIntToString(i));
+        if (i == MT_Neurons[0].GetActivationSteps() - 1) {
+          Log.OutputNNL(Message_Allways, "\n");
+        } else {
+          Log.OutputNNL(Message_Allways, "\t");
+        }
+      }
+      for (int i = 0; i < MT_Neurons.size(); i++) {
+        Log.OutputNNL(Message_Allways, MT_Neurons[i].GetName() + "\t" + IDoubleToString(MT_Neurons[i].GetOri()) + "\t");
+        for (int j = 0; j < MT_Neurons[i].GetActivationSteps(); j++) {
+          Log.OutputNNL(Message_Allways, IDoubleToString(MT_Neurons[i].GetActivation(j)));
+          if (j == MT_Neurons[i].GetActivationSteps() - 1) {
+            Log.OutputNNL(Message_Allways, "\n");
+          } else {
+            Log.OutputNNL(Message_Allways, "\t");
+          }
+        }
+      }
+    }
+    return true;
+  } else {
+    Log.CodedMessage("SD-001");
+    return false;
+  }
+}
+
+bool Simulator::PrintMTActivation(OrientationType OTypeP, string DestinationP)
+{
+  Log.StartOutputRedirection(DestinationP);
+  PrintMTActivation(OTypeP);
+  Log.StopOutputRedirection();
+  return true;
+}
+
+bool Simulator::PrintV1ExternalExcitation(int TimeStepP, string DestinationP)
+{
+  Log.StartOutputRedirection(DestinationP);
+  PrintV1ExternalExcitation(TimeStepP);
+  Log.StopOutputRedirection();
+  return true;
+}
+
+bool Simulator::PrintV1ExternalExcitation(int TimeStepP)
+{
+  if (Initialized) {
+    Log.Output(Message_Allways, "Name\tOrientation\tSpatial Freq.\tTemporal Freq.\tValue");
+    for (int i = 0; i < V1_Neurons.size(); i++) {
+      Log.OutputNNL(Message_Allways, V1_Neurons[i].GetName() + "\t" + IDoubleToString(V1_Neurons[i].GetOri()) + "\t" + IDoubleToString(V1_Neurons[i].GetSpa()) + "\t" + IDoubleToString(V1_Neurons[i].GetTem()) + "\t");
+      Log.Output(Message_Allways, IDoubleToString(V1_Neurons[i].GetExternalExcitation(TimeStepP)));
+    }
+    return true;
+  } else {
+    Log.CodedMessage("SD-001");
+    return false;
+  }
+}
+
+double Simulator::GetV1Radius()
+{
+  return V1Radius;
+}
+#endif
+
+
+//  ReturnType GetLinks(vector<Neuron*> &LinksP);
+//  ReturnType GetActivationSize(int &ActivationSize);
+//  ReturnType CalculateActivationStep();
+//  template <class DataType> ReturnType GetActivationStep(int StepP, DataType &ActivationP);
+
+/*
+template <class DataType> ReturnType Neuron<DataType>::GetLink(string ListP, vector<Neuron<DataType>*> &LinksP)
+{
+  int ListId = -1;
+  for (int i = 0; i < LinksLists.size(); i++) {
+    if (ListP == LinksLists[i]) {
+      ListId = i;
+      i = LinksLists.size();
+    }
+  }
+  if (ListId == -1) {
+    //Lothar error because list name was not found
+    return ReturnFail;
+  }
+  DataType Dummy;
+  string RequestedType = TypeToString(Dummy);
+  LinksP.clear();
+  for (int i = 0; i < LinksPointers.size(); i++) {
+    if (LinksTypes[ListId][i] == RequestedType) {
+      LinksP.push_back((Neuron<DataType>*)LinksPointers[ListId][i]);
+    }
+  }
+  return ReturnSuccess;
+}
+ */
+
+/*
+ReturnType Neuron::GetActivation(int LevelP, int StepP, double &ActivationP)
+{
+  if (LevelP < Activation_double.size()) {
+    if (StepP >= Activation_double[LevelP].size()) {
+      for (int i = Activation_double[LevelP].size(); i < StepP + 1; i++) {
+        //Calculate(i);
+        int ActivationLevels;
+        ReturnCatch(Type->GetActivationLevels(ActivationLevels));
+        //for (int i = 0; i < ActivationLevels; i++) {
+        //if (Type->IsDataType("double") == ReturnSuccess) {
+        if (Activation_double[i].size() <= StepP) {
+          void* Function;
+          ReturnCatch(Type->GetActivationFunction(LevelP, Function));
+          return ((ReturnType(*)(Simulator*, Neuron*, int, int))Function)(SimulatorDepository.CurrentSimulator(), this, LevelP, i);
+        }
+        //}
+        //Lothar: check for other datatypes
+        //}
+      }
+    }
+  } else {
+    //Lothar level fuera de rango;
+    return ReturnFail;
+  }
+  ActivationP = Activation_double[LevelP][StepP];
+  return ReturnSuccess;
+}*/
+
+//  bool SetNproc(string NprocP);
+
+/**
+ * Transforms a string in a set of tokens without deleting the delimeters
+ * From: http://www.oopweb.com/CPP/Documents/CPPHOWTO/Volume/C++Programming-HOWTO-7.html
+ * @param str The original string
+ * @param tokens The tokens destination vector
+ * @param delimiters The delimeters for tokenization (default "\t ")
+ */
+void TokenizeNoDelete(const string& str, vector<string>& tokens, const string& delimiters);
+
+////////////////////////////////////////////////////////////////////////////////////
+// Validation
+////////////////////////////////////////////////////////////////////////////////////
+
+ReturnType CheckString(string StringP, string ConditionsP);
+
+ReturnType CheckInt(int IntP, string ConditionsP);
+
+ReturnType CheckInt(int IntP, string ConditionsP, int LowerP, int UpperP);
+
+////////////////////////////////////////////////////////////////////////////////////
+// Arrays
+////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Duplicates an array
+ * @param SourceP The original array as void*
+ * @param SourceSizeP The number of element of the original array
+ * @param TypeP The data type stored by the array
+ * @return A duplicated array as void*
+ */
+void* DuplicateArray(void* SourceP, int SourceSizeP, DataType TypeP);
+
+/**
+ * Transform a char* to string
+ * @param the char* to transform
+ * @return the char* as string
+ */
+void CstringToString(char* CstringP, string &Return);
+
+/**
+ * char* to string
+ * @param the char* to transform
+ * @return the char* as string
+ */
+string ICstringToString(char* CstringP);
+
+////////////////////////////////////////////////////////////////////////////////////
+// String Formating
+////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Global function for string alignment
+ * @param OriginalP Original String
+ * @param SizeP Future string size
+ * @param FillP Character to fill the missing length
+ * @param SideP Side to add the missing length
+ * @return A resized string
+ */
+string Alignment(string OriginalP, int SizeP, char FillP, SideType SideP);
+
+/**
+ * 
+ * @param OriginalP
+ * @return 
+ */
+string DeleteTrailingZeros(string OriginalP);
+
+////////////////////////////////////////////////////////////////////////////////////
+// Math
+////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Gets the cos for a deg valued angle
+ * @param AngleP the angle in deg
+ * @return the cos of the angle
+ */
+double deg_cos(double AngleP);
+
+////////////////////////////////////////////////////////////////////////////////////
+// Runtime Timing
+////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Prints the elapsed time in clock cycles from the previous function call
+ * @return true if correctly printed
+ */
+bool PrintElapsedTime(clock_t* ElapsedTimeP);
+
+////////////////////////////////////////////////////////////////////////////////////
+// Command Line Processing
+////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Checks if a flag has been set on the command
+ * @param TokensP The tokenized command
+ * @param FlagP The flag that is been looked for
+ * @return true is the flag exist
+ */
+bool GetFlag(vector<string> TokensP, string FlagP);
+
+/**
+ * Returns the value associated to a flag
+ * @param TokensP The tokenized command
+ * @param FlagP The flag that signals the value
+ * @return The string indicated by the flag
+ */
+string GetFlagValue(vector<string> TokensP, string FlagP);
+
+////////////////////////////////////////////////////////////////////////////////////
+// Abbreviated math
+////////////////////////////////////////////////////////////////////////////////////
+
+double NonLinearity001(double ValueP, double MaxP, double AP, double BP);
+
+void TokenizeNoDelete(const string& str, vector<string>& tokens, const string& delimiters)
+{
+  string::size_type lastPos = 0; //str.find_first_not_of(delimiters, 0);
+  string::size_type pos = str.find_first_of(delimiters, lastPos + 1);
+  while (string::npos != pos || string::npos != lastPos) {
+    // Found a token, add it to the vector.
+    tokens.push_back(str.substr(lastPos, pos - lastPos));
+    // Skip delimiters.  Note the "not_of"
+    lastPos = pos; //str.find_first_not_of(delimiters, pos);
+    // Find next "non-delimiter"
+    if (string::npos != lastPos) {
+      pos = str.find_first_of(delimiters, lastPos + 1);
+    }
+  }
+}
+
+ReturnType CheckInt(int IntP, string ConditionsP)
+{
+  if (ConditionsP == "GreaterThanZero") {
+    if (IntP <= 0) {
+      Log.CodedMessage("SD-004");
+      return ReturnFail;
+    }
+    return ReturnSuccess;
+  }
+  if (ConditionsP == "NonNegative") {
+    if (IntP < 0) {
+      Log.CodedMessage("SD-004");
+      return ReturnFail;
+    }
+    return ReturnSuccess;
+  }
+  if (ConditionsP != "") {
+    Log.CodedMessage("DV-009");
+    return ReturnFail;
+  }
+  return ReturnSuccess;
+}
+
+ReturnType CheckInt(int IntP, string ConditionsP, int LowerP, int UpperP)
+{
+  if (ConditionsP == "Range[]") {
+    if (IntP < LowerP || IntP > UpperP) {
+      Log.CodedMessage("SD-004");
+      return ReturnFail;
+    }
+    return ReturnSuccess;
+  }
+  if (ConditionsP == "Range[[") {
+    if (IntP < LowerP || IntP >= UpperP) {
+      Log.CodedMessage("SD-004");
+      return ReturnFail;
+    }
+    return ReturnSuccess;
+  }
+  if (ConditionsP == "Range]]") {
+    if (IntP <= LowerP || IntP > UpperP) {
+      Log.CodedMessage("SD-004");
+      return ReturnFail;
+    }
+    return ReturnSuccess;
+  }
+  if (ConditionsP == "Range][") {
+    if (IntP <= LowerP || IntP >= UpperP) {
+      Log.CodedMessage("SD-004");
+      return ReturnFail;
+    }
+    return ReturnSuccess;
+  }
+  if (ConditionsP != "") {
+    Log.CodedMessage("DV-009");
+    return ReturnFail;
+  }
+  return ReturnSuccess;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+// Arrays
+////////////////////////////////////////////////////////////////////////////////////
+
+void* DuplicateArray(void* SourceP, int CountP, DataType TypeP)
+{
+  void* ToReturn = NULL;
+  if (SourceP == NULL) {
+    return NULL;
+  }
+  switch (TypeP) {
+  case Data_bool:
+    ToReturn = malloc(sizeof (bool) * CountP);
+    if (SourceP) {
+      for (int i = 0; i < CountP; i++) {
+        ((bool*)ToReturn)[i] = ((bool*)SourceP)[i];
+      }
+    }
+    break;
+  case Data_int:
+    ToReturn = malloc(sizeof (int) * CountP);
+    if (SourceP) {
+      for (int i = 0; i < CountP; i++) {
+        ((int*) ToReturn)[i] = ((int*) SourceP)[i];
+      }
+    }
+    break;
+  case Data_float:
+    ToReturn = malloc(sizeof (float) * CountP);
+    if (SourceP) {
+      for (int i = 0; i < CountP; i++) {
+        ((float*) ToReturn)[i] = ((float*) SourceP)[i];
+      }
+    }
+    break;
+  case Data_double:
+    ToReturn = malloc(sizeof (double) * CountP);
+    if (SourceP) {
+      for (int i = 0; i < CountP; i++) {
+        ((double*) ToReturn)[i] = ((double*) SourceP)[i];
+      }
+    }
+    break;
+  case Data_string:
+    ToReturn = malloc(sizeof (string) * CountP);
+    if (SourceP) {
+      for (int i = 0; i < CountP; i++) {
+        ((string*) ToReturn)[i] = ((string*) SourceP)[i];
+      }
+    }
+    break;
+  default:
+    Log.CodedMessage("DV-001");
+    ImplementationAssertion();
+    return NULL;
+  }
+  return ToReturn;
+}
+
+void CstringToString(char* CstringP, string &ReturnP)
+{
+  stringstream ss;
+  ss << CstringP;
+  ReturnP = ss.str();
+}
+
+string ICstringToString(char* CstringP)
+{
+  string Tmp;
+  CstringToString(CstringP, Tmp);
+  return Tmp;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+// String Formating
+////////////////////////////////////////////////////////////////////////////////////
+
+string Alignment(string OriginalP, int SizeP, char FillP, SideType SideP)
+{
+  int ToAdd = SizeP - OriginalP.length();
+  if (ToAdd < 1) {
+    return OriginalP;
+  }
+  for (int i = 0; i < ToAdd; i++) {
+    if (SideP == Side_Right) {
+      OriginalP = OriginalP + FillP;
+    }
+    if (SideP == Side_Left) {
+      OriginalP = FillP + OriginalP;
+    }
+  }
+  return OriginalP;
+}
+
+string DeleteTrailingZeros(string OriginalP)
+{
+  string CleanString = "";
+  bool Deleted = false;
+  for (int i = 0; i < OriginalP.size(); i++) {
+    if (OriginalP[i] == '\'') {
+      i++;
+      Deleted = true;
+      while (OriginalP[i] == '0') {
+        i++;
+      }
+    }
+    if (i < OriginalP.size()) {
+      if (OriginalP[i] <= '9' && OriginalP[i] >= '0') {
+        if (Deleted) {
+          CleanString = CleanString + "'" + OriginalP[i];
+          Deleted = false;
+        } else {
+          CleanString = CleanString + OriginalP[i];
+        }
+      } else {
+        if (Deleted) {
+          CleanString = CleanString + "'0" + OriginalP[i];
+          Deleted = false;
+        } else {
+          CleanString = CleanString + OriginalP[i];
+        }
+      }
+    } else {
+      CleanString = CleanString + "'0";
+    }
+  }
+  return CleanString;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+// Runtime Timing
+////////////////////////////////////////////////////////////////////////////////////
+
+bool PrintElapsedTime(clock_t* ElapsedTimeP)
+{
+  clock_t NewElapsedTime = clock();
+  Log.Output(Message_Allways, "TIME: " + ToString(double(NewElapsedTime - *ElapsedTimeP) / CLOCKS_PER_SEC, 3) + "[s]");
+  *ElapsedTimeP = NewElapsedTime;
+  return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+// Command Line Processing
+////////////////////////////////////////////////////////////////////////////////////
+
+bool GetFlag(vector<string> TokensP, string FlagP)
+{
+  for (int i = 0; i < TokensP.size(); i++) {
+    if (TokensP[i][0] == '-') {
+      if (TokensP[i].substr(1, TokensP[i].size() - 1) == FlagP) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+string GetFlagValue(vector<string> TokensP, string FlagP)
+{
+  for (int i = 0; i < TokensP.size(); i++) {
+    if (TokensP[i][0] == '-') {
+      if (TokensP[i].substr(1, TokensP[i].size() - 1) == FlagP) {
+        if (i + 1 < TokensP.size()) {
+          if (TokensP[i + 1][0] != '-') {
+            return TokensP[i + 1];
+          }
+        }
+      }
+    }
+  }
+  Log.CodedMessage("IN-006: In command \"" + TokensP[0] + " " + TokensP[1] + "\" flag \"" + FlagP + "\"");
+  return "";
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+// Abbreviated math
+////////////////////////////////////////////////////////////////////////////////////
+
+double NonLinearity001(double ValueP, double MaxP, double AP, double BP)
+{
+  double Tem = (MaxP / (1 + exp(AP * (BP - ValueP))) - MaxP / (1 + exp(AP * (BP - 0))))*(MaxP / (MaxP - MaxP / (1 + exp(AP * (BP - 0)))));
+  Tem = (Tem > 0) ? Tem : 0;
+  return Tem;
+}
+
+void ReturnAssertion()
+{
+  Log.CodedMessage("DV-019");
+  assert(0);
+}
+
+/*ReturnType CommandLine::GetDirectives(vector<string> &DirectivesP)
+{
+  if (Ready) {
+    DirectivesP = Directives;
+    return Return(ReturnSuccess);
+  } else {
+    return Return(ReturnFail, "DV-024");
+  }
+}*/
+
+bool Interpreter::RunsimCall(vector<string> TokensP)
+{
+  bool Result = false;
+    bool Found = false;
+    bool Arguments = true;
+  if (TokensP[1] == RUNSIM_SS_INITIALIZE) {
+    Found = true;
+    if (TokensP.size() == 2) {
+      Result = SingleSimulator.InitializeNeurons();
+    } else {
+      Arguments = false;
+    }
+  }
+  if (TokensP[1] == RUNSIM_SS_ADD_V1_DIFFUSION) {
+    Found = true;
+    if (TokensP.size() == 2) {
+      Result = SingleSimulator.AddV1Diffusion();
+    } else {
+      Arguments = false;
+    }
+  }
+  if (TokensP[1] == RUNSIM_SS_SIMULATE) {
+    Found = true;
+    if (TokensP.size() == 3) {
+      Result = SingleSimulator.Simulate(ToInt(TokensP[2]));
+    } else {
+      Arguments = false;
+    }
+  }
+  if (!Found) {
+    Log.CodedMessage("IN-004: " + TokensP[1]);
+  } else {
+    if (!Arguments) {
+
+      Log.CodedMessage("IN-010");
+    }
+  }
+  return Result;
+}
+
+bool Interpreter::ReportCall(vector<string> TokensP)
+{
+  bool Result = false;
+    bool Found = false;
+    bool Arguments = true;
+  if (TokensP[1] == REPORT_SS_PRINT_V1_ACTIVATION) {
+    Found = true;
+    if (TokensP.size() == 2) {
+      Result = SingleSimulator.PrintV1Activation(Orientation_Vertical);
+    } else {
+      if (TokensP.size() == 3) {
+        Result = SingleSimulator.PrintV1Activation(Orientation_Vertical, trim(TokensP[2]));
+      } else {
+        Arguments = false;
+      }
+    }
+  }
+  if (TokensP[1] == REPORT_SS_PRINT_V1_ACTIVATION_HORIZONTAL) {
+    Found = true;
+    if (TokensP.size() == 2) {
+      Result = SingleSimulator.PrintV1Activation(Orientation_Horizontal);
+    } else {
+      if (TokensP.size() == 3) {
+        Result = SingleSimulator.PrintV1Activation(Orientation_Horizontal, trim(TokensP[2]));
+      } else {
+        Arguments = false;
+      }
+    }
+  }
+  if (TokensP[1] == REPORT_SS_PRINT_V1_EXTERNAL_EXCITATION) {
+    Found = true;
+    if (TokensP.size() == 3) {
+      Result = SingleSimulator.PrintV1ExternalExcitation(ToInt(TokensP[2]));
+    } else {
+      if (TokensP.size() == 4) {
+        Result = SingleSimulator.PrintV1ExternalExcitation(ToInt(TokensP[2]), TokensP[3]);
+      } else {
+        Arguments = false;
+      }
+    }
+  }
+  if (TokensP[1] == REPORT_SS_PRINT_MT_ACTIVATION) {
+    Found = true;
+    if (TokensP.size() == 2) {
+      Result = SingleSimulator.PrintMTActivation(Orientation_Vertical);
+    } else {
+      if (TokensP.size() == 3) {
+        Result = SingleSimulator.PrintMTActivation(Orientation_Vertical, trim(TokensP[2]));
+      } else {
+        Arguments = false;
+      }
+    }
+  }
+  if (TokensP[1] == REPORT_SS_PRINT_MT_ACTIVATION_HORIZONTAL) {
+    Found = true;
+    if (TokensP.size() == 2) {
+      Result = SingleSimulator.PrintMTActivation(Orientation_Horizontal);
+    } else {
+      if (TokensP.size() == 3) {
+        Result = SingleSimulator.PrintMTActivation(Orientation_Horizontal, trim(TokensP[2]));
+      } else {
+        Arguments = false;
+      }
+    }
+  }
+  if (!Found) {
+    Log.CodedMessage("IN-004: " + TokensP[1]);
+  } else {
+    if (!Arguments) {
+
+      Log.CodedMessage("IN-010");
+    }
+  }
+  return Result;
+}
+
+bool Interpreter::VarmanCall_SET(vector<string> TokensP)
+{
+
+  return Variables.StoreSetting(TokensP);
+}
+
+bool Interpreter::VarmanCall_PRINT(vector<string> TokensP)
+{
+  if (TokensP.size() == 3) {
+    bool Valid = Variables.GetSettingValid(DeleteTrailingZeros(TokensP[2]));
+    if (!Valid) {
+      Log.CodedMessage("IN-002");
+      return false;
+    }
+    DataType SettingType = Variables.GetSettingType(DeleteTrailingZeros(TokensP[2]));
+      string ToPrint = "";
+    if (DeleteTrailingZeros(TokensP[2]) != TokensP[2]) {
+      ToPrint = TokensP[2] + "(" + DeleteTrailingZeros(TokensP[2]) + ") =";
+    } else {
+      ToPrint = TokensP[2] + " =";
+    }
+    for (int i = 0; i < Variables.GetSettingSize(DeleteTrailingZeros(TokensP[2])); i++) {
+      switch (SettingType) {
+      case Data_bool:
+        if (((bool*)Variables.GetSettingContent(DeleteTrailingZeros(TokensP[2])))[i]) {
+          ToPrint = ToPrint + " TRUE";
+        } else {
+          ToPrint = ToPrint + " FALSE";
+        }
+        break;
+      case Data_double:
+        ToPrint = ToPrint + " " + ToString(((double*) Variables.GetSettingContent(DeleteTrailingZeros(TokensP[2])))[i]);
+        break;
+      case Data_string:
+        ToPrint = ToPrint + " " + ((string*) Variables.GetSettingContent(DeleteTrailingZeros(TokensP[2])))[i];
+        break;
+      default:
+        Log.CodedMessage("DV-001");
+        return false;
+      }
+    }
+    Log.Output(Message_Allways, ToPrint);
+    return true;
+  } else {
+    Log.CodedMessage("IN-010");
+
+    return false;
+  }
+}
+
+bool Interpreter::RescueCall_RETURN(vector<string> TokensP)
+{
+  EarlyReturn = true;
+  return true;
+}
