@@ -30,14 +30,13 @@ NeuronType::NeuronType(string NameP, string DataTypeP, int ActivationLevelsP, ve
   Name = NameP;
   DataType = DataTypeP;
   ActivationLevels = ActivationLevelsP;
-  //Lothar check function compatibility
-  ActivationFunctions = ActivationFunctionsP;
+  ActivationFunctions = ActivationFunctionsP; //Lothar: check function compatibility
   ParametersName = ParametersNameP;
   ParametersType = ParametersTypeP;
   FastInput.clear();
   for (int i = 0; i < ActivationLevels; i++) {
     void* Tmp;
-    ReturnCatch(FunctionDepository.GetFunction(ActivationFunctions[i], Tmp));
+    FunctionDepository.GetFunction(ActivationFunctions[i], Tmp);
     ActivationFunctionsPointers.push_back(Tmp);
   }
 }
@@ -80,13 +79,11 @@ ReturnType NeuronType::GetParametersName(vector<string> &ParametersNameP)
 
 ReturnType NeuronType::GetActivationFunction(int LevelP, void* &FunctionP)
 {
-  if (LevelP < 0 || LevelP >= ActivationLevels) {
-    //Lothar error
-    return ReturnFail;
+  if (LevelP < 0 || LevelP >= ActivationLevels) { //Lothar: create a more propper way to catch this errors
+    return Return(ReturnFail,"Activation level out of bounds");
   }
   FunctionP = ActivationFunctionsPointers[LevelP];
   return ReturnSuccess;
-  // Lothar: hacer un catch mas completo y elegante. Estoy chato en el avión
 }
 
 ReturnType NeuronType::IsName(string NameP)
