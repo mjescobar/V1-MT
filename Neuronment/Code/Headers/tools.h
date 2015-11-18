@@ -39,7 +39,7 @@ void RuntimeAssertion();
  * @param ReturnMessageP The message to return (optional)
  * @return               Equals to the status to return
  */
-ReturnType Return(ReturnType ReturnP, string ConditionsP = "", string ReturnMessageP = "");
+ReturnType Return(ReturnType ReturnP, string ReturnMessageP = "", string ConditionsP = "");
 
 ////////////////////////////////////////////////////////////////////////////////////
 // Hashing
@@ -61,7 +61,7 @@ ReturnType KeyToHashKey(string KeyP, unsigned int &HashKeyP);
  * Checks the specified conditions for a string
  * @param DataP       The data to check
  * @param ConditionsP The conditions to check
- * @return
+ * @return            non caught return
  */
 ReturnType DataCheck(string DataP, string ConditionsP);
 
@@ -69,7 +69,7 @@ ReturnType DataCheck(string DataP, string ConditionsP);
  * Checks the specified conditions for a int
  * @param DataP       The data to check
  * @param ConditionsP The conditions to check
- * @return
+ * @return            non caught return
  */
 ReturnType DataCheck(int DataP, string ConditionsP);
 
@@ -77,7 +77,7 @@ ReturnType DataCheck(int DataP, string ConditionsP);
  * Checks the specified conditions for a char**
  * @param DataP       The data to check
  * @param ConditionsP The conditions to check
- * @return
+ * @return            non caught return
  */
 ReturnType DataCheck(char** DataP, string ConditionsP);
 
@@ -85,14 +85,14 @@ ReturnType DataCheck(char** DataP, string ConditionsP);
  * Checks the specified conditions for a char
  * @param DataP       The data to check
  * @param ConditionsP The conditions to check
- * @return
+ * @return            non caught return
  */
 ReturnType DataCheck(char DataP, string ConditionsP);
 
 /**
  * Checks that the TypeP strings contains a valid type
  * @param TypeP The type string to validate
- * @return 
+ * @return      non caught return
  */
 ReturnType IsValidType(string TypeP);
 

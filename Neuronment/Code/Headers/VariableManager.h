@@ -7,6 +7,8 @@ using namespace std;
 #include "HashTable.h"
 #include "enum.h"
 
+//Lothar: this module requires a decision about using setting and variable as synonyms
+
 class VariableManager {
 public:
   /**

@@ -2,7 +2,7 @@
 #include "FunctionsManager.h"
 
 FunctionsManager::FunctionsManager() :
-Functions(SIMULATOR_ACTIVATION_FUNCTION_HASH_SIZE) //Lothar: cambiar a nombre correcto
+Functions(SIMULATOR_ACTIVATION_FUNCTION_HASH_SIZE) //Lothar: set correct define name
 {
   InitializeManager();
 }

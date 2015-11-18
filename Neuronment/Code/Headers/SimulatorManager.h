@@ -107,7 +107,7 @@ public:
    * @param TypeP Pointer to return the pointer to the neuron type
    * @return 
    */
-  ReturnType GetNeuronType(string NameP, NeuronType **TypeP); //Lothar: shouldn't this use ne *& for the TypeP
+  ReturnType GetNeuronType(string NameP, NeuronType **TypeP); //Lothar: shouldn't this use *& for the TypeP
   
 private:
   int Current;

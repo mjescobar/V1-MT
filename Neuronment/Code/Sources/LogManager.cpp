@@ -185,7 +185,7 @@ ReturnType LogManager::CodedMessage(string CodeP, bool SkipAssertionP)
   }
   if (!(DisablingFound && CountFound && DevelopmentAssertFound && RuntimeAssertFound && LabelFound)) {
     Output(MessageCoded, CodeP);
-    Log.CodedMessage("LM-107");
+    //Log.CodedMessage("LM-107"); //Lothar: fix while the coded message table is not ready jet
   }
   if (Disabling[0]) {
     if (Count[0] < Disabling[0]) {

@@ -1,0 +1,11 @@
+SY-001
+
+%DevelopmentAssertion
+
+%InlineMessage
+Deprecated function
+
+%CompleteMessage
+The current compiled version is using a function that has been flagged as deprecated.
+If you are running the debug version of Neuronment, the program will terminate,
+otherwise, the program will continue its normal execution.

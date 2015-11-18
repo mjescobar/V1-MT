@@ -62,7 +62,8 @@ public:
    * @return 
    */
   ReturnType Simulate();
-  VariableManager InternalVariables;
+  
+  VariableManager InternalVariables; //Lothar: this should be a private variable
 private:
   vector<Neuron> Neurons;
 } ;

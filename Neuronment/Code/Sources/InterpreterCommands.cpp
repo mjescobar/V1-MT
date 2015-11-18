@@ -80,10 +80,10 @@ ReturnType rescue_nproc(CommandLine &LocalManagerP)
         LocalInterpreter.CloseFile();
       }
     } else {
-      return Return(ReturnFail, "UI-006", "IgnoreReturnValue");
+      return Return(ReturnFail, "UI-006", "IgnoreReturnValue"); //Lothar: The IgnoreReturnValue should be removed when UI-006 is correctly managed
     }
   } else {
-    return Return(ReturnFail, "UI-006", "IgnoreReturnValue");
+    return Return(ReturnFail, "UI-006", "IgnoreReturnValue"); //Lothar: The IgnoreReturnValue should be removed when UI-006 is correctly managed
   }
   return ReturnSuccess;
 }

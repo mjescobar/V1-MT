@@ -1,17 +1,21 @@
 #ifndef DEFINE_H
 #define DEFINE_H
+
+
+
+
+
+
+
+
+
+
+
+
+
 //LogManager
 #define LABEL_DONE "DONE"
 #define LABEL_FAIL "FAIL"
-
-
-
-
-
-
-
-
-
 // Simulator Defines
 #define CALCULATE_ACTIVATION "activation"
 #define CALCULATE_DACTIVATION "dactivation"

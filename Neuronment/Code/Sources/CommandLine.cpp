@@ -29,6 +29,7 @@ CommandLine::~CommandLine()
 
 CommandLine & CommandLine::operator=(const CommandLine & orig){
   Log.CodedMessage("DV-001: CommandManager assignment operator");
+  return *this;
 }
 
 CommandLine::CommandLine(int argcP, char** argvP)
@@ -294,13 +295,13 @@ ReturnType CommandLine::ProcessFullCommand()
       if (DataCheck(FullCommand[i], "IsGreaterThan") == ReturnSuccess) {
         if (i > 0) {
           Command = FullCommand.substr(0, i - 1);
-          ReturnCatch(trim(Command));
+          trim(Command);
           Redirection = FullCommand.substr(i + 1, FullCommand.size() - i - 1);
-          ReturnCatch(trim(Redirection));
+          trim(Redirection);
         } else {
           Command = "";
           Redirection = FullCommand.substr(1, FullCommand.size() - 1);
-          ReturnCatch(trim(Redirection));
+          trim(Redirection);
         }
         RedirectionDetected = true;
         i = FullCommand.size();
@@ -320,7 +321,7 @@ ReturnType CommandLine::ProcessFullCommand()
       }
       trim(Redirection);
       vector<string> InternalRedirectionTokenize;
-      ReturnCatch(Tokenize(Redirection, InternalRedirectionTokenize));
+      Tokenize(Redirection, InternalRedirectionTokenize);
       if (InternalRedirectionTokenize.size() > 1) {
         Log.CodedMessage("IN-003");
         Redirection = InternalRedirectionTokenize[0];
@@ -344,7 +345,7 @@ ReturnType CommandLine::ProcessFullCommand()
     for (int i = 0; i < Tokens.size(); i++) {
       string Token;
       Token = Tokens[i];
-      ReturnCatch(trim(Token));
+      trim(Token);
       if (InPreamble) {
         if (DataCheck(Token[0], "IsHyphen") == ReturnFail) {
           Directives.push_back(Token);

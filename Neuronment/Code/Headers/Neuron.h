@@ -95,7 +95,7 @@ public:
    * @param ValueP The value to store
    * @return 
    */
-  ReturnType ActivationPushBack(int LevelP, double ValueP); //Lothar check for other types
+  ReturnType ActivationPushBack(int LevelP, double ValueP); //Lothar: check for other types
   
   /**
    * Returns a string stored neuron type parameter
@@ -111,7 +111,7 @@ public:
    * @param ValueP Pointer to return the value
    * @return 
    */
-  ReturnType GetTypeParameter(string NameP, double &ValueP); //Lothar check for other types
+  ReturnType GetTypeParameter(string NameP, double &ValueP); //Lothar: check for other types
   
   /**
    * Returns a double stored neuron link parameter 
@@ -120,7 +120,7 @@ public:
    * @param ValueP A pointer to return the value
    * @return 
    */
-  ReturnType GetLinkParameter(int LinkP, string NameP, double &ValueP); //Lothar: replicar para diferentes data types
+  ReturnType GetLinkParameter(int LinkP, string NameP, double &ValueP); //Lothar: replicate for different data types
   
   /**
    * Returns the amount of links currently configured for the neuron

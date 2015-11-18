@@ -13,22 +13,19 @@ using namespace std;
 
 ReturnType Function000000(Simulator *SimulatorP, Neuron *NeuronP, int LevelP, int StepP)
 {
-  //Lothar: check for double neuron type
+  //Lothar: Requires check for double neuron type
   int CurrentSize = -1;
   ReturnCatch(NeuronP->GetActivationSize(LevelP, CurrentSize));
   if (CurrentSize > 1) {
-    //Lothar: error, neurona ya leida desde archivo
     Log.Output(MessageAllways, ToString(CurrentSize));
     return ReturnFail;
   }
   string File;
-
   ReturnCatch(NeuronP->GetTypeParameter("InputFile", File));
   double Point;
   vector<double> FromFile;
   ifstream DataFile(File.c_str());
   if (!DataFile.is_open()) {
-    //Lothar file not opened
     Log.Output(MessageAllways, File);
     return ReturnFail;
   }
@@ -37,7 +34,7 @@ ReturnType Function000000(Simulator *SimulatorP, Neuron *NeuronP, int LevelP, in
   }
   DataFile.close();
   //Lothar: catch IO interactions
-  ReturnCatch(NeuronP->LoadActivation(FromFile, LevelP));
+  NeuronP->LoadActivation(FromFile, LevelP);
   return ReturnSuccess;
 }
 
@@ -108,7 +105,7 @@ ReturnType Function000003(Simulator *SimulatorP, Neuron *NeuronP, int LevelP, in
   //double PreferredTemporalFrequency;
   double Magnitude;
   double Orientation;
-  ReturnCatch(NeuronP->GetTypeParameter("A", A)); //Lothar: what if values cames from global?
+  ReturnCatch(NeuronP->GetTypeParameter("A", A)); //Lothar: what if values comes from global?
   ReturnCatch(NeuronP->GetTypeParameter("B", B));
   ReturnCatch(NeuronP->GetTypeParameter("PreferredOrientation", PreferredOrientation));
   //ReturnCatch(NeuronP->GetTypeParameter("PreferredSpatialFrequency", PreferredSpatialFrequency));
@@ -133,7 +130,9 @@ ReturnType Function000004(Simulator *SimulatorP, Neuron *NeuronP, int LevelP, in
   TemporalActivation += Tmp1;
   ReturnCatch(NeuronP->GetActivation(LevelP + 1, StepP, Tmp1));
   vector<double> Tmp2;
-  GlobalVariables.GetSetting("SIM:StepSize", Tmp2);
+  if(GlobalVariables.GetSetting("SIM:StepSize", Tmp2)==ReturnFail){
+    return Return(ReturnFail,"StepSize no definido");
+  }
   TemporalActivation += Tmp2[0] * Tmp1;
   string TypeName;
   ReturnCatch(NeuronP->GetTypeName(TypeName));
@@ -405,29 +404,3 @@ ReturnType Function000007(Simulator *SimulatorP, Neuron *NeuronP, int LevelP, in
 }
 
 //Lothar: what if more than 2 deg derivation is required for calculation with the base_activation???
-
-//MT_A001
-/*
-ReturnType Function000002(Simulator *SimulatorP, Neuron *NeuronP, int LevelP, int StepP)
-{
-  return ReturnSuccess;
-  
-  double TemporalActivation = 0;
-  vector<Neuron<double>*> Links;
-  vector<string> ListNameVector;
-  SimulatorP->InternalVariables.GetSetting("MT_001:connection_list", ListNameVector);
-  if (ListNameVector.size() != 1) {
-    //Lothar error con el tamaño de la lista
-    return ReturnFail;
-  }
-  NeuronP->GetLink(ListNameVector[0], Links);
-  for (int i = 0; i < Links.size(); i++) {
-    double SourceActivation = Links[i]->Activation[LevelP].size(); //((V1_Neuron*) ActivationLinkingList[i])->GetLastActivation();
-    double SourceWeight = ToDouble((NeuronP->LinksParameters[i])[0]); //ActivationLinkingWeights.QuickGetEntry_double(((V1_Neuron*) ActivationLinkingList[i])->GetName());
-    TemporalActivation += SourceActivation * SourceWeight;
-  }
-  TemporalActivation = (TemporalActivation < 0) ? 0 : TemporalActivation;
-  NeuronP->Activation[LevelP].push_back(TemporalActivation);
-  return ReturnSuccess;
-  
-}*/

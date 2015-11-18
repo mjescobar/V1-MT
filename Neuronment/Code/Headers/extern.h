@@ -9,10 +9,15 @@
 #include "VariableManager.h"
 #include "FunctionsManager.h"
 
-extern LogManager Log;
-extern VariableManager GlobalVariables;
+// Global Variables
+extern bool       EarlyReturn;
+extern string     ErrorMessage;
+extern ReturnType ErrorReturn;
+
+// Global Object Instances
+extern LogManager       Log;
+extern VariableManager  GlobalVariables;
 extern SimulatorManager SimulatorDepository;
 extern FunctionsManager FunctionDepository;
-extern bool EarlyReturn;
 
 #endif

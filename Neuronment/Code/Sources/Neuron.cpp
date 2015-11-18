@@ -171,7 +171,8 @@ ReturnType Neuron::GetTypeParameter(string NameP, string &ValueP)
     }
   }
   if (ParameterId < 0) {
-    return Return(ReturnFail,"Parameter not found");
+    //return Return(ReturnFail,"Parameter not found");
+    return ReturnFail;
   }
   ValueP = ParameterValues[ParameterId];
   return ReturnSuccess;
@@ -189,7 +190,8 @@ ReturnType Neuron::GetTypeParameter(string NameP, double &ValueP)
     }
   }
   if (ParameterId < 0) {
-    return Return(ReturnFail,"Parameter not found");
+    //return Return(ReturnFail,"Parameter not found");
+    return ReturnFail;
   }
   ValueP = ToDouble(ParameterValues[ParameterId]);
   return ReturnSuccess;
