@@ -42,10 +42,9 @@ ReturnType VariableManager::SetSettingFromString(string VariableP, string TypeP,
   vector<double> ValuesDouble;
   vector<string> ValuesString;
   if (IsValidType(TypeP) == ReturnFail) {
-    Log.CodedMessage("DV-033");
-    return ReturnFail;
+    return Return(ReturnFail, "DV-033");
   }
-  ReturnCatch(Tokenize(ValueP, TokenizedValueP));
+  Tokenize(ValueP, TokenizedValueP);
   for (int i = 0; i < TokenizedValueP.size(); i++) {
     if (TypeP == "int") {
       ValuesInt.push_back(ToInt(TokenizedValueP[i]));
@@ -56,8 +55,7 @@ ReturnType VariableManager::SetSettingFromString(string VariableP, string TypeP,
     } else if (TypeP == "string") {
       ValuesString.push_back(TokenizedValueP[i]);
     } else {
-      Log.CodedMessage("DV-033");
-      return ReturnFail;
+      return Return(ReturnFail, "DV-033");
     }
   }
   if (TypeP == "int") {
@@ -69,8 +67,7 @@ ReturnType VariableManager::SetSettingFromString(string VariableP, string TypeP,
   } else if (TypeP == "string") {
     SetSetting(VariableP, ValuesString);
   } else {
-    Log.CodedMessage("DV-033");
-    return ReturnFail;
+    return Return(ReturnFail, "DV-033");
   }
   return ReturnSuccess;
 }
@@ -78,12 +75,11 @@ ReturnType VariableManager::SetSettingFromString(string VariableP, string TypeP,
 template <class VariableType> ReturnType VariableManager::SetSetting(string VariableP, vector<VariableType> &ValueP)
 {
   HashTable<VariableType> *LocalTable = NULL;
-  ReturnCatch(GetHashTable(VariableType(), &LocalTable));
+  GetHashTable(VariableType(), &LocalTable);
   if (CheckUnicity(LocalTable, VariableP) == ReturnFail) {
-    Log.CodedMessage("DV-002");
-    return ReturnFail;
+    return Return(ReturnFail, "DV-002");
   }
-  ReturnCatch(LocalTable->PutEntry(VariableP, ValueP));
+  LocalTable->PutEntry(VariableP, ValueP);
   return ReturnSuccess;
 }
 
@@ -111,11 +107,9 @@ ReturnType VariableManager::GetSettingAsString(string VariableP, string &Variabl
     TotalFound++;
   }
   if (TotalFound < 1) {
-    Log.CodedMessage("IN-002: " + VariableP);
-    return ReturnFail;
+    return Return(ReturnFail, "IN-002: " + VariableP);
   } else if (TotalFound > 1) {
-    Log.CodedMessage("IN-013: " + VariableP);
-    return ReturnFail;
+    return Return(ReturnFail, "IN-013: " + VariableP);
   } else {
     string ToReturn;
     for (int i = 0; i < VariableValueInt.size(); i++) {
@@ -150,10 +144,9 @@ ReturnType VariableManager::GetSettingAsString(string VariableP, string &Variabl
 template <class VariableType> ReturnType VariableManager::GetSetting(string VariableP, vector<VariableType> &ValueP)
 {
   HashTable<VariableType> *LocalTable = NULL;
-  ReturnCatch(GetHashTable(VariableType(), &LocalTable));
+  GetHashTable(VariableType(), &LocalTable);
   if (CheckUnicity(LocalTable, VariableP) == ReturnFail) {
-    Log.CodedMessage("DV-002");
-    return ReturnFail;
+    return Return(ReturnFail, "DV-002");
   }
   return LocalTable->GetEntry(VariableP, ValueP);
 }
