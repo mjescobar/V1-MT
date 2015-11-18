@@ -1,23 +1,14 @@
 
-//#include <vector>
-//#include <sstream>
-//#include <fstream>
-//using namespace std;
 #include "enum.h"
-//#include "define.h"
 #include "extern.h"
-//#include "Tools.h"
-//#include "HashEntry.h"
-//#include "LogManager.h"
-//#include "SettingsManager.h"
-//#include "Globals.h"
 #include "Interpreter.h"
 #include "LogManager.h"
 #include "CommandLine.h"
 
 Interpreter::Interpreter()
 {
-  RuntimeAssertion();//Lothar:why this?
+  Return(ReturnFail, "Message because this method should never be used");
+  ImplementationAssertion(); //Lothar: Remove once the message assertion is configured
 }
 
 Interpreter::Interpreter(const Interpreter& orig)
@@ -43,13 +34,11 @@ Interpreter::~Interpreter()
 ReturnType Interpreter::LoadFile()
 {
   if (NprocFile.length() < 1) {
-    Log.CodedMessage("UI-006");
-    return ReturnFail;
+    return Return(ReturnFail, "UI-006");
   }
   NprocStream.open(NprocFile.c_str());
   if (NprocStream.fail()) {
-    Log.CodedMessage("ER-003: " + NprocFile);
-    return ReturnFail;
+    return Return(ReturnFail, "ER-003: " + NprocFile);
   }
   ReadyForReading = true;
   return ReturnSuccess;
@@ -59,13 +48,11 @@ ReturnType Interpreter::CloseFile()
 {
   ReadyForReading = false;
   if (!NprocStream.is_open()) {
-    Log.CodedMessage("ER-009: " + NprocFile);
-    return ReturnFail;
+    return Return(ReturnFail, "ER-009: " + NprocFile);
   }
   NprocStream.close();
   if (NprocStream.is_open()) {
-    Log.CodedMessage("ER-004: " + NprocFile);
-    return ReturnFail;
+    return Return(ReturnFail, "ER-004: " + NprocFile);
   }
   return ReturnSuccess;
 }
@@ -74,15 +61,14 @@ ReturnType Interpreter::Process()
 {
   bool CommandReady;
   bool EarlyReturnInternal = false;
-  ;
   bool LastLine = false;
   string Line;
   LocalManager = new CommandLine();
   while (!EndOfFileReached || LastLine) {
-    ReturnCatch(LocalManager->IsReady(CommandReady));
+    LocalManager->IsReady(CommandReady);
     if (CommandReady) {
       string ThisCommand;
-      ReturnCatch(LocalManager->GetCleanCommand(ThisCommand));
+      LocalManager->GetCleanCommand(ThisCommand);
       ReturnType ThisCommandResult = ProcessLine(*LocalManager);
       if (EarlyReturn == true) {
         EarlyReturn = false;
@@ -100,15 +86,15 @@ ReturnType Interpreter::Process()
         break;
       }
       if (!LastLine) {
-        ReturnCatch(LocalManager->Restart());
+        LocalManager->Restart();
       } else {
         LastLine = false;
       }
     } else {
       if (!LastLine) {
-        ReturnCatch(GetNextLine(Line));
-        ReturnCatch(Log.Output(MessageAllways, Line));
-        ReturnCatch(LocalManager->Append(Line));
+        GetNextLine(Line);
+        Log.Output(MessageAllways, Line);
+        LocalManager->Append(Line);
         if (EndOfFileReached) {
           LastLine = true;
         }
@@ -116,10 +102,10 @@ ReturnType Interpreter::Process()
     }
   }
   if (!EarlyReturnInternal) {
-    ReturnCatch(LocalManager->IsReady(CommandReady));
+    LocalManager->IsReady(CommandReady);
     if (!CommandReady) {
       Log.CodedMessage("IN-018");
-      return ReturnSuccessWarning;
+      return ReturnSuccess;
     }
   }
   return ReturnSuccess;
@@ -129,16 +115,13 @@ ReturnType Interpreter::GetNextLine(string &LineP)
 {
   string InternalLine;
   if (!ReadyForReading) {
-    Log.CodedMessage("ER-005: " + NprocFile);
-    return ReturnFail;
+    return Return(ReturnFail, "ER-005: " + NprocFile);
   }
   if (EndOfFileReached) {
-    Log.CodedMessage("ER-006: " + NprocFile);
-    return ReturnFail;
+    return Return(ReturnFail, "ER-006: " + NprocFile);
   }
   if (NprocStream.eof()) {
-    Log.CodedMessage("ER-010: " + NprocFile);
-    return ReturnFail;
+    return Return(ReturnFail, "ER-010: " + NprocFile);
   }
   getline(NprocStream, InternalLine);
   LastLine = trim_right(InternalLine, "\n\r");
@@ -159,18 +142,18 @@ ReturnType Interpreter::ProcessLine(CommandLine &LocalManagerP)
   RedirectionType RedirectionMode;
   bool HasComment;
   string Comment;
-  ReturnCatch(LocalManagerP.HasCommand(HasCommand));
+  LocalManagerP.HasCommand(HasCommand);
   if (HasCommand) {
-    ReturnCatch(LocalManagerP.GetCommand(Command));
+    LocalManagerP.GetCommand(Command);
   }
-  ReturnCatch(LocalManagerP.HasRedirection(HasRedirection));
+  LocalManagerP.HasRedirection(HasRedirection);
   if (HasRedirection) {
-    ReturnCatch(LocalManagerP.GetRedirection(Redirection));
-    ReturnCatch(LocalManagerP.GetRedirectionType(RedirectionMode));
+    LocalManagerP.GetRedirection(Redirection);
+    LocalManagerP.GetRedirectionType(RedirectionMode);
   }
-  ReturnCatch(LocalManagerP.HasComment(HasComment));
+  LocalManagerP.HasComment(HasComment);
   if (HasComment) {
-    ReturnCatch(LocalManagerP.GetCommand(Comment));
+    LocalManagerP.GetCommand(Comment);
   }
   if (!HasCommand) {
     if (!HasRedirection) {
@@ -180,16 +163,14 @@ ReturnType Interpreter::ProcessLine(CommandLine &LocalManagerP)
       // 01X
       if (!HasComment) {
         // 010
-        Log.CodedMessage("IN-019");
-        return ReturnSuccessWarning;
+        return Return(ReturnSuccess, "IN-019");
       } else {
         // 011
-        Log.CodedMessage("IN-020");
-        return ReturnSuccessWarning;
+        return Return(ReturnSuccess, "IN-020");
       }
     }
   } else {
-    ReturnCatch(ProcessCommand(LocalManagerP));
+    ProcessCommand(LocalManagerP);
     return ReturnSuccess;
   }
 }
@@ -199,13 +180,12 @@ ReturnType Interpreter::ProcessCommand(CommandLine &LocalManagerP)
   // Calculate function name
   string FunctionName = "";
   string FunctionNameToPrint = "";
-  ReturnCatch(LocalManagerP.GetCleanCommand(FunctionNameToPrint));
-  ReturnCatch(LocalManagerP.GetCleanCommand(FunctionName, "_"));
+  LocalManagerP.GetCleanCommand(FunctionNameToPrint);
+  LocalManagerP.GetCleanCommand(FunctionName, "_");
   // Retrieve function name
   void* Function = NULL;
   if (Commands.GetEntryQuick(FunctionName, Function) == ReturnFail) {
-    Log.CodedMessage("IN-001: " + FunctionNameToPrint);
-    return ReturnSuccessWarning;
+    return Return(ReturnSuccess, "IN-001: " + FunctionNameToPrint);
   }
   // Execute function
   return ((ReturnType(*)(CommandLine&))Function)(LocalManagerP);
