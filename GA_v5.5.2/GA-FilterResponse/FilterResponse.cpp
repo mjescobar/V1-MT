@@ -332,7 +332,7 @@ void FilterResponse::SuperposeActivationDifuse(int FaceP, int OrientationP, int 
     TemporalAngle *= 2*3.14159/Orientations;
     TemporalAngle = MagnitudeP*(exp(aP*cos(TemporalAngle))+bP*exp(aP*cos(TemporalAngle+3.14159)))/exp(aP);
     Array[FaceP][i][SpatialFrequencyP][TemporalFrequency] = (Array[FaceP][i][SpatialFrequencyP][TemporalFrequency]>TemporalAngle)?Array[FaceP][i][SpatialFrequencyP][TemporalFrequency]:TemporalAngle;
-	printf("InputAct: %lf\n",Array[FaceP][i][SpatialFrequencyP][TemporalFrequency]);
+	printf("InputAct %d %d : %lf\n", SpatialFrequencyP, TemporalFrequency, Array[FaceP][i][SpatialFrequencyP][TemporalFrequency]);
   }
 }
 
